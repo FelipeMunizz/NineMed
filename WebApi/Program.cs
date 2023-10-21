@@ -1,6 +1,12 @@
+using Domain.Interfaces.Generics;
+using Domain.Interfaces.ISenhaToten;
+using Domain.InterfacesServices;
+using Domain.Servicos;
 using Enities.Models;
 using Helper.Configuracoes;
 using Infra.Configuracao;
+using Infra.Repositorio;
+using Infra.Repositorio.Generico;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -17,6 +23,16 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(Config.ConectionString));
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<AppDbContext>();
+
+#region Repositorios
+builder.Services.AddSingleton(typeof(InterfaceGeneric<>), typeof(RepositorioGenerico<>));
+builder.Services.AddScoped<InterfaceSenhaToten, SenhaTotenRepository>();
+#endregion
+
+#region Servicos
+builder.Services.AddScoped<InterfaceSenhaTotenService, SenhaTotenService>();
+#endregion
+
 
 var app = builder.Build();
 
