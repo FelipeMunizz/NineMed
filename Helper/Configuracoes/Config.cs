@@ -1,6 +1,6 @@
 ﻿namespace Helper.Configuracoes;
 
-public static class Configuracao
+public static class Config
 {
     private const Ambiente ambiente = Ambiente.NotFelipe;
 

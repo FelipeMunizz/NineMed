@@ -48,9 +48,9 @@ public class LogProxy
     {
         try
         {
-            Directory.CreateDirectory(Configuracao.DiretorioLogs);
+            Directory.CreateDirectory(Config.DiretorioLogs);
 
-            var diretorio = $@"{Configuracao.DiretorioLogs}\{nomeArquivo}.txt";
+            var diretorio = $@"{Config.DiretorioLogs}\{nomeArquivo}.txt";
 
             using (var w = File.AppendText(diretorio))
             {
