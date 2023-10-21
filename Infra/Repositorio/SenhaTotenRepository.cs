@@ -27,4 +27,17 @@ public class SenhaTotenRepository : RepositorioGenerico<SenhaToten>, InterfaceSe
                 ).AsNoTracking().ToListAsync();
         }
     }
+
+    public async Task<SenhaToten> UltimaSenhaTotenTipoAtendimento(TipoAtendimento tipoAtendimento)
+    {
+        using(var banco = new AppDbContext(_context))
+        {
+            return await(
+            from s in banco.SenhaToten
+            where s.TipoAtendimento.Equals((int?)tipoAtendimento)
+            orderby s.Id descending
+            select s
+        ).FirstOrDefaultAsync();
+        }
+    }
 }

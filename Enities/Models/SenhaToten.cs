@@ -4,7 +4,7 @@ namespace Enities.Models
 {
     public class SenhaToten
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string? SenhaPainel { get; set; }
         public TipoAtendimento TipoAtendimento { get; set; }
         public StatusAtendimento StatusAtendimento { get; set; }
