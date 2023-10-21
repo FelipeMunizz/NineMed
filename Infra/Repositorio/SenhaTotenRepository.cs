@@ -15,12 +15,12 @@ public class SenhaTotenRepository : RepositorioGenerico<SenhaToten>, InterfaceSe
         _context = context;
     }
 
-    public Task<IList<SenhaToten>> ListaSenhaTotenDiarias(DateTime diaAtual)
+    public Task<IList<SenhaToten>> ListaSenhaTotenDiarias(DateTime diaAtual, string email)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IList<SenhaToten>> ListaSenhaTotenTipoAtendimento(TipoAtendimento tipoAtendimento)
+    public Task<IList<SenhaToten>> ListaSenhaTotenTipoAtendimento(TipoAtendimento tipoAtendimento, string email)
     {
         throw new NotImplementedException();
     }
