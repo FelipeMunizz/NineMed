@@ -16,7 +16,7 @@ public class SenhaTotenRepository : RepositorioGenerico<SenhaToten>, InterfaceSe
         _context = new DbContextOptions<AppDbContext>();
     }
 
-    public async Task<IList<SenhaToten>> ListaSenhaTotenTipoAtendimento(TipoAtendimento tipoAtendimento, string email)
+    public async Task<IList<SenhaToten>> ListaSenhaTotenTipoAtendimento(TipoAtendimento tipoAtendimento)
     {
         using (var banco = new AppDbContext(_context))
         {
