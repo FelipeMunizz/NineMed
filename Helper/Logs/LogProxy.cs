@@ -1,64 +1,64 @@
-﻿using System.Text;
+﻿using Helper.Configuracoes;
+using System.Text;
 
-namespace Helper.Logs
+namespace Helper.Logs;
+
+public class LogProxy
 {
-    internal class LogProxy
+    public static void GravarLogException(Exception exception)
     {
-        public static void GravarLogException(Exception exception)
+        var sb = new StringBuilder();
+
+        var current = exception;
+        while (current != null)
         {
-            var sb = new StringBuilder();
+            if (current != exception) sb.AppendLine("Inner exception:");
+            else sb.AppendLine($"Exception occurred at {DateTime.Now:dd/MM/yyyy HH:mm:ss}:");
 
-            var current = exception;
-            while (current != null)
-            {
-                if (current != exception) sb.AppendLine("Inner exception:");
-                else sb.AppendLine($"Exception occurred at {DateTime.Now:dd/MM/yyyy HH:mm:ss}:");
+            sb.AppendLine(exception.Message);
 
-                sb.AppendLine(exception.Message);
+            sb.AppendLine();
+            sb.AppendLine("Stack Trace:");
+            sb.AppendLine(exception.StackTrace);
 
-                sb.AppendLine();
-                sb.AppendLine("Stack Trace:");
-                sb.AppendLine(exception.StackTrace);
+            sb.AppendLine();
+            sb.AppendLine("Source:");
+            sb.AppendLine(exception.Source);
 
-                sb.AppendLine();
-                sb.AppendLine("Source:");
-                sb.AppendLine(exception.Source);
+            sb.AppendLine();
+            sb.AppendLine();
 
-                sb.AppendLine();
-                sb.AppendLine();
-
-                current = current.InnerException;
-            }
-
-            GravarLog(sb.ToString(), $"{DateTime.Now:yyyy-MM-dd___HH_mm_ss}_ExceptionLog");
+            current = current.InnerException;
         }
 
-        public static void GravarLogErro(string descricao, string mensagemErro, string nomeArquivo = "LogGenerico")
+        GravarLog(sb.ToString(), $"{DateTime.Now:yyyy-MM-dd___HH_mm_ss}_ExceptionLog");
+    }
+
+    public static void GravarLogErro(string descricao, string mensagemErro, string nomeArquivo = "LogGenerico")
+    {
+        try
         {
-            try
-            {
-                GravarLog($"|| {descricao}", nomeArquivo);
-                GravarLog($"|>>>>>>> {mensagemErro}", nomeArquivo);
-            }
-            catch { }
+            GravarLog($"|| {descricao}", nomeArquivo);
+            GravarLog($"|>>>>>>> {mensagemErro}", nomeArquivo);
         }
+        catch { }
+    }
 
-        public static void GravarLog(string mensagem, string nomeArquivo = "LogGenerico")
+    public static void GravarLog(string mensagem, string nomeArquivo = "LogGenerico")
+    {
+        try
         {
-            try
+            Directory.CreateDirectory(Configuracao.DiretorioLogs);
+
+            var diretorio = $@"{Configuracao.DiretorioLogs}\{nomeArquivo}.txt";
+
+            using (var w = File.AppendText(diretorio))
             {
-                //Directory.CreateDirectory(Configuracao.DIRETORIO_LOGS);
-
-                //var diretorio = $@"{Configuracao.DIRETORIO_LOGS}\{nomeArquivo}.txt";
-
-                //using (var w = File.AppendText(diretorio))
-                //{
-                //    w.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
-                //    w.WriteLine($"{mensagem}");
-                //    w.Close();
-                //}
+                w.WriteLine(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
+                w.WriteLine($"{mensagem}");
+                w.Close();
             }
-            catch { }
         }
+        catch { }
     }
 }
