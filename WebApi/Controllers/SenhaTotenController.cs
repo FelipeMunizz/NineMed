@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Domain.InterfacesServices;
+using Enities.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
 
@@ -6,4 +8,18 @@ namespace WebApi.Controllers;
 [ApiController]
 public class SenhaTotenController : ControllerBase
 {
+    private readonly InterfaceSenhaTotenService _service;
+
+    public SenhaTotenController(InterfaceSenhaTotenService service)
+    {
+        _service = service;
+    }
+
+    [HttpPost("AdicionarSenhaToten")]
+    [Produces("application/json")]
+    public async Task<IActionResult> AdicionarSenhaToten(SenhaToten senhaToten)
+    {
+        await _service.AdicionarSenhaToten(senhaToten);
+        return Ok();
+    }
 }

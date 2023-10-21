@@ -22,7 +22,7 @@ public class SenhaTotenRepository : RepositorioGenerico<SenhaToten>, InterfaceSe
         {
             return await (
                     from s in banco.SenhaToten
-                    where s.TipoAtendimento.Equals((int)tipoAtendimento)
+                    where s.TipoAtendimento.Equals(tipoAtendimento)
                     select s
                 ).AsNoTracking().ToListAsync();
         }
@@ -34,7 +34,7 @@ public class SenhaTotenRepository : RepositorioGenerico<SenhaToten>, InterfaceSe
         {
             return await(
             from s in banco.SenhaToten
-            where s.TipoAtendimento.Equals((int?)tipoAtendimento)
+            where s.TipoAtendimento.Equals(tipoAtendimento)
             orderby s.Id descending
             select s
         ).FirstOrDefaultAsync();

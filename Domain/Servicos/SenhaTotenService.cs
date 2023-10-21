@@ -30,7 +30,7 @@ public class SenhaTotenService : InterfaceSenhaTotenService
             }
             else
             {
-                senhaPainel = obj.TipoAtendimento == TipoAtendimento.Prioritario ? "PR01" : "CM01";
+                senhaPainel = obj.TipoAtendimento == TipoAtendimento.Prioritario ? "PR00" : "CM00";
             }
 
             SenhaToten novaSenha = new SenhaToten
