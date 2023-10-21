@@ -3,20 +3,28 @@ using Enities.Enums;
 using Enities.Models;
 using Infra.Configuracao;
 using Infra.Repositorio.Generico;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Repositorio;
 
 public class SenhaTotenRepository : RepositorioGenerico<SenhaToten>, InterfaceSenhaToten
 {
-    private readonly AppDbContext _context;
+    private readonly DbContextOptions<AppDbContext> _context;
 
     public SenhaTotenRepository(AppDbContext context)
     {
-        _context = context;
+        _context = new DbContextOptions<AppDbContext>();
     }
 
-    public Task<IList<SenhaToten>> ListaSenhaTotenTipoAtendimento(TipoAtendimento tipoAtendimento, string email)
+    public async Task<IList<SenhaToten>> ListaSenhaTotenTipoAtendimento(TipoAtendimento tipoAtendimento, string email)
     {
-        throw new NotImplementedException();
+        using (var banco = new AppDbContext(_context))
+        {
+            return await (
+                    from s in banco.SenhaToten
+                    where s.TipoAtendimento.Equals((int)tipoAtendimento)
+                    select s
+                ).AsNoTracking().ToListAsync();
+        }
     }
 }
