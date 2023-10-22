@@ -1,6 +1,6 @@
 ﻿using Domain.Interfaces.ISenhaToten;
-using Enities.Enums;
-using Enities.Models;
+using Entities.Enums;
+using Entities.Models;
 using Infra.Configuracao;
 using Infra.Repositorio.Generico;
 using Microsoft.EntityFrameworkCore;

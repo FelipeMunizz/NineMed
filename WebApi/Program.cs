@@ -1,14 +1,9 @@
-using Domain.Interfaces.Generics;
-using Domain.Interfaces.ISenhaToten;
-using Domain.InterfacesServices;
-using Domain.Servicos;
-using Enities.Models;
+using Entities.Models;
 using Helper.Configuracoes;
 using Infra.Configuracao;
 using Infra.Repositorio;
 using Infra.Repositorio.Generico;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 var builder = WebApplication.CreateBuilder(args);
 

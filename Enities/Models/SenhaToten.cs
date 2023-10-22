@@ -1,7 +1,6 @@
-﻿using Enities.Enums;
-using System.ComponentModel.DataAnnotations;
+﻿using Entities.Enums;
 
-namespace Enities.Models
+namespace Entities.Models
 {
     public class SenhaToten
     {
