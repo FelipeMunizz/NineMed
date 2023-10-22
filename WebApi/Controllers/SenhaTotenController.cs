@@ -1,5 +1,5 @@
 ﻿using Domain.InterfacesServices;
-using Enities.Models;
+using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;

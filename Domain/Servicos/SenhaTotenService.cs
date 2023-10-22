@@ -1,6 +1,8 @@
 ﻿using Domain.Interfaces.ISenhaToten;
 using Domain.InterfacesServices;
+using Entities.Enums;
 using Entities.Models;
+using Helper.Logs;
 
 namespace Domain.Servicos;
 
@@ -17,18 +19,18 @@ public class SenhaTotenService : InterfaceSenhaTotenService
     {
         try
         {
-            SenhaToten ultimaSenhaMesmoAtendimento = await _repository.UltimaSenhaTotenTipoAtendimento(obj.TipoAtendimento);
+            int ultimaSenhaMesmoAtendimento = await _repository.SenhaTotenTipoAtendimento(obj.TipoAtendimento);
 
             string senhaPainel = string.Empty;
 
-            if (ultimaSenhaMesmoAtendimento != null)
+            if (ultimaSenhaMesmoAtendimento > 0)
             {
-                senhaPainel = obj.TipoAtendimento == TipoAtendimento.Prioritario ? $"PR0{ultimaSenhaMesmoAtendimento.Id + 1}"
-                    : $"CM0{ultimaSenhaMesmoAtendimento.Id + 1}";
+                senhaPainel = obj.TipoAtendimento == TipoAtendimento.Prioritario ? $"PR0{ultimaSenhaMesmoAtendimento + 1}"
+                    : $"CM0{ultimaSenhaMesmoAtendimento + 1}";
             }
             else
             {
-                senhaPainel = obj.TipoAtendimento == TipoAtendimento.Prioritario ? "PR00" : "CM00";
+                senhaPainel = obj.TipoAtendimento == TipoAtendimento.Prioritario ? "PR01" : "CM01";
             }
 
             SenhaToten novaSenha = new SenhaToten
