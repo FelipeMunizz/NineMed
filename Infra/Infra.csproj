@@ -18,8 +18,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />
-    <ProjectReference Include="..\Enities\Enities.csproj" />
-    <ProjectReference Include="..\Enities\Entities.csproj" />
     <ProjectReference Include="..\Helper\Helper.csproj" />
   </ItemGroup>
 

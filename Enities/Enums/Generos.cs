@@ -1,4 +1,4 @@
-﻿namespace Enities.Enums;
+﻿namespace Entities.Enums;
 
 public enum Generos
 {

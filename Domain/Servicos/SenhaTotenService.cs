@@ -1,6 +1,6 @@
 ﻿using Domain.Interfaces.ISenhaToten;
 using Domain.InterfacesServices;
-using Enities.Models;
+using Entities.Models;
 
 namespace Domain.Servicos;
 

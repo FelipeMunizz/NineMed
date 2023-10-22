@@ -1,6 +1,6 @@
 ﻿using Domain.Interfaces.Generics;
-using Enities.Enums;
-using Enities.Models;
+using Entities.Enums;
+using Entities.Models;
 
 namespace Domain.Interfaces.ISenhaToten;
 

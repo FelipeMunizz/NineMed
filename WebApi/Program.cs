@@ -1,8 +1,7 @@
-using Enities.Models;
+using Entities.Models;
 using Helper.Configuracoes;
 using Infra.Configuracao;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 var builder = WebApplication.CreateBuilder(args);
 

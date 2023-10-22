@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Enities.Models;
+namespace Entities.Models;
 public class ApplicationUser : IdentityUser
 {
     [Column("USR_CPF")]
