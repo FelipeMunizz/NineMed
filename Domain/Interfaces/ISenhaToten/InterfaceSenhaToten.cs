@@ -8,4 +8,6 @@ public interface InterfaceSenhaToten : InterfaceGeneric<SenhaToten>
 {
     Task<IList<SenhaToten>> ListaSenhaTotenTipoAtendimento(TipoAtendimento tipoAtendimento);
     Task<int> SenhaTotenTipoAtendimento(TipoAtendimento tipoAtendimento);
+    Task<SenhaToten> ObtemSenhaPainel(string senhaPainel);
+    Task<IList<SenhaToten>> SenhasParaExcluir(DateTime diaAnterior);
 }

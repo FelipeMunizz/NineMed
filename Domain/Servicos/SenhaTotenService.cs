@@ -51,13 +51,35 @@ public class SenhaTotenService : InterfaceSenhaTotenService
         }
     }
 
-    public Task AtualizarSenhaToten(SenhaToten obj)
+    public async Task AtualizarSenhaToten(SenhaToten obj)
     {
-        throw new NotImplementedException();
+        try
+        {
+            SenhaToten senha = await _repository.ObtemSenhaPainel(obj.SenhaPainel);
+
+            senha.StatusAtendimento = obj.StatusAtendimento;
+            senha.DataHoraAtualizacao = DateTime.Now;
+
+            await _repository.Update(senha);
+        }
+        catch (Exception ex)
+        {
+            LogProxy.GravarLogException(ex);
+        }
     }
 
-    public Task DeletarSenhasTotenDiarias(DateTime diaAtual)
+    public async Task DeletarSenhasTotenDiarias()
     {
-        throw new NotImplementedException();
+        try
+        {
+            IList<SenhaToten> senhasParaExcluir = await _repository.SenhasParaExcluir(DateTime.Now);
+
+            foreach(var senhaToten in senhasParaExcluir)
+                await _repository.Delete(senhaToten);
+        }
+        catch (Exception ex)
+        {
+            LogProxy.GravarLogException(ex);
+        }
     }
 }

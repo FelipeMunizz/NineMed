@@ -28,9 +28,36 @@ public class SenhaTotenRepository : RepositorioGenerico<SenhaToten>, InterfaceSe
         }
     }
 
+    public async Task<SenhaToten> ObtemSenhaPainel(string senhaPainel)
+    {
+        using (var banco = new AppDbContext(_context))
+        {
+            return await (
+                from s in banco.SenhaToten
+                where s.SenhaPainel == senhaPainel
+                select s
+        ).FirstOrDefaultAsync();
+        }
+    }
+
+    public async Task<IList<SenhaToten>> SenhasParaExcluir(DateTime diaAtual)
+    {
+        using (var banco = new AppDbContext(_context))
+        {
+            DateTime inicioDoDiaAnterior = diaAtual.Date.AddDays(-1);
+            DateTime fimDoDiaAnterior = diaAtual.Date.AddSeconds(-1);
+            return await (
+                from s in banco.SenhaToten
+                where s.DataHoraCriacao.Date >= inicioDoDiaAnterior && s.DataHoraCriacao < fimDoDiaAnterior 
+                && s.StatusAtendimento == StatusAtendimento.Saida
+                select s
+            ).AsNoTracking().ToListAsync();
+        }
+    }
+
     public async Task<int> SenhaTotenTipoAtendimento(TipoAtendimento tipoAtendimento)
     {
-        using(var banco = new AppDbContext(_context))
+        using (var banco = new AppDbContext(_context))
         {
             return await (
             from s in banco.SenhaToten
