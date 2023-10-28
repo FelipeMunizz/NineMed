@@ -25,12 +25,39 @@ public class SenhaTotenService : InterfaceSenhaTotenService
 
             if (ultimaSenhaMesmoAtendimento > 0)
             {
-                senhaPainel = obj.TipoAtendimento == TipoAtendimento.Prioritario ? $"PR0{ultimaSenhaMesmoAtendimento + 1}"
-                    : $"CM0{ultimaSenhaMesmoAtendimento + 1}";
+                switch (obj.TipoAtendimento)
+                {
+                    case TipoAtendimento.Prioritario:
+                        senhaPainel = $"P0{ultimaSenhaMesmoAtendimento + 1}";
+                        break;
+                    case TipoAtendimento.PrioritarioAgendado:
+                        senhaPainel = $"PA0{ultimaSenhaMesmoAtendimento + 1}";
+                        break;
+                    case TipoAtendimento.Comum:
+                        senhaPainel = $"C0{ultimaSenhaMesmoAtendimento + 1}";
+                        break;
+                    case TipoAtendimento.ComumAgendado:
+                        senhaPainel = $"CA0{ultimaSenhaMesmoAtendimento + 1}";
+                        break;
+                }
             }
             else
             {
-                senhaPainel = obj.TipoAtendimento == TipoAtendimento.Prioritario ? "PR01" : "CM01";
+                switch (obj.TipoAtendimento)
+                {
+                    case TipoAtendimento.Prioritario:
+                        senhaPainel = $"P01";
+                        break;
+                    case TipoAtendimento.PrioritarioAgendado:
+                        senhaPainel = $"PA01";
+                        break;
+                    case TipoAtendimento.Comum:
+                        senhaPainel = $"C01";
+                        break;
+                    case TipoAtendimento.ComumAgendado:
+                        senhaPainel = $"CA01";
+                        break;
+                }
             }
 
             SenhaToten novaSenha = new SenhaToten
@@ -74,7 +101,7 @@ public class SenhaTotenService : InterfaceSenhaTotenService
         {
             IList<SenhaToten> senhasParaExcluir = await _repository.SenhasParaExcluir(DateTime.Now);
 
-            foreach(var senhaToten in senhasParaExcluir)
+            foreach (var senhaToten in senhasParaExcluir)
                 await _repository.Delete(senhaToten);
         }
         catch (Exception ex)
