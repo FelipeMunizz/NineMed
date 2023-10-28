@@ -21,10 +21,6 @@ public class UsersController : ControllerBase
         _sign = sign;
     }
 
-    [Authorize(AuthenticationSchemes = "Bearer")]
-    [HttpGet("Teste")]
-    public ActionResult<string> Teste() => DateTime.Now.ToString();
-
     [AllowAnonymous]
     [Produces("application/json")]
     [HttpPost("CreateUser")]
