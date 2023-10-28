@@ -3,6 +3,8 @@
     public enum TipoAtendimento
     {
         Prioritario,
-        Comum
+        PrioritarioAgendado,
+        Comum,
+        ComumAgendado
     }
 }
