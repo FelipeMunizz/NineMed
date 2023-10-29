@@ -44,11 +44,9 @@ public class SenhaTotenRepository : RepositorioGenerico<SenhaToten>, InterfaceSe
     {
         using (var banco = new AppDbContext(_context))
         {
-            DateTime inicioDoDiaAnterior = diaAtual.Date.AddDays(-1);
-            DateTime fimDoDiaAnterior = diaAtual.Date.AddSeconds(-1);
             return await (
                 from s in banco.SenhaToten
-                where s.DataHoraCriacao.Date >= inicioDoDiaAnterior && s.DataHoraCriacao < fimDoDiaAnterior 
+                where s.DataHoraCriacao.Date < DateTime.Now
                 && s.StatusAtendimento == StatusAtendimento.Saida
                 select s
             ).AsNoTracking().ToListAsync();

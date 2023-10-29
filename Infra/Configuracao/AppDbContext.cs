@@ -10,6 +10,10 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
 
     #region Models
     public DbSet<SenhaToten> SenhaToten { get; set; }
+    public DbSet<Clinica> Clinica { get; set; }
+    public DbSet<ConfiguracaoClinica> ConfiguracaoClinica { get; set; }
+    public DbSet<Contato> Contato { get; set; }
+    public DbSet<Endereco> Endereco { get; set; }
     #endregion
 
     #region Metodos Override

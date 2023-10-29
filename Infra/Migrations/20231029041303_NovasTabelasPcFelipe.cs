@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infra.Migrations
 {
     /// <inheritdoc />
-    public partial class InicialPc : Migration
+    public partial class NovasTabelasPcFelipe : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,7 +30,7 @@ namespace Infra.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    USR_CPF = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    USR_DOCUMENTO = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -52,12 +52,31 @@ namespace Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Endereco",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Logradouro = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Numero = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Complemento = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Bairro = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CEP = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Estado = table.Column<int>(type: "int", nullable: false),
+                    Cidade = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Endereco", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SenhaToten",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SenhaPainel = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SenhaPainel = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     TipoAtendimento = table.Column<int>(type: "int", nullable: false),
                     StatusAtendimento = table.Column<int>(type: "int", nullable: false),
                     DataHoraCriacao = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -65,7 +84,7 @@ namespace Infra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SenhaToten", x => x.ID);
+                    table.PrimaryKey("PK_SenhaToten", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -174,6 +193,75 @@ namespace Infra.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Clinica",
+                columns: table => new
+                {
+                    IdEndereco = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CNPJ = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Clinica", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Clinica_Endereco_IdEndereco",
+                        column: x => x.IdEndereco,
+                        principalTable: "Endereco",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ConfiguracaoClinica",
+                columns: table => new
+                {
+                    IdClinica = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    HorarioAbertura = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    HorarioFechamento = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DiaInicio = table.Column<int>(type: "int", nullable: false),
+                    DiaFim = table.Column<int>(type: "int", nullable: false),
+                    FuncionaFeriados = table.Column<bool>(type: "bit", nullable: false),
+                    ControlaEstoque = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ConfiguracaoClinica", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ConfiguracaoClinica_Clinica_IdClinica",
+                        column: x => x.IdClinica,
+                        principalTable: "Clinica",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Contato",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NumeroContato = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TipoContato = table.Column<int>(type: "int", nullable: false),
+                    HorarioComercial = table.Column<bool>(type: "bit", nullable: false),
+                    ClinicaId = table.Column<int>(type: "int", nullable: true),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contato", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Contato_Clinica_ClinicaId",
+                        column: x => x.ClinicaId,
+                        principalTable: "Clinica",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -212,6 +300,21 @@ namespace Infra.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Clinica_IdEndereco",
+                table: "Clinica",
+                column: "IdEndereco");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ConfiguracaoClinica_IdClinica",
+                table: "ConfiguracaoClinica",
+                column: "IdClinica");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Contato_ClinicaId",
+                table: "Contato",
+                column: "ClinicaId");
         }
 
         /// <inheritdoc />
@@ -233,6 +336,12 @@ namespace Infra.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "ConfiguracaoClinica");
+
+            migrationBuilder.DropTable(
+                name: "Contato");
+
+            migrationBuilder.DropTable(
                 name: "SenhaToten");
 
             migrationBuilder.DropTable(
@@ -240,6 +349,12 @@ namespace Infra.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Clinica");
+
+            migrationBuilder.DropTable(
+                name: "Endereco");
         }
     }
 }
