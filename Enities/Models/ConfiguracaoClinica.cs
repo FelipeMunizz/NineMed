@@ -10,10 +10,11 @@ public class ConfiguracaoClinica
     public DateTime HorarioFechamento { get; set; }
     public DiasSemana DiaInicio { get; set; }
     public DiasSemana DiaFim { get; set; }
+    public string IntervaloAgenda { get; set; }
     public bool FuncionaFeriados { get; set; }
     public bool ControlaEstoque {  get; set; }
     [ForeignKey("Clinica")]
     [Column(Order = 1)]
     public int IdClinica { get; set; }
-    public Clinica Clinica { get; set; }
+    public virtual Clinica Clinica { get; set; }
 }

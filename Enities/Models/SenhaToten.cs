@@ -1,5 +1,6 @@
 ﻿using Entities.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities.Models;
 
@@ -12,4 +13,9 @@ public class SenhaToten
     public StatusAtendimento StatusAtendimento { get; set; }
     public DateTime DataHoraCriacao { get; set; }
     public DateTime DataHoraAtualizacao { get; set; }
+
+    [ForeignKey("Clinica")]
+    [Column(Order = 1)]
+    public int IdClinica {  get; set; }
+    public virtual Clinica Clinica { get; set; }
 }

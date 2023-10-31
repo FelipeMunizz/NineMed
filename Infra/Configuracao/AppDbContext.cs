@@ -12,8 +12,18 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<SenhaToten> SenhaToten { get; set; }
     public DbSet<Clinica> Clinica { get; set; }
     public DbSet<ConfiguracaoClinica> ConfiguracaoClinica { get; set; }
-    public DbSet<Contato> Contato { get; set; }
-    public DbSet<Endereco> Endereco { get; set; }
+    public DbSet<ContatoClinica> ContatoClinica { get; set; }
+    public DbSet<EnderecoClinica> EnderecoClinica { get; set; }
+    public DbSet<ContatoPaciente> ContatoPaciente { get; set; }
+    public DbSet<EnderecoPaciente> EnderecoPaciente { get; set; }
+    public DbSet<Agendamento> Agendamento { get; set; }
+    public DbSet<Convenio> Convenio { get; set; }
+    public DbSet<Paciente> Paciente { get; set; }
+    public DbSet<PacienteConvenio> PacienteConvenio {  get; set; }
+    public DbSet<PacienteFamiliar> PacienteFamiliar { get; set; }
+    public DbSet<Procedimento> Procedimento { get; set; }
+    public DbSet<UsuarioClinica> UsuarioClinica { get; set; }
+
     #endregion
 
     #region Metodos Override

@@ -5,9 +5,10 @@ namespace Entities.Models;
 public class Clinica : Base
 {
     public string CNPJ {  get; set; }
-    [ForeignKey("Endereco")]
-    [Column(Order = 1)]
-    public int IdEndereco { get; set; }
-    public Endereco Endereco { get; set; }
-    public List<Contato> Contatos { get; set; } = new List<Contato>();
+    public string RazaoSocial { get; set; }
+    public string Fantasia {  get; set; }
+    public string InscricaoEstadual { get; set; }
+    public string InscricaoMunicipal { get; set; }
+    public bool SimplesNacional { get; set; }
+    public string Logo { get; set; }
 }
