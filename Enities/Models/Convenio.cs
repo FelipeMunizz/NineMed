@@ -6,7 +6,7 @@ public class Convenio : Base
 {
     public string RegistroAns { get; set; }
     public string NomeFantasia { get; set; }
-    public bool Ativo {  get; set; }
+    public bool Ativo { get; set; }
 
     [ForeignKey("Clinica")]
     public int IdClinica { get; set; }

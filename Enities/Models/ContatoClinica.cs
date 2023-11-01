@@ -2,7 +2,7 @@
 
 namespace Entities.Models;
 
-public  class ContatoClinica : Contato
+public class ContatoClinica : Contato
 {
     [ForeignKey("Clinica")]
     public int Id { get; set; }

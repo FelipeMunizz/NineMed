@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infra.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231101165448_MigrationNewTables")]
-    partial class MigrationNewTables
+    [Migration("20231101221938_MigrationsDW")]
+    partial class MigrationsDW
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -786,7 +786,7 @@ namespace Infra.Migrations
 
             modelBuilder.Entity("Entities.Models.Agendamento", b =>
                 {
-                    b.HasOne("Entities.Models.Paciente", "PacienteAgendamento")
+                    b.HasOne("Entities.Models.PacienteAgendamento", "PacienteAgendamento")
                         .WithMany()
                         .HasForeignKey("IdPacienteAgendamento")
                         .OnDelete(DeleteBehavior.Cascade)

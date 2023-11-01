@@ -12,7 +12,7 @@ public class ConfiguracaoClinica
     public DiasSemana DiaFim { get; set; }
     public string IntervaloAgenda { get; set; }
     public bool FuncionaFeriados { get; set; }
-    public bool ControlaEstoque {  get; set; }
+    public bool ControlaEstoque { get; set; }
     [ForeignKey("Clinica")]
     [Column(Order = 1)]
     public int IdClinica { get; set; }

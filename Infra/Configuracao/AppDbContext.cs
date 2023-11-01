@@ -20,7 +20,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Agendamento> Agendamento { get; set; }
     public DbSet<Convenio> Convenio { get; set; }
     public DbSet<Paciente> Paciente { get; set; }
-    public DbSet<PacienteConvenio> PacienteConvenio {  get; set; }
+    public DbSet<PacienteConvenio> PacienteConvenio { get; set; }
     public DbSet<PacienteFamiliar> PacienteFamiliar { get; set; }
     public DbSet<Procedimento> Procedimento { get; set; }
     public DbSet<UsuarioClinica> UsuarioClinica { get; set; }

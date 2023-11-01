@@ -16,7 +16,7 @@ public class Agendamento
 
     [ForeignKey("PacienteAgendamento")]
     public int IdPacienteAgendamento { get; set; }
-    public virtual Paciente PacienteAgendamento { get; set; }
+    public virtual PacienteAgendamento PacienteAgendamento { get; set; }
 
     [ForeignKey("ProfissionalSaudeAgendamento")]
     public int IdProfissionalSaudeAgendamento { get; set; }

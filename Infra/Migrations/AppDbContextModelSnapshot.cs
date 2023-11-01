@@ -783,7 +783,7 @@ namespace Infra.Migrations
 
             modelBuilder.Entity("Entities.Models.Agendamento", b =>
                 {
-                    b.HasOne("Entities.Models.Paciente", "PacienteAgendamento")
+                    b.HasOne("Entities.Models.PacienteAgendamento", "PacienteAgendamento")
                         .WithMany()
                         .HasForeignKey("IdPacienteAgendamento")
                         .OnDelete(DeleteBehavior.Cascade)
