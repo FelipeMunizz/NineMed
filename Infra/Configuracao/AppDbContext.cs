@@ -2,6 +2,7 @@
 using Helper.Configuracoes;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+
 namespace Infra.Configuracao;
 
 public class AppDbContext : IdentityDbContext<ApplicationUser>
@@ -10,6 +11,22 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
 
     #region Models
     public DbSet<SenhaToten> SenhaToten { get; set; }
+    public DbSet<Clinica> Clinica { get; set; }
+    public DbSet<ConfiguracaoClinica> ConfiguracaoClinica { get; set; }
+    public DbSet<ContatoClinica> ContatoClinica { get; set; }
+    public DbSet<EnderecoClinica> EnderecoClinica { get; set; }
+    public DbSet<ContatoPaciente> ContatoPaciente { get; set; }
+    public DbSet<EnderecoPaciente> EnderecoPaciente { get; set; }
+    public DbSet<Agendamento> Agendamento { get; set; }
+    public DbSet<Convenio> Convenio { get; set; }
+    public DbSet<Paciente> Paciente { get; set; }
+    public DbSet<PacienteConvenio> PacienteConvenio { get; set; }
+    public DbSet<PacienteFamiliar> PacienteFamiliar { get; set; }
+    public DbSet<Procedimento> Procedimento { get; set; }
+    public DbSet<UsuarioClinica> UsuarioClinica { get; set; }
+    public DbSet<PacienteAgendamento> PacienteAgendamento { get; set; }
+    public DbSet<ProfissionalSaudeAgendamento> ProfissionalSaudeAgendamento { get; set; }
+
     #endregion
 
     #region Metodos Override
