@@ -18,4 +18,8 @@ public class Paciente : Base
     [ForeignKey("PacienteConvenio")]
     public int IdPacienteConvenio { get; set; }
     public virtual PacienteConvenio PacienteConvenio { get; set; }
+
+    [ForeignKey("Clinica")]
+    public int IdClinica { get; set; }
+    public virtual Clinica Clinica {  get; set; }
 }

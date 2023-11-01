@@ -2,6 +2,7 @@
 using Helper.Configuracoes;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+
 namespace Infra.Configuracao;
 
 public class AppDbContext : IdentityDbContext<ApplicationUser>
@@ -23,6 +24,8 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<PacienteFamiliar> PacienteFamiliar { get; set; }
     public DbSet<Procedimento> Procedimento { get; set; }
     public DbSet<UsuarioClinica> UsuarioClinica { get; set; }
+    public DbSet<PacienteAgendamento> PacienteAgendamento { get; set; }
+    public DbSet<ProfissionalSaudeAgendamento> ProfissionalSaudeAgendamento { get; set; }
 
     #endregion
 

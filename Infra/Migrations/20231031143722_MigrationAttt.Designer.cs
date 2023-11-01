@@ -4,6 +4,7 @@ using Infra.Configuracao;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infra.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231031143722_MigrationAttt")]
+    partial class MigrationAttt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,10 +42,7 @@ namespace Infra.Migrations
                     b.Property<TimeSpan>("HorarioInicio")
                         .HasColumnType("time");
 
-                    b.Property<int>("IdPacienteAgendamento")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdProfissionalSaudeAgendamento")
+                    b.Property<int>("IdPaciente")
                         .HasColumnType("int");
 
                     b.Property<bool>("Lembrete")
@@ -55,14 +55,9 @@ namespace Infra.Migrations
                     b.Property<int>("Repeticao")
                         .HasColumnType("int");
 
-                    b.Property<int>("SituacaoAgendamento")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("IdPacienteAgendamento");
-
-                    b.HasIndex("IdProfissionalSaudeAgendamento");
+                    b.HasIndex("IdPaciente");
 
                     b.ToTable("Agendamento");
                 });
@@ -424,9 +419,6 @@ namespace Infra.Migrations
                     b.Property<int>("EstadoCivil")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdClinica")
-                        .HasColumnType("int");
-
                     b.Property<int>("IdPacienteConvenio")
                         .HasColumnType("int");
 
@@ -447,31 +439,11 @@ namespace Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdClinica");
-
                     b.HasIndex("IdPacienteConvenio");
 
                     b.HasIndex("IdPacienteFamiliar");
 
                     b.ToTable("Paciente");
-                });
-
-            modelBuilder.Entity("Entities.Models.PacienteAgendamento", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("IdPaciente")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdPaciente");
-
-                    b.ToTable("PacienteAgendamento");
                 });
 
             modelBuilder.Entity("Entities.Models.PacienteConvenio", b =>
@@ -556,24 +528,6 @@ namespace Infra.Migrations
                     b.HasIndex("IdClinica");
 
                     b.ToTable("Procedimento");
-                });
-
-            modelBuilder.Entity("Entities.Models.ProfissionalSaudeAgendamento", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("IdUsuarioClinica")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdUsuarioClinica");
-
-                    b.ToTable("ProfissionalSaudeAgendamento");
                 });
 
             modelBuilder.Entity("Entities.Models.SenhaToten", b =>
@@ -783,21 +737,13 @@ namespace Infra.Migrations
 
             modelBuilder.Entity("Entities.Models.Agendamento", b =>
                 {
-                    b.HasOne("Entities.Models.Paciente", "PacienteAgendamento")
+                    b.HasOne("Entities.Models.Paciente", "Paciente")
                         .WithMany()
-                        .HasForeignKey("IdPacienteAgendamento")
+                        .HasForeignKey("IdPaciente")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entities.Models.ProfissionalSaudeAgendamento", "ProfissionalSaudeAgendamento")
-                        .WithMany()
-                        .HasForeignKey("IdProfissionalSaudeAgendamento")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PacienteAgendamento");
-
-                    b.Navigation("ProfissionalSaudeAgendamento");
+                    b.Navigation("Paciente");
                 });
 
             modelBuilder.Entity("Entities.Models.ConfiguracaoClinica", b =>
@@ -868,12 +814,6 @@ namespace Infra.Migrations
 
             modelBuilder.Entity("Entities.Models.Paciente", b =>
                 {
-                    b.HasOne("Entities.Models.Clinica", "Clinica")
-                        .WithMany()
-                        .HasForeignKey("IdClinica")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Entities.Models.PacienteConvenio", "PacienteConvenio")
                         .WithMany()
                         .HasForeignKey("IdPacienteConvenio")
@@ -886,22 +826,9 @@ namespace Infra.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Clinica");
-
                     b.Navigation("PacienteConvenio");
 
                     b.Navigation("PacienteFamiliar");
-                });
-
-            modelBuilder.Entity("Entities.Models.PacienteAgendamento", b =>
-                {
-                    b.HasOne("Entities.Models.Paciente", "Paciente")
-                        .WithMany()
-                        .HasForeignKey("IdPaciente")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Paciente");
                 });
 
             modelBuilder.Entity("Entities.Models.Procedimento", b =>
@@ -913,17 +840,6 @@ namespace Infra.Migrations
                         .IsRequired();
 
                     b.Navigation("Clinica");
-                });
-
-            modelBuilder.Entity("Entities.Models.ProfissionalSaudeAgendamento", b =>
-                {
-                    b.HasOne("Entities.Models.UsuarioClinica", "UsuarioClinica")
-                        .WithMany()
-                        .HasForeignKey("IdUsuarioClinica")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("UsuarioClinica");
                 });
 
             modelBuilder.Entity("Entities.Models.SenhaToten", b =>
