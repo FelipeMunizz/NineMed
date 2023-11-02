@@ -9,5 +9,6 @@ public class Procedimento : Base
 
     [ForeignKey("Clinica")]
     public int IdClinica { get; set; }
+    [NotMapped]
     public virtual Clinica Clinica { get; set; }
 }
