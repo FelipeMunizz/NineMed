@@ -16,9 +16,13 @@ public class Agendamento
 
     [ForeignKey("PacienteAgendamento")]
     public int IdPacienteAgendamento { get; set; }
+
+    [NotMapped]
     public virtual PacienteAgendamento PacienteAgendamento { get; set; }
 
     [ForeignKey("ProfissionalSaudeAgendamento")]
     public int IdProfissionalSaudeAgendamento { get; set; }
+
+    [NotMapped]
     public virtual ProfissionalSaudeAgendamento ProfissionalSaudeAgendamento { get; set; }
 }

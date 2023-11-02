@@ -17,5 +17,6 @@ public class SenhaToten
     [ForeignKey("Clinica")]
     [Column(Order = 1)]
     public int IdClinica { get; set; }
+    [NotMapped]
     public virtual Clinica Clinica { get; set; }
 }

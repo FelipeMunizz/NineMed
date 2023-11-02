@@ -8,5 +8,6 @@ public class PacienteAgendamento
 
     [ForeignKey("Paciente")]
     public int IdPaciente { get; set; }
+    [NotMapped]
     public virtual Paciente Paciente { get; set; }
 }
