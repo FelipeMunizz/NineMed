@@ -7,6 +7,5 @@ public class EnderecoPaciente : Endereco
     public int Id { get; set; }
     [ForeignKey("Paciente")]
     public int IdPaciente { get; set; }
-    [NotMapped]
     public virtual Paciente Paciente { get; set; }
 }

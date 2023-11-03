@@ -12,6 +12,5 @@ public class UsuarioClinica
     public string Especialidade { get; set; }
     [ForeignKey("Clinica")]
     public int IdClinica { get; set; }
-    [NotMapped]
     public virtual Clinica Clinica { get; set; }
 }

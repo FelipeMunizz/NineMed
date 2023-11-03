@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infra.Migrations
 {
     /// <inheritdoc />
-    public partial class MigrationsDW : Migration
+    public partial class MigrationUpadateTables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -239,7 +239,9 @@ namespace Infra.Migrations
                 name: "ContatoClinica",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdClinica = table.Column<int>(type: "int", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NumeroContato = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -251,8 +253,8 @@ namespace Infra.Migrations
                 {
                     table.PrimaryKey("PK_ContatoClinica", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ContatoClinica_Clinica_Id",
-                        column: x => x.Id,
+                        name: "FK_ContatoClinica_Clinica_IdClinica",
+                        column: x => x.IdClinica,
                         principalTable: "Clinica",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -416,29 +418,45 @@ namespace Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProfissionalSaudeAgendamento",
+                name: "Agendamento",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    DataAgendamento = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    HorarioInicio = table.Column<TimeSpan>(type: "time", nullable: false),
+                    HorarioFim = table.Column<TimeSpan>(type: "time", nullable: false),
+                    Repeticao = table.Column<int>(type: "int", nullable: false),
+                    SituacaoAgendamento = table.Column<int>(type: "int", nullable: false),
+                    Lembrete = table.Column<bool>(type: "bit", nullable: false),
+                    Observacao = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdPaciente = table.Column<int>(type: "int", nullable: false),
                     IdUsuarioClinica = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProfissionalSaudeAgendamento", x => x.Id);
+                    table.PrimaryKey("PK_Agendamento", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProfissionalSaudeAgendamento_UsuarioClinica_IdUsuarioClinica",
+                        name: "FK_Agendamento_Paciente_IdPaciente",
+                        column: x => x.IdPaciente,
+                        principalTable: "Paciente",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Agendamento_UsuarioClinica_IdUsuarioClinica",
                         column: x => x.IdUsuarioClinica,
                         principalTable: "UsuarioClinica",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
                 name: "ContatoPaciente",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdPaciente = table.Column<int>(type: "int", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NumeroContato = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -450,8 +468,8 @@ namespace Infra.Migrations
                 {
                     table.PrimaryKey("PK_ContatoPaciente", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ContatoPaciente_Paciente_Id",
-                        column: x => x.Id,
+                        name: "FK_ContatoPaciente_Paciente_IdPaciente",
+                        column: x => x.IdPaciente,
                         principalTable: "Paciente",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -483,67 +501,15 @@ namespace Infra.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "PacienteAgendamento",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    IdPaciente = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PacienteAgendamento", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PacienteAgendamento_Paciente_IdPaciente",
-                        column: x => x.IdPaciente,
-                        principalTable: "Paciente",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Agendamento",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DataAgendamento = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    HorarioInicio = table.Column<TimeSpan>(type: "time", nullable: false),
-                    HorarioFim = table.Column<TimeSpan>(type: "time", nullable: false),
-                    Repeticao = table.Column<int>(type: "int", nullable: false),
-                    SituacaoAgendamento = table.Column<int>(type: "int", nullable: false),
-                    Lembrete = table.Column<bool>(type: "bit", nullable: false),
-                    Observacao = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IdPacienteAgendamento = table.Column<int>(type: "int", nullable: false),
-                    IdProfissionalSaudeAgendamento = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Agendamento", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Agendamento_PacienteAgendamento_IdPacienteAgendamento",
-                        column: x => x.IdPacienteAgendamento,
-                        principalTable: "PacienteAgendamento",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Agendamento_ProfissionalSaudeAgendamento_IdProfissionalSaudeAgendamento",
-                        column: x => x.IdProfissionalSaudeAgendamento,
-                        principalTable: "ProfissionalSaudeAgendamento",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
-                });
+            migrationBuilder.CreateIndex(
+                name: "IX_Agendamento_IdPaciente",
+                table: "Agendamento",
+                column: "IdPaciente");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Agendamento_IdPacienteAgendamento",
+                name: "IX_Agendamento_IdUsuarioClinica",
                 table: "Agendamento",
-                column: "IdPacienteAgendamento");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Agendamento_IdProfissionalSaudeAgendamento",
-                table: "Agendamento",
-                column: "IdProfissionalSaudeAgendamento");
+                column: "IdUsuarioClinica");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -590,6 +556,16 @@ namespace Infra.Migrations
                 column: "IdClinica");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ContatoClinica_IdClinica",
+                table: "ContatoClinica",
+                column: "IdClinica");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ContatoPaciente_IdPaciente",
+                table: "ContatoPaciente",
+                column: "IdPaciente");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Convenio_IdClinica",
                 table: "Convenio",
                 column: "IdClinica");
@@ -620,19 +596,9 @@ namespace Infra.Migrations
                 column: "IdPacienteFamiliar");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PacienteAgendamento_IdPaciente",
-                table: "PacienteAgendamento",
-                column: "IdPaciente");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Procedimento_IdClinica",
                 table: "Procedimento",
                 column: "IdClinica");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProfissionalSaudeAgendamento_IdUsuarioClinica",
-                table: "ProfissionalSaudeAgendamento",
-                column: "IdUsuarioClinica");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SenhaToten_IdClinica",
@@ -691,10 +657,7 @@ namespace Infra.Migrations
                 name: "SenhaToten");
 
             migrationBuilder.DropTable(
-                name: "PacienteAgendamento");
-
-            migrationBuilder.DropTable(
-                name: "ProfissionalSaudeAgendamento");
+                name: "UsuarioClinica");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -706,16 +669,13 @@ namespace Infra.Migrations
                 name: "Paciente");
 
             migrationBuilder.DropTable(
-                name: "UsuarioClinica");
+                name: "Clinica");
 
             migrationBuilder.DropTable(
                 name: "PacienteConvenio");
 
             migrationBuilder.DropTable(
                 name: "PacienteFamiliar");
-
-            migrationBuilder.DropTable(
-                name: "Clinica");
         }
     }
 }

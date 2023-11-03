@@ -5,7 +5,6 @@ namespace Entities.Models;
 public class ContatoPaciente : Contato
 {
     [ForeignKey("Paciente")]
-    public int Id { get; set; }
-    [NotMapped]
+    public int IdPaciente { get; set; }
     public virtual Paciente Paciente { get; set; }
 }
