@@ -14,15 +14,11 @@ public class Agendamento
     public bool Lembrete { get; set; }
     public string Observacao { get; set; }
 
-    [ForeignKey("PacienteAgendamento")]
-    public int IdPacienteAgendamento { get; set; }
+    [ForeignKey("Paciente")]
+    public int IdPaciente { get; set; }
+    public virtual Paciente Paciente { get; set; }
 
-    [NotMapped]
-    public virtual PacienteAgendamento PacienteAgendamento { get; set; }
-
-    [ForeignKey("ProfissionalSaudeAgendamento")]
-    public int IdProfissionalSaudeAgendamento { get; set; }
-
-    [NotMapped]
-    public virtual ProfissionalSaudeAgendamento ProfissionalSaudeAgendamento { get; set; }
+    [ForeignKey("UsuarioClinica")]
+    public int IdUsuarioClinica { get; set; }
+    public virtual UsuarioClinica UsuarioClinica { get; set; }
 }

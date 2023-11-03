@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infra.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231101221938_MigrationsDW")]
-    partial class MigrationsDW
+    [Migration("20231103171229_MigrationUpadateTables")]
+    partial class MigrationUpadateTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,10 +42,10 @@ namespace Infra.Migrations
                     b.Property<TimeSpan>("HorarioInicio")
                         .HasColumnType("time");
 
-                    b.Property<int>("IdPacienteAgendamento")
+                    b.Property<int>("IdPaciente")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdProfissionalSaudeAgendamento")
+                    b.Property<int>("IdUsuarioClinica")
                         .HasColumnType("int");
 
                     b.Property<bool>("Lembrete")
@@ -63,9 +63,9 @@ namespace Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdPacienteAgendamento");
+                    b.HasIndex("IdPaciente");
 
-                    b.HasIndex("IdProfissionalSaudeAgendamento");
+                    b.HasIndex("IdUsuarioClinica");
 
                     b.ToTable("Agendamento");
                 });
@@ -227,7 +227,10 @@ namespace Infra.Migrations
             modelBuilder.Entity("Entities.Models.ContatoClinica", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -235,6 +238,9 @@ namespace Infra.Migrations
 
                     b.Property<bool>("HorarioComercial")
                         .HasColumnType("bit");
+
+                    b.Property<int>("IdClinica")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Lembretes")
                         .HasColumnType("bit");
@@ -251,6 +257,8 @@ namespace Infra.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdClinica");
 
                     b.ToTable("ContatoClinica");
                 });
@@ -258,7 +266,10 @@ namespace Infra.Migrations
             modelBuilder.Entity("Entities.Models.ContatoPaciente", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -266,6 +277,9 @@ namespace Infra.Migrations
 
                     b.Property<bool>("HorarioComercial")
                         .HasColumnType("bit");
+
+                    b.Property<int>("IdPaciente")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Lembretes")
                         .HasColumnType("bit");
@@ -282,6 +296,8 @@ namespace Infra.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdPaciente");
 
                     b.ToTable("ContatoPaciente");
                 });
@@ -459,24 +475,6 @@ namespace Infra.Migrations
                     b.ToTable("Paciente");
                 });
 
-            modelBuilder.Entity("Entities.Models.PacienteAgendamento", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("IdPaciente")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdPaciente");
-
-                    b.ToTable("PacienteAgendamento");
-                });
-
             modelBuilder.Entity("Entities.Models.PacienteConvenio", b =>
                 {
                     b.Property<int>("Id")
@@ -559,24 +557,6 @@ namespace Infra.Migrations
                     b.HasIndex("IdClinica");
 
                     b.ToTable("Procedimento");
-                });
-
-            modelBuilder.Entity("Entities.Models.ProfissionalSaudeAgendamento", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("IdUsuarioClinica")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdUsuarioClinica");
-
-                    b.ToTable("ProfissionalSaudeAgendamento");
                 });
 
             modelBuilder.Entity("Entities.Models.SenhaToten", b =>
@@ -786,21 +766,21 @@ namespace Infra.Migrations
 
             modelBuilder.Entity("Entities.Models.Agendamento", b =>
                 {
-                    b.HasOne("Entities.Models.PacienteAgendamento", "PacienteAgendamento")
+                    b.HasOne("Entities.Models.Paciente", "Paciente")
                         .WithMany()
-                        .HasForeignKey("IdPacienteAgendamento")
+                        .HasForeignKey("IdPaciente")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entities.Models.ProfissionalSaudeAgendamento", "ProfissionalSaudeAgendamento")
+                    b.HasOne("Entities.Models.UsuarioClinica", "UsuarioClinica")
                         .WithMany()
-                        .HasForeignKey("IdProfissionalSaudeAgendamento")
+                        .HasForeignKey("IdUsuarioClinica")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("PacienteAgendamento");
+                    b.Navigation("Paciente");
 
-                    b.Navigation("ProfissionalSaudeAgendamento");
+                    b.Navigation("UsuarioClinica");
                 });
 
             modelBuilder.Entity("Entities.Models.ConfiguracaoClinica", b =>
@@ -818,7 +798,7 @@ namespace Infra.Migrations
                 {
                     b.HasOne("Entities.Models.Clinica", "Clinica")
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("IdClinica")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -829,7 +809,7 @@ namespace Infra.Migrations
                 {
                     b.HasOne("Entities.Models.Paciente", "Paciente")
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("IdPaciente")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -896,17 +876,6 @@ namespace Infra.Migrations
                     b.Navigation("PacienteFamiliar");
                 });
 
-            modelBuilder.Entity("Entities.Models.PacienteAgendamento", b =>
-                {
-                    b.HasOne("Entities.Models.Paciente", "Paciente")
-                        .WithMany()
-                        .HasForeignKey("IdPaciente")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Paciente");
-                });
-
             modelBuilder.Entity("Entities.Models.Procedimento", b =>
                 {
                     b.HasOne("Entities.Models.Clinica", "Clinica")
@@ -916,17 +885,6 @@ namespace Infra.Migrations
                         .IsRequired();
 
                     b.Navigation("Clinica");
-                });
-
-            modelBuilder.Entity("Entities.Models.ProfissionalSaudeAgendamento", b =>
-                {
-                    b.HasOne("Entities.Models.UsuarioClinica", "UsuarioClinica")
-                        .WithMany()
-                        .HasForeignKey("IdUsuarioClinica")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("UsuarioClinica");
                 });
 
             modelBuilder.Entity("Entities.Models.SenhaToten", b =>
