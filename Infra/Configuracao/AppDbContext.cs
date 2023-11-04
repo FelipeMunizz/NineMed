@@ -23,7 +23,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<PacienteConvenio> PacienteConvenio { get; set; }
     public DbSet<PacienteFamiliar> PacienteFamiliar { get; set; }
     public DbSet<Procedimento> Procedimento { get; set; }
-    public DbSet<UsuarioClinica> UsuarioClinica { get; set; }
+    public DbSet<Funcionario> Funcionario { get; set; }
     #endregion
 
     #region Metodos Override
