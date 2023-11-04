@@ -5,5 +5,6 @@ public enum SituacaoAgendamento
     AguardandoConfirmacao,
     Confirmado,
     PacienteCompareceu,
-    PacienteNaoCompareceu
+    PacienteNaoCompareceu,
+    Cancelado = 99
 }
