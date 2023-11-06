@@ -38,11 +38,11 @@ public class SenhaTotenController : ControllerBase
         return Ok();
     }
 
-    [HttpDelete("DeletarSenhasTotenDiarias")]
+    [HttpDelete("DeletarSenhasTotenDiarias/{idToten:int}")]
     [Produces("application/json")]
-    public async Task<IActionResult> DeletarSenhasTotenDiarias()
+    public async Task<IActionResult> DeletarSenhasTotenDiarias(int idToten)
     {
-        await _service.DeletarSenhasTotenDiarias();
+        await _service.DeletarSenhasTotenDiarias(idToten);
         return Ok();
     }
 }

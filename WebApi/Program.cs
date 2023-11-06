@@ -1,4 +1,5 @@
 using Domain.Interfaces.Generics;
+using Domain.Interfaces.IClinica;
 using Domain.Interfaces.ISenhaToten;
 using Domain.InterfacesServices;
 using Domain.Servicos;
@@ -30,10 +31,12 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 #region Repositorios
 builder.Services.AddSingleton(typeof(InterfaceGeneric<>), typeof(RepositorioGenerico<>));
 builder.Services.AddScoped<InterfaceSenhaToten, SenhaTotenRepository>();
+builder.Services.AddScoped<InterfaceClinica, ClinicaRepository>();
 #endregion
 
 #region Servicos
 builder.Services.AddScoped<InterfaceSenhaTotenService, SenhaTotenService>();
+builder.Services.AddScoped<InterfaceClinicaService, ClinicaService>();
 #endregion
 
 builder.Services.AddSwaggerGen(c =>

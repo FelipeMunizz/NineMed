@@ -8,6 +8,6 @@ public class HorarioFuncionario
     public DateTime DataHorario {  get; set; }
     [ForeignKey("Funcionario")]
     public int IdFuncionario { get; set; }
-    public virtual Funcionario Funcionario { get; set; }
+    public virtual Funcionario? Funcionario { get; set; }
 
 }

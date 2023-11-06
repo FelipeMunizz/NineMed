@@ -15,12 +15,13 @@ public class RepositorioGenerico<T> : InterfaceGeneric<T>, IDisposable where T :
         _optionsBuilder = new DbContextOptions<AppDbContext>();
     }
 
-    public async Task Add(T Objeto)
+    public async Task<T> Add(T Objeto)
     {
         using (var data = new AppDbContext(_optionsBuilder))
         {
             await data.Set<T>().AddAsync(Objeto);
             await data.SaveChangesAsync();
+            return Objeto;
         }
     }
 

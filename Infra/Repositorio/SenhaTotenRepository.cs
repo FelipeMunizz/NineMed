@@ -16,31 +16,31 @@ public class SenhaTotenRepository : RepositorioGenerico<SenhaToten>, InterfaceSe
         _context = new DbContextOptions<AppDbContext>();
     }
 
-    public async Task<IList<SenhaToten>> ListaSenhaTotenTipoAtendimento(TipoAtendimento tipoAtendimento)
+    public async Task<IList<SenhaToten>> ListaSenhaTotenTipoAtendimento(TipoAtendimento tipoAtendimento, int idToten)
     {
         using (var banco = new AppDbContext(_context))
         {
             return await (
                     from s in banco.SenhaToten
-                    where s.TipoAtendimento.Equals(tipoAtendimento)
+                    where s.TipoAtendimento.Equals(tipoAtendimento) && s.IdToten.Equals(idToten)
                     select s
                 ).AsNoTracking().ToListAsync();
         }
     }
 
-    public async Task<SenhaToten> ObtemSenhaPainel(string senhaPainel)
+    public async Task<SenhaToten> ObtemSenhaPainel(string senhaPainel, int idToten)
     {
         using (var banco = new AppDbContext(_context))
         {
             return await (
                 from s in banco.SenhaToten
-                where s.SenhaPainel == senhaPainel
+                where s.SenhaPainel == senhaPainel && s.IdToten.Equals(idToten)
                 select s
         ).FirstOrDefaultAsync();
         }
     }
 
-    public async Task<IList<SenhaToten>> SenhasParaExcluir(DateTime diaAtual)
+    public async Task<IList<SenhaToten>> SenhasParaExcluir(DateTime diaAtual, int idToten)
     {
         using (var banco = new AppDbContext(_context))
         {
@@ -48,18 +48,19 @@ public class SenhaTotenRepository : RepositorioGenerico<SenhaToten>, InterfaceSe
                 from s in banco.SenhaToten
                 where s.DataHoraCriacao.Date < DateTime.Now
                 && s.StatusAtendimento == StatusAtendimento.Saida
+                && s.IdToten.Equals(idToten)
                 select s
             ).AsNoTracking().ToListAsync();
         }
     }
 
-    public async Task<int> SenhaTotenTipoAtendimento(TipoAtendimento tipoAtendimento)
+    public async Task<int> SenhaTotenTipoAtendimento(TipoAtendimento tipoAtendimento, int idToten)
     {
         using (var banco = new AppDbContext(_context))
         {
             return await (
             from s in banco.SenhaToten
-            where s.TipoAtendimento.Equals(tipoAtendimento)
+            where s.TipoAtendimento.Equals(tipoAtendimento) && s.IdToten.Equals(idToten)
             select s
         ).CountAsync();
         }

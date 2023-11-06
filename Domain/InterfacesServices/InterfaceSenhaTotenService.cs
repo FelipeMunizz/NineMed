@@ -6,5 +6,5 @@ public interface InterfaceSenhaTotenService
 {
     Task AdicionarSenhaToten(SenhaToten obj);
     Task AtualizarSenhaToten(SenhaToten obj);
-    Task DeletarSenhasTotenDiarias();
+    Task DeletarSenhasTotenDiarias(int idToten);
 }

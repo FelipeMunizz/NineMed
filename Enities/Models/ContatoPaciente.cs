@@ -6,5 +6,5 @@ public class ContatoPaciente : Contato
 {
     [ForeignKey("Paciente")]
     public int IdPaciente { get; set; }
-    public virtual Paciente Paciente { get; set; }
+    public virtual Paciente? Paciente { get; set; }
 }
