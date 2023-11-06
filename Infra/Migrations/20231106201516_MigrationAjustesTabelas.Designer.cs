@@ -4,6 +4,7 @@ using Infra.Configuracao;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infra.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231106201516_MigrationAjustesTabelas")]
+    partial class MigrationAjustesTabelas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -598,7 +601,7 @@ namespace Infra.Migrations
                     b.Property<DateTime>("DataHoraCriacao")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IdToten")
+                    b.Property<int>("IdClinica")
                         .HasColumnType("int")
                         .HasColumnOrder(1);
 
@@ -614,31 +617,9 @@ namespace Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdToten");
-
-                    b.ToTable("SenhaToten");
-                });
-
-            modelBuilder.Entity("Entities.Models.Toten", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("IdClinica")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
                     b.HasIndex("IdClinica");
 
-                    b.ToTable("Toten");
+                    b.ToTable("SenhaToten");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -924,17 +905,6 @@ namespace Infra.Migrations
                 });
 
             modelBuilder.Entity("Entities.Models.SenhaToten", b =>
-                {
-                    b.HasOne("Entities.Models.Toten", "Toten")
-                        .WithMany()
-                        .HasForeignKey("IdToten")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Toten");
-                });
-
-            modelBuilder.Entity("Entities.Models.Toten", b =>
                 {
                     b.HasOne("Entities.Models.Clinica", "Clinica")
                         .WithMany()

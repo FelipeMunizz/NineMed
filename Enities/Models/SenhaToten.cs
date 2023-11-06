@@ -14,8 +14,8 @@ public class SenhaToten
     public DateTime DataHoraCriacao { get; set; }
     public DateTime DataHoraAtualizacao { get; set; }
 
-    [ForeignKey("Clinica")]
+    [ForeignKey("Toten")]
     [Column(Order = 1)]
-    public int IdClinica { get; set; }
-    public virtual Clinica Clinica { get; set; }
+    public int IdToten { get; set; }
+    public virtual Toten Toten { get; set; }
 }
