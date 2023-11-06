@@ -2,12 +2,8 @@
 
 namespace Entities.Models;
 
-public class Convenio : Base
+public class Toten : Base
 {
-    public string? RegistroAns { get; set; }
-    public string? NomeFantasia { get; set; }
-    public bool Ativo { get; set; }
-
     [ForeignKey("Clinica")]
     public int IdClinica { get; set; }
     public virtual Clinica Clinica { get; set; }

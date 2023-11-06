@@ -10,7 +10,7 @@ public class Agendamento
     public RepeticaoAgendamento Repeticao { get; set; }
     public SituacaoAgendamento SituacaoAgendamento { get; set; }
     public bool Lembrete { get; set; }
-    public string Observacao { get; set; }
+    public string? Observacao { get; set; }
     public string IdProcedimento { get; set; }
 
     [ForeignKey("Paciente")]
