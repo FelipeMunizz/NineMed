@@ -2,6 +2,7 @@ using Domain.Interfaces.Generics;
 using Domain.Interfaces.IClinica;
 using Domain.Interfaces.ISenhaToten;
 using Domain.InterfacesServices;
+using Domain.InterfacesServices.IClinicaService;
 using Domain.Servicos;
 using Entities.Models;
 using Helper.Configuracoes;

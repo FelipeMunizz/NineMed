@@ -1,5 +1,5 @@
 ﻿using Domain.Interfaces.IClinica;
-using Domain.InterfacesServices;
+using Domain.InterfacesServices.IClinicaService;
 using Entities.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -128,6 +128,39 @@ public class ClinicaController : ControllerBase
     public async Task<IActionResult> DeletarClinica(int idClinica)
     {
         await _service.DeletarClinica(idClinica);
+        return Ok();
+    }
+
+    [HttpGet("ListaEnderecosClinica")]
+    [Produces("application/json")]
+    public async Task<object> ListaEnderecosClinica(int idClinica) => await _service.ListaEnderecosClinica(idClinica);
+
+    [HttpGet("ObterEnderecoClinica")]
+    [Produces("application/json")]
+    public async Task<object> ObterEnderecoClinica(int idEndereco) => await _service.ObterEnderecoClinica(idEndereco);
+
+
+    [HttpPost("AdicionarEnderecoClinica")]
+    [Produces("application/json")]
+    public async Task<IActionResult> AdicionarEnderecoClinica(EnderecoClinica endereco)
+    {
+        await _service.AdicionarEnderecoClinica(endereco);
+        return Ok();
+    }
+
+    [HttpPut("AtualizarEnderecoClinica")]
+    [Produces("application/json")]
+    public async Task<IActionResult> AtualizarEnderecoClinica(EnderecoClinica endereco)
+    {
+        await _service.AtualizarEnderecoClinica(endereco);
+        return Ok();
+    }
+
+    [HttpDelete("DeletarEnderecoClinica/{idEndereco:int}")]
+    [Produces("application/json")]
+    public async Task<IActionResult> DeletarEnderecoClinica(int idEndereco)
+    {
+        await _service.DeletarEnderecoClinica(idEndereco);
         return Ok();
     }
 }

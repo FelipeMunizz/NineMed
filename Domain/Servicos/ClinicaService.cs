@@ -1,5 +1,5 @@
 ﻿using Domain.Interfaces.IClinica;
-using Domain.InterfacesServices;
+using Domain.InterfacesServices.IClinicaService;
 using Entities.Models;
 using Helper.Logs;
 
@@ -20,6 +20,7 @@ public class ClinicaService : InterfaceClinicaService
         _enderecoClinicaRepositorio = enderecoClinicaRepositorio;
     }
 
+    #region Clinica
     public async Task AdicionarClinica(Clinica clinica, EnderecoClinica endereco, ContatoClinica contato)
     {
         try
@@ -83,4 +84,22 @@ public class ClinicaService : InterfaceClinicaService
             throw;
         }
     }
+    #endregion
+
+    #region EnderecoClinica
+    public async Task<IList<EnderecoClinica>> ListaEnderecosClinica(int idClinica) => await _enderecoClinicaRepositorio.EnderecosClinica(idClinica);
+
+    public async Task AdicionarEnderecoClinica(EnderecoClinica endereco) => await _enderecoClinicaRepositorio.Add(endereco);
+
+    public async Task AtualizarEnderecoClinica(EnderecoClinica endereco) => await _enderecoClinicaRepositorio.Update(endereco);
+
+    public async Task<EnderecoClinica> ObterEnderecoClinica(int idEndereco) => await _enderecoClinicaRepositorio.GetEntityById(idEndereco);
+
+    public async Task DeletarEnderecoClinica(int idEndereco)
+    {
+        EnderecoClinica endereco = await ObterEnderecoClinica(idEndereco);
+
+        await _enderecoClinicaRepositorio.Delete(endereco);
+    }
+    #endregion
 }
