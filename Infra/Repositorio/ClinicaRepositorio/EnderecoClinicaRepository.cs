@@ -4,26 +4,25 @@ using Infra.Configuracao;
 using Infra.Repositorio.Generico;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infra.Repositorio;
+namespace Infra.Repositorio.ClinicaRepositorio;
 
-public class ClinicaRepository : RepositorioGenerico<Clinica>, InterfaceClinica
+public class EnderecoClinicaRepository : RepositorioGenerico<EnderecoClinica>, InterfaceEnderecoClinica
 {
     private readonly DbContextOptions<AppDbContext> _context;
 
-    public ClinicaRepository(AppDbContext context)
+    public EnderecoClinicaRepository(AppDbContext context)
     {
         _context = new DbContextOptions<AppDbContext>();
     }
 
-    public async Task<IList<Clinica>> ListaClinicasUsuario(string email)
+    public async Task<IList<EnderecoClinica>> EnderecosClinica(int idClinica)
     {
         using (var banco = new AppDbContext(_context))
         {
             return await (
-                from c in banco.Clinica
-                join f in banco.Funcionario on c.Id equals f.IdClinica
-                where f.Email.Equals(email)
-                select c
+                from ec in banco.EnderecoClinica
+                where ec.IdClinica.Equals(idClinica)
+                select ec
                 ).AsNoTracking().ToListAsync();
         }
     }

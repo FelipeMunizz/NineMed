@@ -18,6 +18,7 @@ public class ClinicaDTO
     public string? CEP { get; set; }
     public EstadosBrasil Estado { get; set; }
     public string? Cidade { get; set; }
+    public string? NomeContato { get; set; }
     public string? NumeroContato { get; set; }
     public string? Email { get; set; }
     public TipoContato TipoContato { get; set; }

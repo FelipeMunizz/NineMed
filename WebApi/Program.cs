@@ -7,6 +7,7 @@ using Entities.Models;
 using Helper.Configuracoes;
 using Infra.Configuracao;
 using Infra.Repositorio;
+using Infra.Repositorio.ClinicaRepositorio;
 using Infra.Repositorio.Generico;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +33,8 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 builder.Services.AddSingleton(typeof(InterfaceGeneric<>), typeof(RepositorioGenerico<>));
 builder.Services.AddScoped<InterfaceSenhaToten, SenhaTotenRepository>();
 builder.Services.AddScoped<InterfaceClinica, ClinicaRepository>();
+builder.Services.AddScoped<InterfaceContatoClinica, ContatoClinicaRepository>();
+builder.Services.AddScoped<InterfaceEnderecoClinica, EnderecoClinicaRepository>();
 #endregion
 
 #region Servicos
