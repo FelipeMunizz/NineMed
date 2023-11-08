@@ -15,4 +15,12 @@ public interface InterfaceClinicaService
     Task<EnderecoClinica> ObterEnderecoClinica(int idEndereco);
     Task DeletarEnderecoClinica(int idEndereco);
     #endregion
+
+    #region Contato
+    Task<IList<ContatoClinica>> ListaContatoClinica(int idClinica);
+    Task AdicionarContatoClinica(ContatoClinica contato);
+    Task AtualizarContatoClinica(ContatoClinica contato);
+    Task<ContatoClinica> ObterContatoClinica(int idContato);
+    Task DeletarContatoClinica(int idContato);
+    #endregion
 }

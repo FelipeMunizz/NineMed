@@ -102,4 +102,20 @@ public class ClinicaService : InterfaceClinicaService
         await _enderecoClinicaRepositorio.Delete(endereco);
     }
     #endregion
+
+    #region ContatoClinica
+    public async Task<IList<ContatoClinica>> ListaContatoClinica(int idClinica) => await _contatoClinicaRepositorio.ContatosClinica(idClinica);
+
+    public async Task AdicionarContatoClinica(ContatoClinica contato) => await _contatoClinicaRepositorio.Add(contato);
+
+    public async Task AtualizarContatoClinica(ContatoClinica contato) => await _contatoClinicaRepositorio.Update(contato);
+
+    public async Task<ContatoClinica> ObterContatoClinica(int idContato) => await _contatoClinicaRepositorio.GetEntityById(idContato);
+
+    public async Task DeletarContatoClinica(int idContato)
+    {
+        ContatoClinica contato = await ObterContatoClinica(idContato);
+        await _contatoClinicaRepositorio.Delete(contato);
+    }
+    #endregion
 }

@@ -163,4 +163,37 @@ public class ClinicaController : ControllerBase
         await _service.DeletarEnderecoClinica(idEndereco);
         return Ok();
     }
+
+    [HttpGet("ListaContatoClinica")]
+    [Produces("application/json")]
+    public async Task<object> ListaContatoClinica(int idClinica) => await _service.ListaContatoClinica(idClinica);
+
+    [HttpGet("ObterContatoClinica/{idContato:int}")]
+    [Produces("application/json")]
+    public async Task<object> ObterContatoClinica(int idContato) => await _service.ObterContatoClinica(idContato);
+
+
+    [HttpPost("AdicionarContatoClinica")]
+    [Produces("application/json")]
+    public async Task<IActionResult> AdicionarContatoClinica(ContatoClinica contato)
+    {
+        await _service.AdicionarContatoClinica(contato);
+        return Ok();
+    }
+
+    [HttpPut("AtualizarContatoClinica")]
+    [Produces("application/json")]
+    public async Task<IActionResult> AtualizarEnderecoClinica(ContatoClinica contato)
+    {
+        await _service.AtualizarContatoClinica(contato);
+        return Ok();
+    }
+
+    [HttpDelete("DeletarContatoClinica/{idContato:int}")]
+    [Produces("application/json")]
+    public async Task<IActionResult> DeletarContatoClinica(int idContato)
+    {
+        await _service.DeletarContatoClinica(idContato);
+        return Ok();
+    }
 }
