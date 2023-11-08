@@ -6,8 +6,8 @@ namespace Domain.Interfaces.ISenhaToten;
 
 public interface InterfaceSenhaToten : InterfaceGeneric<SenhaToten>
 {
-    Task<IList<SenhaToten>> ListaSenhaTotenTipoAtendimento(TipoAtendimento tipoAtendimento);
-    Task<int> SenhaTotenTipoAtendimento(TipoAtendimento tipoAtendimento);
-    Task<SenhaToten> ObtemSenhaPainel(string senhaPainel);
-    Task<IList<SenhaToten>> SenhasParaExcluir(DateTime diaAnterior);
+    Task<IList<SenhaToten>> ListaSenhaTotenTipoAtendimento(TipoAtendimento tipoAtendimento, int idToten);
+    Task<int> SenhaTotenTipoAtendimento(TipoAtendimento tipoAtendimento, int idToten);
+    Task<SenhaToten> ObtemSenhaPainel(string senhaPainel, int idToten);
+    Task<IList<SenhaToten>> SenhasParaExcluir(DateTime diaAnterior, int idToten);
 }

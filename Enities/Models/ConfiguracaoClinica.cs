@@ -16,5 +16,5 @@ public class ConfiguracaoClinica
     [ForeignKey("Clinica")]
     [Column(Order = 1)]
     public int IdClinica { get; set; }
-    public virtual Clinica Clinica { get; set; }
+    public virtual Clinica? Clinica { get; set; }
 }

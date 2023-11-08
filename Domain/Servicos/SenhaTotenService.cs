@@ -19,7 +19,7 @@ public class SenhaTotenService : InterfaceSenhaTotenService
     {
         try
         {
-            int ultimaSenhaMesmoAtendimento = await _repository.SenhaTotenTipoAtendimento(obj.TipoAtendimento);
+            int ultimaSenhaMesmoAtendimento = await _repository.SenhaTotenTipoAtendimento(obj.TipoAtendimento, obj.IdToten);
 
             string senhaPainel = string.Empty;
 
@@ -82,7 +82,7 @@ public class SenhaTotenService : InterfaceSenhaTotenService
     {
         try
         {
-            SenhaToten senha = await _repository.ObtemSenhaPainel(obj.SenhaPainel);
+            SenhaToten senha = await _repository.ObtemSenhaPainel(obj.SenhaPainel, obj.IdToten);
 
             senha.StatusAtendimento = obj.StatusAtendimento;
             senha.DataHoraAtualizacao = DateTime.Now;
@@ -95,11 +95,11 @@ public class SenhaTotenService : InterfaceSenhaTotenService
         }
     }
 
-    public async Task DeletarSenhasTotenDiarias()
+    public async Task DeletarSenhasTotenDiarias(int idToten)
     {
         try
         {
-            IList<SenhaToten> senhasParaExcluir = await _repository.SenhasParaExcluir(DateTime.Now);
+            IList<SenhaToten> senhasParaExcluir = await _repository.SenhasParaExcluir(DateTime.Now, idToten);
 
             foreach (var senhaToten in senhasParaExcluir)
                 await _repository.Delete(senhaToten);

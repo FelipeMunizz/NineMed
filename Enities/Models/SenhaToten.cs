@@ -17,5 +17,5 @@ public class SenhaToten
     [ForeignKey("Toten")]
     [Column(Order = 1)]
     public int IdToten { get; set; }
-    public virtual Toten Toten { get; set; }
+    public virtual Toten? Toten { get; set; }
 }
