@@ -16,6 +16,7 @@ public class FuncionarioController : ControllerBase
     }
 
     [HttpPost("AdicionarFuncionario")]
+    [Produces("application/json")]
     public async Task<IActionResult> AdicionarFuncionario(Funcionario funcionario)
     {
         await _service.AdicionarFuncionario(funcionario);
