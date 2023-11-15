@@ -1,9 +1,11 @@
 ﻿using Domain.InterfacesServices.IFuncionarioService;
 using Entities.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
 
+[Authorize(AuthenticationSchemes = "Bearer")]
 [Route("api/[controller]")]
 [ApiController]
 public class FuncionarioController : ControllerBase
