@@ -2,7 +2,7 @@
 
 public static class Config
 {
-    private const Ambiente ambiente = Ambiente.PCFelipe;
+    private const Ambiente ambiente = Ambiente.NotFelipe;
 
     public static string DiretorioLogs = DiretorioLog();
 
