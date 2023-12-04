@@ -1,10 +1,12 @@
 using Domain.Interfaces.Generics;
 using Domain.Interfaces.IClinica;
 using Domain.Interfaces.IFuncionario;
+using Domain.Interfaces.IProcedimento;
 using Domain.Interfaces.ISenhaToten;
 using Domain.InterfacesServices;
 using Domain.InterfacesServices.IClinicaService;
 using Domain.InterfacesServices.IFuncionarioService;
+using Domain.InterfacesServices.IProcedimentoService;
 using Domain.Servicos;
 using Entities.Models;
 using Helper.Configuracoes;
@@ -13,6 +15,7 @@ using Infra.Repositorio;
 using Infra.Repositorio.ClinicaRepositorio;
 using Infra.Repositorio.FuncionarioRepositorio;
 using Infra.Repositorio.Generico;
+using Infra.Repositorio.ProcedimentoRepositorio;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -40,12 +43,14 @@ builder.Services.AddScoped<InterfaceClinica, ClinicaRepository>();
 builder.Services.AddScoped<InterfaceContatoClinica, ContatoClinicaRepository>();
 builder.Services.AddScoped<InterfaceEnderecoClinica, EnderecoClinicaRepository>();
 builder.Services.AddScoped<InterfaceFuncionario, FuncionarioRepository>();
+builder.Services.AddScoped<InterfaceProcedimento, ProcedimentoRepository>();
 #endregion
 
 #region Servicos
 builder.Services.AddScoped<InterfaceSenhaTotenService, SenhaTotenService>();
 builder.Services.AddScoped<InterfaceClinicaService, ClinicaService>();
 builder.Services.AddScoped<InterfaceFuncionarioService, FuncionarioService>();
+builder.Services.AddScoped<InterfaceProcedimentoService, ProcedimentoService>();
 #endregion
 
 builder.Services.AddSwaggerGen(c =>
