@@ -75,7 +75,7 @@ public class PacienteService : InterfacePacienteService
 
     public async Task DeletarPaciente(int idPaciente)
     {
-        IList<PacienteFamiliar> familiares = await _familiarRepositorio.ListaEnderecosFamiliar(idPaciente);
+        IList<PacienteFamiliar> familiares = await _familiarRepositorio.ListaFamiliaresPaciente(idPaciente);
         foreach (PacienteFamiliar familiar in familiares)
             await _familiarRepositorio.Delete(familiar);
 
@@ -128,7 +128,7 @@ public class PacienteService : InterfacePacienteService
     #endregion
 
     #region Familiar
-    public async Task<IList<PacienteFamiliar>> ListaPacienteFamiliar(int idFamiliar) => await _familiarRepositorio.ListaEnderecosFamiliar(idFamiliar);
+    public async Task<IList<PacienteFamiliar>> ListaPacienteFamiliar(int idFamiliar) => await _familiarRepositorio.ListaFamiliaresPaciente(idFamiliar);
     public async Task AdicionarPacienteFamiliar(PacienteFamiliar familiar) => await _familiarRepositorio.Add(familiar);
     public async Task AtualizarPacienteFamiliar(PacienteFamiliar familiar) => await _familiarRepositorio.Update(familiar);
     public async Task<PacienteFamiliar> ObterPacienteFamiliar(int idFamiliar) => await _familiarRepositorio.GetEntityById(idFamiliar);
