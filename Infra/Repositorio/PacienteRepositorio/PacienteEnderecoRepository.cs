@@ -6,4 +6,8 @@ namespace Infra.Repositorio.PacienteRepositorio;
 
 public class PacienteEnderecoRepository : RepositorioGenerico<EnderecoPaciente>, InterfacePacienteEndereco
 {
+    public Task<IList<EnderecoPaciente>> ListaEnderecosPaciente(int idPaciente)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -5,4 +5,5 @@ namespace Domain.Interfaces.IPaciente;
 
 public interface InterfacePacienteConvenio : InterfaceGeneric<PacienteConvenio>
 {
+    Task<IList<PacienteConvenio>> ListaConveniosPaciente(int idPaciente);
 }

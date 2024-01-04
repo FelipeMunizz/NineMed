@@ -6,4 +6,8 @@ namespace Infra.Repositorio.PacienteRepositorio;
 
 public class PacienteConvenioRepository : RepositorioGenerico<PacienteConvenio>, InterfacePacienteConvenio
 {
+    public Task<IList<PacienteConvenio>> ListaConveniosPaciente(int idPaciente)
+    {
+        throw new NotImplementedException();
+    }
 }
