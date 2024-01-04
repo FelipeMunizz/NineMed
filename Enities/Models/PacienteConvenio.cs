@@ -1,4 +1,6 @@
-﻿namespace Entities.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Entities.Models;
 
 public class PacienteConvenio
 {
@@ -8,4 +10,8 @@ public class PacienteConvenio
     public string ContratoPlano { get; set; }
     public string Observacoes { get; set; }
     public int IdConvenio { get; set; }
+
+    [ForeignKey("Paciente")]
+    public int IdPaciente { get; set; }
+    public virtual Paciente Paciente { get; set; }
 }
