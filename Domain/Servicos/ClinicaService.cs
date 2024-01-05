@@ -47,13 +47,11 @@ public class ClinicaService : InterfaceClinicaService
         }
     }
 
-    public async Task AtualizarClinica(Clinica clinica, EnderecoClinica endereco, ContatoClinica contato)
+    public async Task AtualizarClinica(Clinica clinica)
     {
         try
         {
             await _clinicaRepositorio.Update(clinica);
-            await _enderecoClinicaRepositorio.Update(endereco);
-            await _contatoClinicaRepositorio.Update(contato);
         }
         catch (Exception ex)
         {

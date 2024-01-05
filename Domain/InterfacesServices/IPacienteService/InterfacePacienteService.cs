@@ -5,7 +5,7 @@ namespace Domain.InterfacesServices.IPacienteService;
 public interface InterfacePacienteService
 {
     Task AdicionarPaciente(Paciente paciente, EnderecoPaciente endereco, ContatoPaciente contato, PacienteConvenio convenio, PacienteFamiliar familiar);
-    Task AtualizarPaciente(Paciente paciente, EnderecoPaciente endereco, ContatoPaciente contato, PacienteConvenio convenio, PacienteFamiliar familiar);
+    Task AtualizarPaciente(Paciente paciente);
     Task DeletarPaciente(int idPaciente);
 
     #region Endereco

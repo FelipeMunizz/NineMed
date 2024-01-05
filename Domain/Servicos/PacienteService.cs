@@ -60,17 +60,9 @@ public class PacienteService : InterfacePacienteService
         }
     }
 
-    public async Task AtualizarPaciente(Paciente paciente,
-                                        EnderecoPaciente endereco,
-                                        ContatoPaciente contato,
-                                        PacienteConvenio convenio,
-                                        PacienteFamiliar familiar)
+    public async Task AtualizarPaciente(Paciente paciente)
     {
         await _pacienteRepositorio.Update(paciente);
-        await _enderecoRepositorio.Update(endereco);
-        await _contatoRepositorio.Update(contato);
-        await _convenioRepositorio.Update(convenio);
-        await _familiarRepositorio.Update(familiar);
     }
 
     public async Task DeletarPaciente(int idPaciente)

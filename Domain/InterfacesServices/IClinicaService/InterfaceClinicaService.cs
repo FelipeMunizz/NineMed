@@ -5,7 +5,7 @@ namespace Domain.InterfacesServices.IClinicaService;
 public interface InterfaceClinicaService
 {
     Task AdicionarClinica(Clinica clinica, EnderecoClinica endereco, ContatoClinica contato);
-    Task AtualizarClinica(Clinica clinica, EnderecoClinica endereco, ContatoClinica contato);
+    Task AtualizarClinica(Clinica clinica);
     Task DeletarClinica(int idClinica);
 
     #region Endereco

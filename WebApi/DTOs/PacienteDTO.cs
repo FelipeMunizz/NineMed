@@ -4,12 +4,14 @@ namespace WebApi.DTOs;
 
 public class PacienteDTO
 {
+    public int IdClinica { get; set; }
     public string Nome { get; set; }
     public DateTime DataNascimento { get; set; }
     public EstadoCivil EstadoCivil { get; set; }
     public string? RG { get; set; }
     public string? CPF { get; set; }
     public string? Profissao { get; set; }
+    public string? NomeContato { get; set; }
     public string? NumeroContato { get; set; }
     public string? Email { get; set; }
     public TipoContato TipoContato { get; set; }
@@ -29,5 +31,5 @@ public class PacienteDTO
     public int IdConvenio { get; set; }
     public string NomeFamiliar { get; set; }
     public string GrauParentesco { get; set; }
-    public string Telefone { get; set; }
+    public string TelefoneFamiliar { get; set; }
 }
