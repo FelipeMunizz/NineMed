@@ -1,11 +1,13 @@
 using Domain.Interfaces.Generics;
 using Domain.Interfaces.IClinica;
 using Domain.Interfaces.IFuncionario;
+using Domain.Interfaces.IPaciente;
 using Domain.Interfaces.IProcedimento;
 using Domain.Interfaces.ISenhaToten;
 using Domain.InterfacesServices;
 using Domain.InterfacesServices.IClinicaService;
 using Domain.InterfacesServices.IFuncionarioService;
+using Domain.InterfacesServices.IPacienteService;
 using Domain.InterfacesServices.IProcedimentoService;
 using Domain.Servicos;
 using Entities.Models;
@@ -15,6 +17,7 @@ using Infra.Repositorio;
 using Infra.Repositorio.ClinicaRepositorio;
 using Infra.Repositorio.FuncionarioRepositorio;
 using Infra.Repositorio.Generico;
+using Infra.Repositorio.PacienteRepositorio;
 using Infra.Repositorio.ProcedimentoRepositorio;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -39,9 +42,21 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 #region Repositorios
 builder.Services.AddSingleton(typeof(InterfaceGeneric<>), typeof(RepositorioGenerico<>));
 builder.Services.AddScoped<InterfaceSenhaToten, SenhaTotenRepository>();
+
+#region Clinica
 builder.Services.AddScoped<InterfaceClinica, ClinicaRepository>();
 builder.Services.AddScoped<InterfaceContatoClinica, ContatoClinicaRepository>();
 builder.Services.AddScoped<InterfaceEnderecoClinica, EnderecoClinicaRepository>();
+#endregion
+
+#region Paciente
+builder.Services.AddScoped<InterfacePaciente, PacienteRepository>();
+builder.Services.AddScoped<InterfacePacienteContato, PacienteContatoRepository>();
+builder.Services.AddScoped<InterfacePacienteConvenio, PacienteConvenioRepository>();
+builder.Services.AddScoped<InterfacePacienteEndereco, PacienteEnderecoRepository>();
+builder.Services.AddScoped<InterfacePacienteFamiliar, PacienteFamiliarRepoistory>();
+#endregion
+
 builder.Services.AddScoped<InterfaceFuncionario, FuncionarioRepository>();
 builder.Services.AddScoped<InterfaceProcedimento, ProcedimentoRepository>();
 #endregion
@@ -51,6 +66,7 @@ builder.Services.AddScoped<InterfaceSenhaTotenService, SenhaTotenService>();
 builder.Services.AddScoped<InterfaceClinicaService, ClinicaService>();
 builder.Services.AddScoped<InterfaceFuncionarioService, FuncionarioService>();
 builder.Services.AddScoped<InterfaceProcedimentoService, ProcedimentoService>();
+builder.Services.AddScoped<InterfacePacienteService, PacienteService>();    
 #endregion
 
 builder.Services.AddSwaggerGen(c =>

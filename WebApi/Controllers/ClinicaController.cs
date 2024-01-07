@@ -78,43 +78,11 @@ public class ClinicaController : ControllerBase
 
     [HttpPut("AtualizarClinica")]
     [Produces("application/json")]
-    public async Task<IActionResult> AtualizarClinica(ClinicaDTO clinicaDTO)
+    public async Task<IActionResult> AtualizarClinica(Clinica clinica)
     {
         try
-        {
-            Clinica clinica = new Clinica
-            {
-                Nome = clinicaDTO.Fantasia,
-                CNPJ = clinicaDTO.CNPJ,
-                RazaoSocial = clinicaDTO.RazaoSocial,
-                Fantasia = clinicaDTO.Fantasia,
-                InscricaoEstadual = clinicaDTO.InscricaoEstadual,
-                InscricaoMunicipal = clinicaDTO.InscricaoMunicipal,
-                Logo = clinicaDTO.Logo
-            };
-
-            EnderecoClinica endereco = new EnderecoClinica
-            {
-                Logradouro = clinicaDTO.Logradouro,
-                Numero = clinicaDTO.Numero,
-                Complemento = clinicaDTO.Complemento,
-                CEP = clinicaDTO.CEP,
-                Bairro = clinicaDTO.Bairro,
-                Cidade = clinicaDTO.Cidade,
-                Estado = clinicaDTO.Estado,
-            };
-
-            ContatoClinica contato = new ContatoClinica
-            {
-                Nome = clinicaDTO.NomeContato,
-                TipoContato = clinicaDTO.TipoContato,
-                Email = clinicaDTO.Email,
-                NumeroContato = clinicaDTO.NumeroContato,
-                HorarioComercial = clinicaDTO.HorarioComercial,
-                Lembretes = clinicaDTO.Lembretes
-            };
-
-            await _service.AtualizarClinica(clinica, endereco, contato);
+        {            
+            await _service.AtualizarClinica(clinica);
             return Ok();
         }
         catch (Exception)

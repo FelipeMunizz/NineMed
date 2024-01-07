@@ -11,14 +11,6 @@ public class Paciente : Base
     public string? CPF { get; set; }
     public string? Profissao { get; set; }
 
-    [ForeignKey("PacienteFamiliar")]
-    public int IdPacienteFamiliar { get; set; }
-    public virtual PacienteFamiliar? PacienteFamiliar { get; set; }
-
-    [ForeignKey("PacienteConvenio")]
-    public int IdPacienteConvenio { get; set; }
-    public virtual PacienteConvenio? PacienteConvenio { get; set; }
-
     [ForeignKey("Clinica")]
     public int IdClinica { get; set; }
     public virtual Clinica? Clinica { get; set; }
