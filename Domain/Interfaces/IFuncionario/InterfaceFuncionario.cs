@@ -5,4 +5,5 @@ namespace Domain.Interfaces.IFuncionario;
 
 public interface InterfaceFuncionario : InterfaceGeneric<Funcionario>
 {
+    Task<IList<Funcionario>> ListarFuncionariosClinica(int idClinica);
 }

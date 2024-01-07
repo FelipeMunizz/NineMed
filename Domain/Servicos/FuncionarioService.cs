@@ -17,4 +17,18 @@ public class FuncionarioService : InterfaceFuncionarioService
     {        
         await _repository.Add(obj);
     }
+
+    public async Task AtualizarFuncionario(Funcionario obj)
+    {
+        await _repository.Update(obj);
+    }
+
+    public async Task DeletarFuncionario(int idFuncionaro)
+    {
+        Funcionario funcionario = await _repository.GetEntityById(idFuncionaro);
+        if (funcionario != null)
+        {
+            await _repository.Delete(funcionario);
+        }
+    }
 }
