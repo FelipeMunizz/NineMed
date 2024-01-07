@@ -2,7 +2,7 @@
 using Entities.Enums;
 using Entities.Models;
 
-namespace Domain.Interfaces.ISenhaToten;
+namespace Domain.Interfaces.IToten;
 
 public interface InterfaceSenhaToten : InterfaceGeneric<SenhaToten>
 {

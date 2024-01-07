@@ -1,25 +1,47 @@
-﻿using Domain.Interfaces.ISenhaToten;
-using Domain.InterfacesServices;
+﻿using Domain.Interfaces.IToten;
+using Domain.InterfacesServices.ITotenService;
 using Entities.Enums;
 using Entities.Models;
 using Helper.Logs;
 
 namespace Domain.Servicos;
 
-public class SenhaTotenService : InterfaceSenhaTotenService
+public class TotenService : InterfaceTotenService
 {
-    private readonly InterfaceSenhaToten _repository;
+    private readonly InterfaceSenhaToten _repositorySenhas;
+    private readonly InterfaceToten _repositoryToten;
 
-    public SenhaTotenService(InterfaceSenhaToten repository)
+    public TotenService(InterfaceSenhaToten repositorySenhas, InterfaceToten repositoryToten)
     {
-        _repository = repository;
+        _repositorySenhas = repositorySenhas;
+        _repositoryToten = repositoryToten;
     }
 
+    #region Toten
+    public async Task AdicionarToten(Toten toten)
+    {
+        await _repositoryToten.Add(toten);
+    }
+
+    public async Task AtualizarToten(Toten toten)
+    {
+        await _repositoryToten.Update(toten);
+    }
+
+    public async Task DeletarToten(int idToten)
+    {
+        Toten toten = await _repositoryToten.GetEntityById(idToten);
+        if(toten != null)
+            await _repositoryToten.Delete(toten);
+    }
+    #endregion
+
+    #region SenhasToten
     public async Task AdicionarSenhaToten(SenhaToten obj)
     {
         try
         {
-            int ultimaSenhaMesmoAtendimento = await _repository.SenhaTotenTipoAtendimento(obj.TipoAtendimento, obj.IdToten);
+            int ultimaSenhaMesmoAtendimento = await _repositorySenhas.SenhaTotenTipoAtendimento(obj.TipoAtendimento, obj.IdToten);
 
             string senhaPainel = string.Empty;
 
@@ -69,7 +91,7 @@ public class SenhaTotenService : InterfaceSenhaTotenService
                 DataHoraAtualizacao = DateTime.Now
             };
 
-            await _repository.Add(novaSenha);
+            await _repositorySenhas.Add(novaSenha);
 
         }
         catch (Exception ex)
@@ -82,12 +104,12 @@ public class SenhaTotenService : InterfaceSenhaTotenService
     {
         try
         {
-            SenhaToten senha = await _repository.ObtemSenhaPainel(obj.SenhaPainel, obj.IdToten);
+            SenhaToten senha = await _repositorySenhas.ObtemSenhaPainel(obj.SenhaPainel, obj.IdToten);
 
             senha.StatusAtendimento = obj.StatusAtendimento;
             senha.DataHoraAtualizacao = DateTime.Now;
 
-            await _repository.Update(senha);
+            await _repositorySenhas.Update(senha);
         }
         catch (Exception ex)
         {
@@ -99,14 +121,15 @@ public class SenhaTotenService : InterfaceSenhaTotenService
     {
         try
         {
-            IList<SenhaToten> senhasParaExcluir = await _repository.SenhasParaExcluir(DateTime.Now, idToten);
+            IList<SenhaToten> senhasParaExcluir = await _repositorySenhas.SenhasParaExcluir(DateTime.Now, idToten);
 
             foreach (var senhaToten in senhasParaExcluir)
-                await _repository.Delete(senhaToten);
+                await _repositorySenhas.Delete(senhaToten);
         }
         catch (Exception ex)
         {
             LogProxy.GravarLogException(ex);
         }
     }
+    #endregion
 }
