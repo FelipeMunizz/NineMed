@@ -1,11 +1,13 @@
 using Domain.Interfaces.Generics;
 using Domain.Interfaces.IClinica;
+using Domain.Interfaces.IConfiguracaoClinica;
 using Domain.Interfaces.IFuncionario;
 using Domain.Interfaces.IPaciente;
 using Domain.Interfaces.IProcedimento;
 using Domain.Interfaces.ISenhaToten;
 using Domain.InterfacesServices;
 using Domain.InterfacesServices.IClinicaService;
+using Domain.InterfacesServices.IConfiguracaoClinicaService;
 using Domain.InterfacesServices.IFuncionarioService;
 using Domain.InterfacesServices.IPacienteService;
 using Domain.InterfacesServices.IProcedimentoService;
@@ -15,6 +17,7 @@ using Helper.Configuracoes;
 using Infra.Configuracao;
 using Infra.Repositorio;
 using Infra.Repositorio.ClinicaRepositorio;
+using Infra.Repositorio.ConfiguracaoClinicaRepositorio;
 using Infra.Repositorio.FuncionarioRepositorio;
 using Infra.Repositorio.Generico;
 using Infra.Repositorio.PacienteRepositorio;
@@ -59,6 +62,7 @@ builder.Services.AddScoped<InterfacePacienteFamiliar, PacienteFamiliarRepoistory
 
 builder.Services.AddScoped<InterfaceFuncionario, FuncionarioRepository>();
 builder.Services.AddScoped<InterfaceProcedimento, ProcedimentoRepository>();
+builder.Services.AddScoped<InterfaceConfiguracaoClinica, ConfiguracaoClinicaRepository>();
 #endregion
 
 #region Servicos
@@ -66,7 +70,8 @@ builder.Services.AddScoped<InterfaceSenhaTotenService, SenhaTotenService>();
 builder.Services.AddScoped<InterfaceClinicaService, ClinicaService>();
 builder.Services.AddScoped<InterfaceFuncionarioService, FuncionarioService>();
 builder.Services.AddScoped<InterfaceProcedimentoService, ProcedimentoService>();
-builder.Services.AddScoped<InterfacePacienteService, PacienteService>();    
+builder.Services.AddScoped<InterfacePacienteService, PacienteService>();
+builder.Services.AddScoped<InterfaceConfiguracaoClinicaService, ConfiguracaoClinicaService>();
 #endregion
 
 builder.Services.AddSwaggerGen(c =>
