@@ -1,11 +1,11 @@
-﻿using Domain.Interfaces.ISenhaToten;
+﻿using Domain.Interfaces.IToten;
 using Entities.Enums;
 using Entities.Models;
 using Infra.Configuracao;
 using Infra.Repositorio.Generico;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infra.Repositorio;
+namespace Infra.Repositorio.TotenRepositorio;
 
 public class SenhaTotenRepository : RepositorioGenerico<SenhaToten>, InterfaceSenhaToten
 {

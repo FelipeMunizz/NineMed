@@ -4,24 +4,24 @@ using Domain.Interfaces.IConfiguracaoClinica;
 using Domain.Interfaces.IFuncionario;
 using Domain.Interfaces.IPaciente;
 using Domain.Interfaces.IProcedimento;
-using Domain.Interfaces.ISenhaToten;
-using Domain.InterfacesServices;
+using Domain.Interfaces.IToten;
 using Domain.InterfacesServices.IClinicaService;
 using Domain.InterfacesServices.IConfiguracaoClinicaService;
 using Domain.InterfacesServices.IFuncionarioService;
 using Domain.InterfacesServices.IPacienteService;
 using Domain.InterfacesServices.IProcedimentoService;
+using Domain.InterfacesServices.ITotenService;
 using Domain.Servicos;
 using Entities.Models;
 using Helper.Configuracoes;
 using Infra.Configuracao;
-using Infra.Repositorio;
 using Infra.Repositorio.ClinicaRepositorio;
 using Infra.Repositorio.ConfiguracaoClinicaRepositorio;
 using Infra.Repositorio.FuncionarioRepositorio;
 using Infra.Repositorio.Generico;
 using Infra.Repositorio.PacienteRepositorio;
 using Infra.Repositorio.ProcedimentoRepositorio;
+using Infra.Repositorio.TotenRepositorio;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -44,6 +44,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 
 #region Repositorios
 builder.Services.AddSingleton(typeof(InterfaceGeneric<>), typeof(RepositorioGenerico<>));
+builder.Services.AddScoped<InterfaceToten, TotenRepository>();
 builder.Services.AddScoped<InterfaceSenhaToten, SenhaTotenRepository>();
 
 #region Clinica
@@ -66,7 +67,7 @@ builder.Services.AddScoped<InterfaceConfiguracaoClinica, ConfiguracaoClinicaRepo
 #endregion
 
 #region Servicos
-builder.Services.AddScoped<InterfaceSenhaTotenService, SenhaTotenService>();
+builder.Services.AddScoped<InterfaceTotenService, TotenService>();
 builder.Services.AddScoped<InterfaceClinicaService, ClinicaService>();
 builder.Services.AddScoped<InterfaceFuncionarioService, FuncionarioService>();
 builder.Services.AddScoped<InterfaceProcedimentoService, ProcedimentoService>();

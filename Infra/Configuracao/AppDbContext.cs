@@ -10,6 +10,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public AppDbContext(DbContextOptions options) : base(options) { }
 
     #region Models
+    public DbSet<Toten> Toten { get; set; }
     public DbSet<SenhaToten> SenhaToten { get; set; }
     public DbSet<Clinica> Clinica { get; set; }
     public DbSet<ConfiguracaoClinica> ConfiguracaoClinica { get; set; }
