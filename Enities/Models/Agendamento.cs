@@ -12,6 +12,10 @@ public class Agendamento
     public bool Lembrete { get; set; }
     public string? Observacao { get; set; }
 
+    [ForeignKey("Clinica")]
+    public int IdClinica { get; set; }
+    public virtual Clinica? Clinica { get; set; }
+
     [ForeignKey("Paciente")]
     public int IdPaciente { get; set; }
     public virtual Paciente? Paciente { get; set; }
