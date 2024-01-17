@@ -5,5 +5,5 @@ namespace Domain.Interfaces.IToten;
 
 public interface InterfaceToten : InterfaceGeneric<Toten>
 {
-    Task<IList<Toten>> ListaTotensClinica(int idClinica);
+    Task<List<Toten>> ListaTotensClinica(int idClinica);
 }

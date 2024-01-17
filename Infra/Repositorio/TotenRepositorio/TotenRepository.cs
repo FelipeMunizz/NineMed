@@ -1,30 +1,27 @@
-﻿using Domain.Interfaces.IToten;
+﻿using Dapper;
+using Domain.Interfaces.IToten;
 using Entities.Models;
-using Infra.Configuracao;
+using Helper.Configuracoes;
 using Infra.Repositorio.Generico;
-using Microsoft.EntityFrameworkCore;
-using System.Data.Entity;
+using Microsoft.Data.SqlClient;
 
 namespace Infra.Repositorio.TotenRepositorio;
 
 public class TotenRepository : RepositorioGenerico<Toten>, InterfaceToten
 {
-    private readonly DbContextOptions<AppDbContext> _context;
 
-    public TotenRepository(AppDbContext context)
+    public async Task<List<Toten>> ListaTotensClinica(int idClinica)
     {
-        _context = new DbContextOptions<AppDbContext>();
-    }
-
-    public async Task<IList<Toten>> ListaTotensClinica(int idClinica)
-    {
-        using (var banco = new AppDbContext(_context))
+        using (var connection = new SqlConnection(Config.ConectionString))
         {
-            return await(
-                    from t in banco.Toten
-                    where t.IdClinica.Equals(idClinica)
-                    select t
-                    ).ToListAsync();
+            await connection.OpenAsync();
+
+            string sql = "SELECT * FROM Toten WHERE IdClinica = @IdClinica";
+            var totens = await connection.QueryAsync<Toten>(sql, new { IdClinica = idClinica });
+
+            await connection.CloseAsync();
+
+            return totens.ToList();
         }
     }
 }
