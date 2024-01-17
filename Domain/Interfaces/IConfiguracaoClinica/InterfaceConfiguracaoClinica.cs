@@ -5,4 +5,5 @@ namespace Domain.Interfaces.IConfiguracaoClinica;
 
 public interface InterfaceConfiguracaoClinica : InterfaceGeneric<ConfiguracaoClinica>
 {
+    Task<ConfiguracaoClinica> ObterConfiguracaoClinica(int idClinica);
 }

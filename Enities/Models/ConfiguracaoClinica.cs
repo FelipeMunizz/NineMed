@@ -6,11 +6,9 @@ namespace Entities.Models;
 public class ConfiguracaoClinica
 {
     public int Id { get; set; }
-    public DateTime HorarioAbertura { get; set; }
-    public DateTime HorarioFechamento { get; set; }
-    public DiasSemana DiaInicio { get; set; }
-    public DiasSemana DiaFim { get; set; }
-    public string IntervaloAgenda { get; set; }
+    public TimeOnly HorarioAbertura { get; set; }
+    public TimeOnly HorarioFechamento { get; set; }
+    public string IntervaloAgendaPadrao { get; set; }
     public bool FuncionaFeriados { get; set; }
     public bool ControlaEstoque { get; set; }
     [ForeignKey("Clinica")]

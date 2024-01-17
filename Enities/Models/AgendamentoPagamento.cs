@@ -16,4 +16,6 @@ public class AgendamentoPagamento
 
     public decimal Valor { get; set; }
     public decimal Troco { get; set; }
+    public decimal Desconto { get; set; }
+    public decimal Acrescimo { get; set; }
 }
