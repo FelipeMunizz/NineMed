@@ -1,10 +1,12 @@
 using Domain.Interfaces.Generics;
+using Domain.Interfaces.IAgendamento;
 using Domain.Interfaces.IClinica;
 using Domain.Interfaces.IConfiguracaoClinica;
 using Domain.Interfaces.IFuncionario;
 using Domain.Interfaces.IPaciente;
 using Domain.Interfaces.IProcedimento;
 using Domain.Interfaces.IToten;
+using Domain.InterfacesServices.IAgendamentoService;
 using Domain.InterfacesServices.IClinicaService;
 using Domain.InterfacesServices.IConfiguracaoClinicaService;
 using Domain.InterfacesServices.IFuncionarioService;
@@ -15,6 +17,7 @@ using Domain.Servicos;
 using Entities.Models;
 using Helper.Configuracoes;
 using Infra.Configuracao;
+using Infra.Repositorio.AgendamentoRepositorio;
 using Infra.Repositorio.ClinicaRepositorio;
 using Infra.Repositorio.ConfiguracaoClinicaRepositorio;
 using Infra.Repositorio.FuncionarioRepositorio;
@@ -61,6 +64,12 @@ builder.Services.AddScoped<InterfacePacienteEndereco, PacienteEnderecoRepository
 builder.Services.AddScoped<InterfacePacienteFamiliar, PacienteFamiliarRepoistory>();
 #endregion
 
+#region Agendamento
+builder.Services.AddScoped<InterfaceAgendamento, AgendamentoRepository>();
+builder.Services.AddScoped<InterfaceAgendamentoPagamento, AgendamentoPagamentoRepositorry>();
+builder.Services.AddScoped<InterfaceAgendamentoProcedimento,  AgendamentoProcedimentoRepository>();
+#endregion
+
 builder.Services.AddScoped<InterfaceFuncionario, FuncionarioRepository>();
 builder.Services.AddScoped<InterfaceProcedimento, ProcedimentoRepository>();
 builder.Services.AddScoped<InterfaceConfiguracaoClinica, ConfiguracaoClinicaRepository>();
@@ -73,6 +82,7 @@ builder.Services.AddScoped<InterfaceFuncionarioService, FuncionarioService>();
 builder.Services.AddScoped<InterfaceProcedimentoService, ProcedimentoService>();
 builder.Services.AddScoped<InterfacePacienteService, PacienteService>();
 builder.Services.AddScoped<InterfaceConfiguracaoClinicaService, ConfiguracaoClinicaService>();
+builder.Services.AddScoped<InterfaceAgendamentoService, AgendamentoService>();
 #endregion
 
 builder.Services.AddSwaggerGen(c =>
