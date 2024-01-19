@@ -6,7 +6,7 @@ public class LoginUserDTO
 {
     [Required(ErrorMessage = "Informe email")]
     [EmailAddress]
-    public string? Email { get; set; }
+    public string? Username { get; set; }
     [Required(ErrorMessage = "Informe senha")]
     public string? Password { get; set; }
 }

@@ -23,9 +23,9 @@ public class AccountController : ControllerBase
     [AllowAnonymous]
     [Produces("application/json")]
     [HttpPost("CreateToken")]
-    public async Task<IActionResult> CreateToken([FromBody] LoginUserDTO model)
+    public async Task<object> CreateToken([FromBody] LoginUserDTO model)
     {
-        var result = await _sign.PasswordSignInAsync(model.Email, model.Password, false, lockoutOnFailure: false);
+        var result = await _sign.PasswordSignInAsync(model.Username, model.Password, false, lockoutOnFailure: false);
         if (result.Succeeded)
         {
             var token = new TokenJwtBuilder()
@@ -33,13 +33,23 @@ public class AccountController : ControllerBase
                 .AddSubject("Nine Med v1")
                 .AddIssuer("NineMed.Security.Bearer")
                 .AddAudience("NineMed.Security.Bearer")
-                .AddClaim("UsuarioEmail", model.Email)
+                .AddClaim("UsuarioEmail", model.Username)
                 .AddExpiry(5)
                 .Builder();
 
-            return Ok(token.value);
+            return new RetornoToken
+            {
+                Token = token.value,
+                User = model.Username
+            };
         }
         else
             return Unauthorized();
     }
+}
+
+public class RetornoToken
+{
+    public string Token { get; set; }
+    public string User { get; set; }
 }
