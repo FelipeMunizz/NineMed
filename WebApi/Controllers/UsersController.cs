@@ -1,8 +1,11 @@
 ﻿using Entities.Models;
+using Helper.Logs;
+using Helper.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
+using Newtonsoft.Json;
 using System.Text;
 using WebApi.DTOs;
 
@@ -32,6 +35,9 @@ public class UsersController : ControllerBase
             UserName = login.Email,
             Documento = login.Documento
         };
+
+        if (!await ValidaDocumento(login.Documento))
+            return BadRequest("Documento inválido");
 
         IdentityResult result = await _user.CreateAsync(user, login.Password);
 
@@ -77,4 +83,45 @@ public class UsersController : ControllerBase
         else
             return BadRequest("Erro ao atualizar usuário.");
     }
+
+    private async Task<bool> ValidaDocumento(string documento)
+    {
+        try
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string tipoDocumento = documento.Length > 11 ? "cnpj" : "cpf";
+                string apiUrl = $"https://api.invertexto.com/v1/validator?token={ApiInvertexto.Token}&value={documento}&type={tipoDocumento}";
+
+                HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Analisar a resposta da API para determinar se o documento é válido
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    ValidaDocumento resultado = JsonConvert.DeserializeObject<ValidaDocumento>(responseBody);
+                    if (resultado.Valid)
+                        return true;
+                    else
+                        return false;
+                }
+                else
+                {
+                    LogProxy.GravarLogErro("Erro Api InverTexto",$"Erro na chamada à API: {response.StatusCode}");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            LogProxy.GravarLogException(ex);
+        }
+
+        return false; // Retornar false por padrão em caso de erro
+    }
+}
+
+public class ValidaDocumento
+{
+    public bool Valid { get; set; }
+    public string Formatted { get; set; }
 }
