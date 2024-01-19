@@ -3,6 +3,8 @@ using Domain.Interfaces.IConfiguracaoClinica;
 using Domain.Interfaces.IFuncionario;
 using Domain.Interfaces.IProcedimento;
 using Domain.InterfacesServices.IAgendamentoService;
+using Domain.InterfacesServices.IFuncionarioService;
+using Entities.Enums;
 using Entities.Models;
 using Entities.Retorno;
 
@@ -15,26 +17,25 @@ public class AgendamentoService : InterfaceAgendamentoService
     private readonly InterfaceAgendamentoPagamento _repositoryAgendamentoPagamento;
     private readonly InterfaceConfiguracaoClinica _repositoryConfigClinica;
     private readonly InterfaceProcedimento _repositorioProcedimento;
-    private readonly InterfaceHorarioFuncionario _repositorioHorarioFuncionario;
+    private readonly InterfaceFuncionarioService _serviceFuncionario;
 
     public AgendamentoService(InterfaceAgendamento repositoryAgendamento,
         InterfaceAgendamentoProcedimento repositoryAgendamentoProcedimento,
         InterfaceAgendamentoPagamento repositoryAgendamentoPagamento,
         InterfaceConfiguracaoClinica repositoryConfigClinica,
         InterfaceProcedimento repositorioProcedimento,
-        InterfaceHorarioFuncionario repositorioHorarioFuncionario)
+        InterfaceFuncionarioService serviceFuncionario)
     {
         _repositoryAgendamento = repositoryAgendamento;
         _repositoryAgendamentoProcedimento = repositoryAgendamentoProcedimento;
         _repositoryAgendamentoPagamento = repositoryAgendamentoPagamento;
         _repositoryConfigClinica = repositoryConfigClinica;
         _repositorioProcedimento = repositorioProcedimento;
-        _repositorioHorarioFuncionario = repositorioHorarioFuncionario;
+        _serviceFuncionario = serviceFuncionario;
     }
 
-    public async Task<object> AdicionarAgendamento(Agendamento agendamento, 
-        IList<AgendamentoProcedimento> agendamentoProcedimentos, 
-        IList<AgendamentoPagamento> agendamentoPagamentos)
+    public async Task<object> AdicionarAgendamento(Agendamento agendamento,
+        IList<AgendamentoProcedimento> agendamentoProcedimentos)
     {
         ConfiguracaoClinica configClinica = await _repositoryConfigClinica.ObterConfiguracaoClinica(agendamento.IdClinica);
 
@@ -46,7 +47,16 @@ public class AgendamentoService : InterfaceAgendamentoService
                 Result = string.Empty
             };
 
-        agendamento = await _repositoryAgendamento.Add(agendamento);
+        Funcionario funcionario = await _serviceFuncionario.ObterFuncionario(agendamento.IdFuncionario);
+
+        if (funcionario.ProfissionalSaude)
+            agendamento = await _repositoryAgendamento.Add(agendamento);
+        else
+            return new RetornoGenerico<object>
+            {
+                Success = false,
+                Message = "Apenas profissionais da saúde podem ter horários agendados."
+            };
 
         if (agendamento.Id > 0)
         {
@@ -61,14 +71,8 @@ public class AgendamentoService : InterfaceAgendamentoService
                         tempoTotalAgendamento += procedimento.Duracao;
 
                     procedimentoAgendados.IdAgendamento = agendamento.Id;
-                    _repositoryAgendamentoProcedimento.Add(procedimentoAgendados);
+                    await AdicionarAgendamentoProcedimento(procedimentoAgendados);
                 }
-            }
-
-            foreach (AgendamentoPagamento pagamento in agendamentoPagamentos)
-            {
-                pagamento.IdAgendamento = agendamento.Id;
-                _repositoryAgendamentoPagamento.Add(pagamento);
             }
 
             TimeOnly tempoAgendado = TimeOnly.FromDateTime(DateTime.MinValue.AddMinutes(tempoTotalAgendamento));
@@ -80,7 +84,7 @@ public class AgendamentoService : InterfaceAgendamentoService
                 TempoAgendado = tempoAgendado
             };
 
-            await _repositorioHorarioFuncionario.Add(horarioFuncionario);
+            await _serviceFuncionario.AdicionarHorarioFuncionario(horarioFuncionario);
         }
         else
             return new RetornoGenerico<object>
@@ -97,19 +101,22 @@ public class AgendamentoService : InterfaceAgendamentoService
         };
     }
 
-    public Task<object> AdicionarAgendamento(Agendamento agendamento, AgendamentoProcedimento procedimento)
+    public async Task AdicionarAgendamentoPagamento(AgendamentoPagamento agendamentoPagamento)
     {
-        throw new NotImplementedException();
+        await _repositoryAgendamentoPagamento.Add(agendamentoPagamento);
     }
 
-    public Task AdicionarAgendamentoPagamento(AgendamentoPagamento agendamentoPagamento)
+    public async Task AdicionarAgendamentoProcedimento(AgendamentoProcedimento agendamentoProcedimento)
     {
-        throw new NotImplementedException();
-    }
+        Procedimento procedimento = await _repositorioProcedimento.GetEntityById(agendamentoProcedimento.IdProcedimento);
 
-    public Task AdicionarAgendamentoProcedimento(AgendamentoProcedimento agendamentoProcedimento)
-    {
-        throw new NotImplementedException();
+        if (procedimento != null)
+        {
+            agendamentoProcedimento.ValorTotal =
+                agendamentoProcedimento.Quantidade * procedimento.Preco;
+
+            await _repositoryAgendamentoProcedimento.Add(agendamentoProcedimento);
+        }
     }
 
     public Task<object> AtualizarAgendamento(Agendamento agendamento)

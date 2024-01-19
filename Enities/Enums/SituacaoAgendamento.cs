@@ -8,3 +8,11 @@ public enum SituacaoAgendamento
     PacienteNaoCompareceu,
     Cancelado = 99
 }
+
+public enum SituacaoAgendamentoPagamento
+{
+    EmAberto,
+    PagoParcial,
+    PagoTotal,
+    Cancelado
+}

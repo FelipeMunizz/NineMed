@@ -15,6 +15,8 @@ public class FuncionarioService : InterfaceFuncionarioService
         _repositoryHorario = repositoryHorario;
     }
 
+    public async Task<Funcionario> ObterFuncionario(int idFuncionario) => await _repository.GetEntityById(idFuncionario);
+
     public async Task AdicionarFuncionario(Funcionario obj)
     {        
         await _repository.Add(obj);

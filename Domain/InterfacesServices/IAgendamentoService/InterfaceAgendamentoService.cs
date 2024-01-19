@@ -4,7 +4,8 @@ namespace Domain.InterfacesServices.IAgendamentoService;
 
 public interface InterfaceAgendamentoService
 {
-    Task<object> AdicionarAgendamento(Agendamento agendamento, AgendamentoProcedimento procedimento);
+    Task<object> AdicionarAgendamento(Agendamento agendamento,
+        IList<AgendamentoProcedimento> agendamentoProcedimentos);
     Task<object> AtualizarAgendamento(Agendamento agendamento);
 
     #region Agendamento Procedimento

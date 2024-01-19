@@ -4,6 +4,7 @@ using Infra.Configuracao;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infra.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240118222154_MigrationNewsColumns")]
+    partial class MigrationNewsColumns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,12 +62,6 @@ namespace Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdClinica");
-
-                    b.HasIndex("IdFuncionario");
-
-                    b.HasIndex("IdPaciente");
-
                     b.ToTable("Agendamento");
                 });
 
@@ -96,10 +93,6 @@ namespace Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdAgendamento");
-
-                    b.HasIndex("IdFormaPagamento");
-
                     b.ToTable("AgendamentoPagamento");
                 });
 
@@ -124,10 +117,6 @@ namespace Infra.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdAgendamento");
-
-                    b.HasIndex("IdProcedimento");
 
                     b.ToTable("AgendamentoProcedimento");
                 });
@@ -279,8 +268,6 @@ namespace Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdClinica");
-
                     b.ToTable("ConfiguracaoClinica");
                 });
 
@@ -315,8 +302,6 @@ namespace Infra.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdClinica");
 
                     b.ToTable("ContatoClinica");
                 });
@@ -353,8 +338,6 @@ namespace Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdPaciente");
-
                     b.ToTable("ContatoPaciente");
                 });
 
@@ -383,8 +366,6 @@ namespace Infra.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdClinica");
 
                     b.ToTable("Convenio");
                 });
@@ -426,8 +407,6 @@ namespace Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdClinica");
-
                     b.ToTable("EnderecoClinica");
                 });
 
@@ -468,8 +447,6 @@ namespace Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdPaciente");
-
                     b.ToTable("EnderecoPaciente");
                 });
 
@@ -497,8 +474,6 @@ namespace Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdClinica");
-
                     b.ToTable("FormaPagamento");
                 });
 
@@ -520,10 +495,6 @@ namespace Infra.Migrations
                     b.Property<int>("IdClinica")
                         .HasColumnType("int");
 
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Perfil")
                         .HasColumnType("int");
 
@@ -534,8 +505,6 @@ namespace Infra.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdClinica");
 
                     b.ToTable("Funcionario");
                 });
@@ -558,8 +527,6 @@ namespace Infra.Migrations
                         .HasColumnType("time");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdFuncionario");
 
                     b.ToTable("HorarioFuncionario");
                 });
@@ -596,8 +563,6 @@ namespace Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdClinica");
-
                     b.ToTable("Paciente");
                 });
 
@@ -632,8 +597,6 @@ namespace Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdPaciente");
-
                     b.ToTable("PacienteConvenio");
                 });
 
@@ -661,8 +624,6 @@ namespace Infra.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdPaciente");
 
                     b.ToTable("PacienteFamiliar");
                 });
@@ -692,8 +653,6 @@ namespace Infra.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdClinica");
 
                     b.ToTable("Procedimento");
                 });
@@ -728,8 +687,6 @@ namespace Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdToten");
-
                     b.ToTable("SenhaToten");
                 });
 
@@ -749,8 +706,6 @@ namespace Infra.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdClinica");
 
                     b.ToTable("Toten");
                 });
@@ -890,236 +845,6 @@ namespace Infra.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("Entities.Models.Agendamento", b =>
-                {
-                    b.HasOne("Entities.Models.Clinica", "Clinica")
-                        .WithMany()
-                        .HasForeignKey("IdClinica")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entities.Models.Funcionario", "Funcionario")
-                        .WithMany()
-                        .HasForeignKey("IdFuncionario")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entities.Models.Paciente", "Paciente")
-                        .WithMany()
-                        .HasForeignKey("IdPaciente")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Clinica");
-
-                    b.Navigation("Funcionario");
-
-                    b.Navigation("Paciente");
-                });
-
-            modelBuilder.Entity("Entities.Models.AgendamentoPagamento", b =>
-                {
-                    b.HasOne("Entities.Models.Agendamento", "Agendamento")
-                        .WithMany()
-                        .HasForeignKey("IdAgendamento")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entities.Models.FormaPagamento", "FormaPagamento")
-                        .WithMany()
-                        .HasForeignKey("IdFormaPagamento")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Agendamento");
-
-                    b.Navigation("FormaPagamento");
-                });
-
-            modelBuilder.Entity("Entities.Models.AgendamentoProcedimento", b =>
-                {
-                    b.HasOne("Entities.Models.Agendamento", "Agendamento")
-                        .WithMany()
-                        .HasForeignKey("IdAgendamento")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entities.Models.Procedimento", "Procedimento")
-                        .WithMany()
-                        .HasForeignKey("IdProcedimento")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Agendamento");
-
-                    b.Navigation("Procedimento");
-                });
-
-            modelBuilder.Entity("Entities.Models.ConfiguracaoClinica", b =>
-                {
-                    b.HasOne("Entities.Models.Clinica", "Clinica")
-                        .WithMany()
-                        .HasForeignKey("IdClinica")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Clinica");
-                });
-
-            modelBuilder.Entity("Entities.Models.ContatoClinica", b =>
-                {
-                    b.HasOne("Entities.Models.Clinica", "Clinica")
-                        .WithMany()
-                        .HasForeignKey("IdClinica")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Clinica");
-                });
-
-            modelBuilder.Entity("Entities.Models.ContatoPaciente", b =>
-                {
-                    b.HasOne("Entities.Models.Paciente", "Paciente")
-                        .WithMany()
-                        .HasForeignKey("IdPaciente")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Paciente");
-                });
-
-            modelBuilder.Entity("Entities.Models.Convenio", b =>
-                {
-                    b.HasOne("Entities.Models.Clinica", "Clinica")
-                        .WithMany()
-                        .HasForeignKey("IdClinica")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Clinica");
-                });
-
-            modelBuilder.Entity("Entities.Models.EnderecoClinica", b =>
-                {
-                    b.HasOne("Entities.Models.Clinica", "Clinica")
-                        .WithMany()
-                        .HasForeignKey("IdClinica")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Clinica");
-                });
-
-            modelBuilder.Entity("Entities.Models.EnderecoPaciente", b =>
-                {
-                    b.HasOne("Entities.Models.Paciente", "Paciente")
-                        .WithMany()
-                        .HasForeignKey("IdPaciente")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Paciente");
-                });
-
-            modelBuilder.Entity("Entities.Models.FormaPagamento", b =>
-                {
-                    b.HasOne("Entities.Models.Clinica", "Clinica")
-                        .WithMany()
-                        .HasForeignKey("IdClinica")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Clinica");
-                });
-
-            modelBuilder.Entity("Entities.Models.Funcionario", b =>
-                {
-                    b.HasOne("Entities.Models.Clinica", "Clinica")
-                        .WithMany()
-                        .HasForeignKey("IdClinica")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Clinica");
-                });
-
-            modelBuilder.Entity("Entities.Models.HorarioFuncionario", b =>
-                {
-                    b.HasOne("Entities.Models.Funcionario", "Funcionario")
-                        .WithMany()
-                        .HasForeignKey("IdFuncionario")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Funcionario");
-                });
-
-            modelBuilder.Entity("Entities.Models.Paciente", b =>
-                {
-                    b.HasOne("Entities.Models.Clinica", "Clinica")
-                        .WithMany()
-                        .HasForeignKey("IdClinica")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Clinica");
-                });
-
-            modelBuilder.Entity("Entities.Models.PacienteConvenio", b =>
-                {
-                    b.HasOne("Entities.Models.Paciente", "Paciente")
-                        .WithMany()
-                        .HasForeignKey("IdPaciente")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Paciente");
-                });
-
-            modelBuilder.Entity("Entities.Models.PacienteFamiliar", b =>
-                {
-                    b.HasOne("Entities.Models.Paciente", "Paciente")
-                        .WithMany()
-                        .HasForeignKey("IdPaciente")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Paciente");
-                });
-
-            modelBuilder.Entity("Entities.Models.Procedimento", b =>
-                {
-                    b.HasOne("Entities.Models.Clinica", "Clinica")
-                        .WithMany()
-                        .HasForeignKey("IdClinica")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Clinica");
-                });
-
-            modelBuilder.Entity("Entities.Models.SenhaToten", b =>
-                {
-                    b.HasOne("Entities.Models.Toten", "Toten")
-                        .WithMany()
-                        .HasForeignKey("IdToten")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Toten");
-                });
-
-            modelBuilder.Entity("Entities.Models.Toten", b =>
-                {
-                    b.HasOne("Entities.Models.Clinica", "Clinica")
-                        .WithMany()
-                        .HasForeignKey("IdClinica")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Clinica");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

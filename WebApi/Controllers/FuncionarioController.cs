@@ -26,7 +26,7 @@ public class FuncionarioController : ControllerBase
 
     [HttpGet("ObterFuncionario/{idFuncionario:int}")]
     [Produces("application/json")]
-    public async Task<ActionResult<Funcionario>> ObterFuncionario(int idFuncionario) => await _repository.GetEntityById(idFuncionario);
+    public async Task<ActionResult<Funcionario>> ObterFuncionario(int idFuncionario) => await _service.ObterFuncionario(idFuncionario);
 
     [HttpPost("AdicionarFuncionario")]
     [Produces("application/json")]

@@ -1,31 +1,26 @@
 ﻿using Entities.Enums;
+using Entities.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace Entities.Models;
+namespace WebApi.DTOs;
 
-public class Agendamento
+public class AgendamentoDTO
 {
     public int Id { get; set; }
-    public DateTime DataAgendamento { get; set; }
+    public string DataAgendamento { get; set; }
     public RepeticaoAgendamento Repeticao { get; set; }
     public SituacaoAgendamento SituacaoAgendamento { get; set; }
     public bool Lembrete { get; set; }
     public string? Observacao { get; set; }
-    public int TempoTotalAgendamento { get; set; }
-
-    [ForeignKey("Clinica")]
-    [JsonIgnore]
     public int IdClinica { get; set; }
-    public virtual Clinica? Clinica { get; set; }
-
-    [ForeignKey("Paciente")]
-    [JsonIgnore]
     public int IdPaciente { get; set; }
-    public virtual Paciente? Paciente { get; set; }
-
-    [ForeignKey("Funcionario")]
-    [JsonIgnore]
     public int IdFuncionario { get; set; }
-    public virtual Funcionario? Funcionario { get; set; }
+    public List<AgendamentoProcedimentoDTO> Procedimentos { get; set; }
+}
+
+public class AgendamentoProcedimentoDTO
+{
+    public int Quantidade { get; set; }
+    public int IdProcedimento { get; set; }
 }
