@@ -1,6 +1,7 @@
 ﻿using Entities.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Entities.Models;
 
@@ -17,5 +18,6 @@ public class SenhaToten
     [ForeignKey("Toten")]
     [Column(Order = 1)]
     public int IdToten { get; set; }
+    [JsonIgnore]
     public virtual Toten? Toten { get; set; }
 }

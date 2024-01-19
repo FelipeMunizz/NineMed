@@ -11,7 +11,7 @@ public class TokenJwtBuilder
     private string issuer = string.Empty;
     private string audience = string.Empty;
     private Dictionary<string, string> claims = new Dictionary<string, string>();
-    private int expiryInMinutes = 5;
+    private int expiryInMinutes = 60;
 
     public TokenJwtBuilder AddSecurityKey(SecurityKey securityKey)
     {

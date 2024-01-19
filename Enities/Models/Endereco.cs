@@ -9,6 +9,7 @@ public class Endereco
     public string? Complemento { get; set; }
     public string? Bairro { get; set; }
     public string? CEP { get; set; }
+    public string? CodMunicipio { get; set; }
     public EstadosBrasil Estado { get; set; }
     public string? Cidade { get; set; }
 }

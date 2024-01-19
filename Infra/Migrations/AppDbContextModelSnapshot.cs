@@ -17,7 +17,7 @@ namespace Infra.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.13")
+                .HasAnnotation("ProductVersion", "8.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -33,15 +33,14 @@ namespace Infra.Migrations
                     b.Property<DateTime>("DataAgendamento")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("IdClinica")
+                        .HasColumnType("int");
+
                     b.Property<int>("IdFuncionario")
                         .HasColumnType("int");
 
                     b.Property<int>("IdPaciente")
                         .HasColumnType("int");
-
-                    b.Property<string>("IdProcedimento")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Lembrete")
                         .HasColumnType("bit");
@@ -57,11 +56,77 @@ namespace Infra.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IdClinica");
+
                     b.HasIndex("IdFuncionario");
 
                     b.HasIndex("IdPaciente");
 
                     b.ToTable("Agendamento");
+                });
+
+            modelBuilder.Entity("Entities.Models.AgendamentoPagamento", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Acrescimo")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Desconto")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("IdAgendamento")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdFormaPagamento")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Troco")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Valor")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdAgendamento");
+
+                    b.HasIndex("IdFormaPagamento");
+
+                    b.ToTable("AgendamentoPagamento");
+                });
+
+            modelBuilder.Entity("Entities.Models.AgendamentoProcedimento", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("IdAgendamento")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdProcedimento")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantidade")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("ValorTotal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdAgendamento");
+
+                    b.HasIndex("IdProcedimento");
+
+                    b.ToTable("AgendamentoProcedimento");
                 });
 
             modelBuilder.Entity("Entities.Models.ApplicationUser", b =>
@@ -182,31 +247,32 @@ namespace Infra.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CNAE")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("ControlaEstoque")
                         .HasColumnType("bit");
-
-                    b.Property<int>("DiaFim")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DiaInicio")
-                        .HasColumnType("int");
 
                     b.Property<bool>("FuncionaFeriados")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("HorarioAbertura")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeOnly>("HorarioAbertura")
+                        .HasColumnType("time");
 
-                    b.Property<DateTime>("HorarioFechamento")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeOnly>("HorarioFechamento")
+                        .HasColumnType("time");
 
                     b.Property<int>("IdClinica")
                         .HasColumnType("int")
                         .HasColumnOrder(1);
 
-                    b.Property<string>("IntervaloAgenda")
+                    b.Property<string>("IntervaloAgendaPadrao")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NumeroNota")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -337,6 +403,9 @@ namespace Infra.Migrations
                     b.Property<string>("Cidade")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CodMunicipio")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Complemento")
                         .HasColumnType("nvarchar(max)");
 
@@ -376,6 +445,9 @@ namespace Infra.Migrations
                     b.Property<string>("Cidade")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CodMunicipio")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Complemento")
                         .HasColumnType("nvarchar(max)");
 
@@ -398,6 +470,35 @@ namespace Infra.Migrations
                     b.ToTable("EnderecoPaciente");
                 });
 
+            modelBuilder.Entity("Entities.Models.FormaPagamento", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("IdClinica")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TipoValor")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("UtilizaTef")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdClinica");
+
+                    b.ToTable("FormaPagamento");
+                });
+
             modelBuilder.Entity("Entities.Models.Funcionario", b =>
                 {
                     b.Property<int>("Id")
@@ -415,6 +516,10 @@ namespace Infra.Migrations
 
                     b.Property<int>("IdClinica")
                         .HasColumnType("int");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Perfil")
                         .HasColumnType("int");
@@ -445,6 +550,9 @@ namespace Infra.Migrations
 
                     b.Property<int>("IdFuncionario")
                         .HasColumnType("int");
+
+                    b.Property<TimeOnly>("TempoAgendado")
+                        .HasColumnType("time");
 
                     b.HasKey("Id");
 
@@ -563,6 +671,9 @@ namespace Infra.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CodTribMunicipio")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Duracao")
                         .HasColumnType("int");
@@ -780,6 +891,12 @@ namespace Infra.Migrations
 
             modelBuilder.Entity("Entities.Models.Agendamento", b =>
                 {
+                    b.HasOne("Entities.Models.Clinica", "Clinica")
+                        .WithMany()
+                        .HasForeignKey("IdClinica")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Entities.Models.Funcionario", "Funcionario")
                         .WithMany()
                         .HasForeignKey("IdFuncionario")
@@ -792,9 +909,49 @@ namespace Infra.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Clinica");
+
                     b.Navigation("Funcionario");
 
                     b.Navigation("Paciente");
+                });
+
+            modelBuilder.Entity("Entities.Models.AgendamentoPagamento", b =>
+                {
+                    b.HasOne("Entities.Models.Agendamento", "Agendamento")
+                        .WithMany()
+                        .HasForeignKey("IdAgendamento")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.Models.FormaPagamento", "FormaPagamento")
+                        .WithMany()
+                        .HasForeignKey("IdFormaPagamento")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Agendamento");
+
+                    b.Navigation("FormaPagamento");
+                });
+
+            modelBuilder.Entity("Entities.Models.AgendamentoProcedimento", b =>
+                {
+                    b.HasOne("Entities.Models.Agendamento", "Agendamento")
+                        .WithMany()
+                        .HasForeignKey("IdAgendamento")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.Models.Procedimento", "Procedimento")
+                        .WithMany()
+                        .HasForeignKey("IdProcedimento")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Agendamento");
+
+                    b.Navigation("Procedimento");
                 });
 
             modelBuilder.Entity("Entities.Models.ConfiguracaoClinica", b =>
@@ -861,6 +1018,17 @@ namespace Infra.Migrations
                         .IsRequired();
 
                     b.Navigation("Paciente");
+                });
+
+            modelBuilder.Entity("Entities.Models.FormaPagamento", b =>
+                {
+                    b.HasOne("Entities.Models.Clinica", "Clinica")
+                        .WithMany()
+                        .HasForeignKey("IdClinica")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Clinica");
                 });
 
             modelBuilder.Entity("Entities.Models.Funcionario", b =>

@@ -7,7 +7,7 @@ using Microsoft.Identity.Client;
 
 namespace WebApi.Controllers;
 
-[Authorize(AuthenticationSchemes = "Bearer")]
+//[Authorize(AuthenticationSchemes = "Bearer")]
 [Route("api/[controller]")]
 [ApiController]
 public class ProcedimentoController : ControllerBase

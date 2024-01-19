@@ -1,12 +1,16 @@
 using Domain.Interfaces.Generics;
+using Domain.Interfaces.IAgendamento;
 using Domain.Interfaces.IClinica;
 using Domain.Interfaces.IConfiguracaoClinica;
+using Domain.Interfaces.IConvenio;
 using Domain.Interfaces.IFuncionario;
 using Domain.Interfaces.IPaciente;
 using Domain.Interfaces.IProcedimento;
 using Domain.Interfaces.IToten;
+using Domain.InterfacesServices.IAgendamentoService;
 using Domain.InterfacesServices.IClinicaService;
 using Domain.InterfacesServices.IConfiguracaoClinicaService;
+using Domain.InterfacesServices.IConvenioService;
 using Domain.InterfacesServices.IFuncionarioService;
 using Domain.InterfacesServices.IPacienteService;
 using Domain.InterfacesServices.IProcedimentoService;
@@ -15,8 +19,10 @@ using Domain.Servicos;
 using Entities.Models;
 using Helper.Configuracoes;
 using Infra.Configuracao;
+using Infra.Repositorio.AgendamentoRepositorio;
 using Infra.Repositorio.ClinicaRepositorio;
 using Infra.Repositorio.ConfiguracaoClinicaRepositorio;
+using Infra.Repositorio.ConvenioRepositorio;
 using Infra.Repositorio.FuncionarioRepositorio;
 using Infra.Repositorio.Generico;
 using Infra.Repositorio.PacienteRepositorio;
@@ -46,6 +52,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 builder.Services.AddSingleton(typeof(InterfaceGeneric<>), typeof(RepositorioGenerico<>));
 builder.Services.AddScoped<InterfaceToten, TotenRepository>();
 builder.Services.AddScoped<InterfaceSenhaToten, SenhaTotenRepository>();
+builder.Services.AddScoped<InterfaceConvenio, ConvenioRepository>();
 
 #region Clinica
 builder.Services.AddScoped<InterfaceClinica, ClinicaRepository>();
@@ -61,7 +68,14 @@ builder.Services.AddScoped<InterfacePacienteEndereco, PacienteEnderecoRepository
 builder.Services.AddScoped<InterfacePacienteFamiliar, PacienteFamiliarRepoistory>();
 #endregion
 
+#region Agendamento
+builder.Services.AddScoped<InterfaceAgendamento, AgendamentoRepository>();
+builder.Services.AddScoped<InterfaceAgendamentoPagamento, AgendamentoPagamentoRepositorry>();
+builder.Services.AddScoped<InterfaceAgendamentoProcedimento,  AgendamentoProcedimentoRepository>();
+#endregion
+
 builder.Services.AddScoped<InterfaceFuncionario, FuncionarioRepository>();
+builder.Services.AddScoped<InterfaceHorarioFuncionario, HorarioFuncionarioRepository>();
 builder.Services.AddScoped<InterfaceProcedimento, ProcedimentoRepository>();
 builder.Services.AddScoped<InterfaceConfiguracaoClinica, ConfiguracaoClinicaRepository>();
 #endregion
@@ -69,10 +83,12 @@ builder.Services.AddScoped<InterfaceConfiguracaoClinica, ConfiguracaoClinicaRepo
 #region Servicos
 builder.Services.AddScoped<InterfaceTotenService, TotenService>();
 builder.Services.AddScoped<InterfaceClinicaService, ClinicaService>();
+builder.Services.AddScoped<InterfaceConvenioService, ConvenioService>();    
 builder.Services.AddScoped<InterfaceFuncionarioService, FuncionarioService>();
 builder.Services.AddScoped<InterfaceProcedimentoService, ProcedimentoService>();
 builder.Services.AddScoped<InterfacePacienteService, PacienteService>();
 builder.Services.AddScoped<InterfaceConfiguracaoClinicaService, ConfiguracaoClinicaService>();
+builder.Services.AddScoped<InterfaceAgendamentoService, AgendamentoService>();
 #endregion
 
 builder.Services.AddSwaggerGen(c =>

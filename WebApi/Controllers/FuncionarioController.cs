@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
 
-[Authorize(AuthenticationSchemes = "Bearer")]
+//[Authorize(AuthenticationSchemes = "Bearer")]
 [Route("api/[controller]")]
 [ApiController]
 public class FuncionarioController : ControllerBase
@@ -20,13 +20,13 @@ public class FuncionarioController : ControllerBase
         _repository = repository;
     }
 
-    [HttpGet("ListarFuncionarios/idClinica{int}")]
+    [HttpGet("ListarFuncionarios/{idClinica:int}")]
     [Produces("application/json")]
     public async Task<object> ListarFuncionariosClinica(int idClinica) => await _repository.ListarFuncionariosClinica(idClinica);
 
-    [HttpGet("ObterFuncionario/idFuncionario{int}")]
+    [HttpGet("ObterFuncionario/{idFuncionario:int}")]
     [Produces("application/json")]
-    public async Task<ActionResult<Funcionario>> ObterFuncionario(int idFuncionario) => await _repository.GetEntityById(idFuncionario);
+    public async Task<ActionResult<Funcionario>> ObterFuncionario(int idFuncionario) => await _service.ObterFuncionario(idFuncionario);
 
     [HttpPost("AdicionarFuncionario")]
     [Produces("application/json")]
