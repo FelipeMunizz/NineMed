@@ -12,20 +12,20 @@ public class Agendamento
     public SituacaoAgendamento SituacaoAgendamento { get; set; }
     public bool Lembrete { get; set; }
     public string? Observacao { get; set; }
-    public int TempoTotalAgendamento { get; set; }
 
     [ForeignKey("Clinica")]
-    [JsonIgnore]
     public int IdClinica { get; set; }
+
+    [JsonIgnore]
     public virtual Clinica? Clinica { get; set; }
 
     [ForeignKey("Paciente")]
-    [JsonIgnore]
     public int IdPaciente { get; set; }
+    [JsonIgnore]
     public virtual Paciente? Paciente { get; set; }
 
     [ForeignKey("Funcionario")]
-    [JsonIgnore]
     public int IdFuncionario { get; set; }
+    [JsonIgnore]
     public virtual Funcionario? Funcionario { get; set; }
 }

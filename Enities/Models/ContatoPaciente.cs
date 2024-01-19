@@ -6,7 +6,7 @@ namespace Entities.Models;
 public class ContatoPaciente : Contato
 {
     [ForeignKey("Paciente")]
-    [JsonIgnore]
     public int IdPaciente { get; set; }
+    [JsonIgnore]
     public virtual Paciente? Paciente { get; set; }
 }

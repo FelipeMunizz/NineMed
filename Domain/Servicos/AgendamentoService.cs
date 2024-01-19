@@ -1,10 +1,8 @@
 ﻿using Domain.Interfaces.IAgendamento;
 using Domain.Interfaces.IConfiguracaoClinica;
-using Domain.Interfaces.IFuncionario;
 using Domain.Interfaces.IProcedimento;
 using Domain.InterfacesServices.IAgendamentoService;
 using Domain.InterfacesServices.IFuncionarioService;
-using Entities.Enums;
 using Entities.Models;
 using Entities.Retorno;
 
@@ -33,6 +31,10 @@ public class AgendamentoService : InterfaceAgendamentoService
         _repositorioProcedimento = repositorioProcedimento;
         _serviceFuncionario = serviceFuncionario;
     }
+    public async Task<IList<Agendamento>> ListaAgendamentosPaciente(int idPaciente) => await _repositoryAgendamento.ListaAgendamentosCliente(idPaciente);
+    public async Task<IList<Agendamento>> ListaAgendamentosClinica(int idClinica) => await _repositoryAgendamento.ListaAgendamentosClinica(idClinica);
+    public async Task<IList<Agendamento>> ListaAgendamentosDia(int idClinica, DateTime dia) => await _repositoryAgendamento.ListaAgendamentosDia(idClinica, dia);
+    public async Task<IList<Agendamento>> ListaAgendamentosFuncionario(int idFuncionario) => await _repositoryAgendamento.ListaAgendamentosFuncionario(idFuncionario);
 
     public async Task<object> AdicionarAgendamento(Agendamento agendamento,
         IList<AgendamentoProcedimento> agendamentoProcedimentos)
@@ -119,50 +121,54 @@ public class AgendamentoService : InterfaceAgendamentoService
         }
     }
 
-    public Task<object> AtualizarAgendamento(Agendamento agendamento)
+    public async Task AtualizarAgendamento(Agendamento agendamento)
     {
-        throw new NotImplementedException();
+        await _repositoryAgendamento.Update(agendamento);
     }
 
-    public Task AtualizarAgendamentoPagamento(AgendamentoPagamento agendamentoPagamento)
+    public async Task AtualizarAgendamentoPagamento(AgendamentoPagamento agendamentoPagamento)
     {
-        throw new NotImplementedException();
+        await _repositoryAgendamentoPagamento.Update(agendamentoPagamento);
     }
 
-    public Task AtualizarAgendamentoProcedimento(AgendamentoProcedimento agendamentoProcedimento)
+    public async Task AtualizarAgendamentoProcedimento(AgendamentoProcedimento agendamentoProcedimento)
     {
-        throw new NotImplementedException();
+        await _repositoryAgendamentoProcedimento.Update(agendamentoProcedimento);
     }
 
-    public Task DeletarAgendamentoPagamento(int idAgendamentoPagamento)
+    public async Task<object> DeletarAgendamentoProcedimento(int idAgendamentoProcedimento)
     {
-        throw new NotImplementedException();
+        AgendamentoProcedimento procedimento = await _repositoryAgendamentoProcedimento.GetEntityById(idAgendamentoProcedimento);
+        if (procedimento != null)
+        {
+            await _repositoryAgendamentoProcedimento.Delete(procedimento);
+            return new RetornoGenerico<object>
+            {
+                Success = true,
+                Message = "Procedimento deletado com sucesso do agendamento"
+            };
+        }
+        else
+            return new RetornoGenerico<object>
+            {
+                Success = false,
+                Message = "Procedimento não localizado no agendamento"
+            };
     }
 
-    public Task DeletarAgendamentoProcedimento(int idAgendamentoProcedimento)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<IList<AgendamentoPagamento>> ListaAgendamentoPagamento(int idPagamento) =>
+        await _repositoryAgendamentoPagamento.ListaAgendamentosPagamento(idPagamento);
 
-    public Task<IList<AgendamentoPagamento>> ListaAgendamentoPagamento(int idPagamento)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<IList<AgendamentoProcedimento>> ListaAgendamentoProcedimento(int idProcedimento) =>
+        await _repositoryAgendamentoProcedimento.ListaAgendamentosProcedimento(idProcedimento);
 
-    public Task<IList<AgendamentoProcedimento>> ListaAgendamentoProcedimento(int idProcedimento)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<AgendamentoPagamento> ObterAgendamentoPagamento(int idAgendamentoPagamento) =>
+        await _repositoryAgendamentoPagamento.GetEntityById(idAgendamentoPagamento);
 
-    public Task<AgendamentoPagamento> ObterAgendamentoPagamento(int idAgendamentoPagamento)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<AgendamentoProcedimento> ObterAgendamentoProcedimento(int idAgendamentoProcedimento)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<AgendamentoProcedimento> ObterAgendamentoProcedimento(int idAgendamentoProcedimento) =>
+        await _repositoryAgendamentoProcedimento.GetEntityById(idAgendamentoProcedimento);
+    public async Task<Agendamento> ObterAgendamento(int idAgendamento) =>
+        await _repositoryAgendamento.GetEntityById(idAgendamento);
 
     private bool ValidaHorarioClinica(DateTime horarioAgendamento, ConfiguracaoClinica configClinica)
     {

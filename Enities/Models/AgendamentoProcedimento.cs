@@ -9,14 +9,14 @@ public class AgendamentoProcedimento
     public int Quantidade { get; set; }
 
     [ForeignKey("Agendamento")]
-    [JsonIgnore]
     public int IdAgendamento { get; set; }
+    [JsonIgnore]
     public virtual Agendamento? Agendamento { get; set; }
 
 
     [ForeignKey("Procedimento")]
-    [JsonIgnore]
     public int IdProcedimento { get; set; }
+    [JsonIgnore]
     public virtual Procedimento? Procedimento { get; set; }
 
     public decimal ValorTotal { get; set; }

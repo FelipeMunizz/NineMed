@@ -16,7 +16,7 @@ public class ConfiguracaoClinica
     public string CNAE { get; set; }
     [ForeignKey("Clinica")]
     [Column(Order = 1)]
-    [JsonIgnore]
     public int IdClinica { get; set; }
+    [JsonIgnore]
     public virtual Clinica? Clinica { get; set; }
 }

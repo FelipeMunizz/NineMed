@@ -12,7 +12,7 @@ public class Funcionario : Base
     public string? RegistroProfissional { get; set; }
     public string? Especialidade { get; set; }
     [ForeignKey("Clinica")]
-    [JsonIgnore]
     public int IdClinica { get; set; }
+    [JsonIgnore]
     public virtual Clinica? Clinica { get; set; }
 }

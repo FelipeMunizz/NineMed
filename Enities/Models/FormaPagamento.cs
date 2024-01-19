@@ -9,7 +9,7 @@ public class FormaPagamento : Base
     public bool UtilizaTef {  get; set; }
 
     [ForeignKey("Clinica")]
-    [JsonIgnore]
     public int IdClinica { get; set; }
+    [JsonIgnore]
     public virtual Clinica? Clinica { get; set; }
 }

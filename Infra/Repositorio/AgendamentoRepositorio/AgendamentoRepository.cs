@@ -42,12 +42,16 @@ public class AgendamentoRepository : RepositorioGenerico<Agendamento>, Interface
     {
         using (var banco = new AppDbContext(_context))
         {
-            return await(
+            DateTime inicioDia = dia.Date; 
+            DateTime fimDia = dia.Date.AddHours(23).AddMinutes(59).AddSeconds(59);
+
+            return await (
                 from a in banco.Agendamento
                 where a.IdClinica == idClinica
-                && a.DataAgendamento.ToString("yyyy-MM-dd") == dia.ToString("yyyy-MM-dd")
+                && a.DataAgendamento >= inicioDia
+                && a.DataAgendamento <= fimDia
                 select a
-                ).AsNoTracking().ToListAsync();
+            ).AsNoTracking().ToListAsync();
         }
     }
 

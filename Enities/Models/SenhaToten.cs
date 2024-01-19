@@ -17,7 +17,7 @@ public class SenhaToten
 
     [ForeignKey("Toten")]
     [Column(Order = 1)]
-    [JsonIgnore]
     public int IdToten { get; set; }
+    [JsonIgnore]
     public virtual Toten? Toten { get; set; }
 }

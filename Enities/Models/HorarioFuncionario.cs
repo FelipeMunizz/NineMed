@@ -9,8 +9,8 @@ public class HorarioFuncionario
     public DateTime DataHorario {  get; set; }
     public TimeOnly TempoAgendado { get; set; }
     [ForeignKey("Funcionario")]
-    [JsonIgnore]
     public int IdFuncionario { get; set; }
+    [JsonIgnore]
     public virtual Funcionario? Funcionario { get; set; }
 
 }

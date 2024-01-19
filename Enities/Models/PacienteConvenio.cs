@@ -13,7 +13,7 @@ public class PacienteConvenio
     public int IdConvenio { get; set; }
 
     [ForeignKey("Paciente")]
-    [JsonIgnore]
     public int IdPaciente { get; set; }
+    [JsonIgnore]
     public virtual Paciente Paciente { get; set; }
 }

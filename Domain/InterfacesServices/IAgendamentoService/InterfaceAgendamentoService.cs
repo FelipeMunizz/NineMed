@@ -6,14 +6,19 @@ public interface InterfaceAgendamentoService
 {
     Task<object> AdicionarAgendamento(Agendamento agendamento,
         IList<AgendamentoProcedimento> agendamentoProcedimentos);
-    Task<object> AtualizarAgendamento(Agendamento agendamento);
+    Task AtualizarAgendamento(Agendamento agendamento);
+    Task<IList<Agendamento>> ListaAgendamentosPaciente(int idPaciente);
+    Task<IList<Agendamento>> ListaAgendamentosClinica(int idClinica);
+    Task<IList<Agendamento>> ListaAgendamentosDia(int idClinica, DateTime dia);
+    Task<IList<Agendamento>> ListaAgendamentosFuncionario(int idFuncionario);
+    Task<Agendamento> ObterAgendamento(int idAgendamento);
 
     #region Agendamento Procedimento
     Task<IList<AgendamentoProcedimento>> ListaAgendamentoProcedimento(int idProcedimento);
     Task<AgendamentoProcedimento> ObterAgendamentoProcedimento(int idAgendamentoProcedimento);
     Task AdicionarAgendamentoProcedimento(AgendamentoProcedimento agendamentoProcedimento);
     Task AtualizarAgendamentoProcedimento(AgendamentoProcedimento agendamentoProcedimento);
-    Task DeletarAgendamentoProcedimento(int idAgendamentoProcedimento);
+    Task<object> DeletarAgendamentoProcedimento(int idAgendamentoProcedimento);
     #endregion
 
     #region Agendamento Pagamento
@@ -21,6 +26,5 @@ public interface InterfaceAgendamentoService
     Task<AgendamentoPagamento> ObterAgendamentoPagamento(int idAgendamentoPagamento);
     Task AdicionarAgendamentoPagamento(AgendamentoPagamento agendamentoPagamento);
     Task AtualizarAgendamentoPagamento(AgendamentoPagamento agendamentoPagamento);
-    Task DeletarAgendamentoPagamento(int idAgendamentoPagamento);
     #endregion
 }

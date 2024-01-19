@@ -7,7 +7,7 @@ public class EnderecoClinica : Endereco
 {
     public int Id { get; set; }
     [ForeignKey("Clinica")]
-    [JsonIgnore]
     public int IdClinica { get; set; }
+    [JsonIgnore]
     public virtual Clinica? Clinica { get; set; }
 }

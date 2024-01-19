@@ -8,13 +8,13 @@ public class AgendamentoPagamento
     public int Id { get; set; }
 
     [ForeignKey("Agendamento")]
-    [JsonIgnore]
     public int IdAgendamento { get; set; }
+    [JsonIgnore]
     public virtual Agendamento? Agendamento { get; set; }
 
     [ForeignKey("FormaPagamento")]
-    [JsonIgnore]
     public int IdFormaPagamento { get; set; }
+    [JsonIgnore]
     public virtual FormaPagamento? FormaPagamento { get; set; }
 
     public decimal Valor { get; set; }
