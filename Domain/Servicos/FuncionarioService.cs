@@ -16,6 +16,7 @@ public class FuncionarioService : InterfaceFuncionarioService
     }
 
     public async Task<Funcionario> ObterFuncionario(int idFuncionario) => await _repository.GetEntityById(idFuncionario);
+    public async Task<Funcionario> ObterFuncionarioEmail(string email) => await _repository.ObterFuncionarioEmail(email);
 
     public async Task AdicionarFuncionario(Funcionario obj)
     {        

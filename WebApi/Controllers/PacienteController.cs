@@ -7,7 +7,7 @@ using WebApi.DTOs;
 
 namespace WebApi.Controllers;
 
-//[Authorize(AuthenticationSchemes = "Bearer")]
+[Authorize(AuthenticationSchemes = "Bearer")]
 [Route("api/[controller]")]
 [ApiController]
 public class PacienteController : ControllerBase

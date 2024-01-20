@@ -1,10 +1,12 @@
 ﻿using Domain.Interfaces.IConvenio;
 using Domain.InterfacesServices.IConvenioService;
 using Entities.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
 
+[Authorize(AuthenticationSchemes = "Bearer")]
 [Route("api/[controller]")]
 [ApiController]
 public class ConvenioController : ControllerBase

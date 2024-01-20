@@ -1,4 +1,6 @@
-﻿using Entities.Models;
+﻿using Domain.InterfacesServices.IFuncionarioService;
+using Entities.Enums;
+using Entities.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +15,13 @@ public class AccountController : ControllerBase
 {
     private readonly UserManager<ApplicationUser> _user;
     private readonly SignInManager<ApplicationUser> _sign;
+    private readonly InterfaceFuncionarioService _funcionarioService;
 
-    public AccountController(UserManager<ApplicationUser> user, SignInManager<ApplicationUser> sign)
+    public AccountController(UserManager<ApplicationUser> user, SignInManager<ApplicationUser> sign, InterfaceFuncionarioService funcionarioService)
     {
         _user = user;
         _sign = sign;
+        _funcionarioService = funcionarioService;
     }
 
     [AllowAnonymous]
@@ -34,13 +38,19 @@ public class AccountController : ControllerBase
                 .AddIssuer("NineMed.Security.Bearer")
                 .AddAudience("NineMed.Security.Bearer")
                 .AddClaim("UsuarioEmail", model.Username)
-                .AddExpiry(5)
+                .AddExpiry(60)
                 .Builder();
+
+            Funcionario funcionario = await _funcionarioService.ObterFuncionarioEmail(model.Username);
 
             return new RetornoToken
             {
                 Token = token.value,
-                User = model.Username
+                User = model.Username,
+                Nome = funcionario.Nome,
+                Role = funcionario.Perfil.ToString(),
+                IdFuncionario = funcionario.Id,
+                IdClinica = funcionario.IdClinica
             };
         }
         else
@@ -50,6 +60,10 @@ public class AccountController : ControllerBase
 
 public class RetornoToken
 {
+    public int IdFuncionario {  get; set; }
     public string Token { get; set; }
+    public string Nome { get; set; }
     public string User { get; set; }
+    public string Role { get; set; }
+    public int IdClinica { get; set; }
 }

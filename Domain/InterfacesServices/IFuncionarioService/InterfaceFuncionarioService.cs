@@ -8,6 +8,7 @@ public interface InterfaceFuncionarioService
     Task AtualizarFuncionario(Funcionario obj);
     Task DeletarFuncionario(int idFuncionaro);
     Task<Funcionario> ObterFuncionario(int idFuncionario);
+    Task<Funcionario> ObterFuncionarioEmail(string email);
 
     Task AdicionarHorarioFuncionario(HorarioFuncionario horario);
     Task AtualizaHorarioFuncionario(HorarioFuncionario horario);

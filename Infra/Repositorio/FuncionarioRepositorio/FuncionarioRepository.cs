@@ -23,7 +23,19 @@ public class FuncionarioRepository : RepositorioGenerico<Funcionario>, Interface
                     from f in banco.Funcionario
                     where f.IdClinica.Equals(idClinica)
                     select f
-                    ).ToListAsync();
+                    ).AsNoTracking().ToListAsync();
+        }
+    }
+
+    public async Task<Funcionario> ObterFuncionarioEmail(string email)
+    {
+        using (var banco = new AppDbContext(_context))
+        {
+            return await (
+                    from f in banco.Funcionario
+                    where f.Email.Equals(email)
+                    select f
+                    ).AsNoTracking().FirstOrDefaultAsync();
         }
     }
 }
