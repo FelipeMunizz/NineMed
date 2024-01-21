@@ -41,16 +41,10 @@ public class AccountController : ControllerBase
                 .AddExpiry(60)
                 .Builder();
 
-            Funcionario funcionario = await _funcionarioService.ObterFuncionarioEmail(model.Email);
-
             return new RetornoToken
             {
                 Token = token.value,
-                Email = model.Email,
-                Nome = funcionario.Nome,
-                Role = funcionario.Perfil.ToString(),
-                IdFuncionario = funcionario.Id,
-                IdClinica = funcionario.IdClinica
+                Email = model.Email
             };
         }
         else
@@ -60,10 +54,6 @@ public class AccountController : ControllerBase
 
 public class RetornoToken
 {
-    public int IdFuncionario {  get; set; }
     public string Token { get; set; }
-    public string Nome { get; set; }
     public string Email { get; set; }
-    public string Role { get; set; }
-    public int IdClinica { get; set; }
 }
