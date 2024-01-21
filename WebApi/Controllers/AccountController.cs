@@ -29,7 +29,7 @@ public class AccountController : ControllerBase
     [HttpPost("CreateToken")]
     public async Task<object> CreateToken([FromBody] LoginUserDTO model)
     {
-        var result = await _sign.PasswordSignInAsync(model.Username, model.Password, false, lockoutOnFailure: false);
+        var result = await _sign.PasswordSignInAsync(model.Email, model.Password, false, lockoutOnFailure: false);
         if (result.Succeeded)
         {
             var token = new TokenJwtBuilder()
@@ -37,16 +37,16 @@ public class AccountController : ControllerBase
                 .AddSubject("Nine Med v1")
                 .AddIssuer("NineMed.Security.Bearer")
                 .AddAudience("NineMed.Security.Bearer")
-                .AddClaim("UsuarioEmail", model.Username)
+                .AddClaim("UsuarioEmail", model.Email)
                 .AddExpiry(60)
                 .Builder();
 
-            Funcionario funcionario = await _funcionarioService.ObterFuncionarioEmail(model.Username);
+            Funcionario funcionario = await _funcionarioService.ObterFuncionarioEmail(model.Email);
 
             return new RetornoToken
             {
                 Token = token.value,
-                User = model.Username,
+                Email = model.Email,
                 Nome = funcionario.Nome,
                 Role = funcionario.Perfil.ToString(),
                 IdFuncionario = funcionario.Id,
@@ -63,7 +63,7 @@ public class RetornoToken
     public int IdFuncionario {  get; set; }
     public string Token { get; set; }
     public string Nome { get; set; }
-    public string User { get; set; }
+    public string Email { get; set; }
     public string Role { get; set; }
     public int IdClinica { get; set; }
 }

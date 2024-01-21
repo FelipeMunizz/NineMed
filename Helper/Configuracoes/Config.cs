@@ -2,7 +2,7 @@
 
 public static class Config
 {
-    private const Ambiente ambiente = Ambiente.NotFelipe;
+    private const Ambiente ambiente = Ambiente.Producao;
 
     public static string DiretorioLogs = DiretorioLog();
 
@@ -31,7 +31,7 @@ public static class Config
             case Ambiente.NotFelipe:
                 return "Data Source=DESKTOP-HH8094V;Initial Catalog=NineMed;Integrated Security=True;Pooling=False;Encrypt=False;TrustServerCertificate=False;";
             case Ambiente.Producao:
-                return string.Empty;
+                return "workstation id=ninemed.mssql.somee.com;packet size=4096;user id=FeMuniz_SQLLogin_1;pwd=pqj5if9kcd;data source=ninemed.mssql.somee.com;persist security info=False;initial catalog=ninemed; Pooling=False;Encrypt=true;TrustServerCertificate=true;";
             default: return string.Empty;
 
         }
