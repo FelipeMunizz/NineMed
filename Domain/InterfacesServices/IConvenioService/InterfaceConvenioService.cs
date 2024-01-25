@@ -13,4 +13,9 @@ public interface InterfaceConvenioService
     Task<RetornoGenerico<object>> AdicionarPlanoConvenio(PlanosConvenio plano);
     Task AtualizarPlanoConvenio(PlanosConvenio plano);
     Task DeletarPlanoConvenio(int idPlanoConvenio);
+    Task<IList<ProfissionaisSaudeConvenio>> ListaProfissionaisSaudeConvenio(int idConvenio);
+    Task<ProfissionaisSaudeConvenio> ObtemProfissionalSaudeConvenio(int idProfissionalSaudeConvenio);
+    Task<RetornoGenerico<object>> AdicionarProfissionalSaudeConvenio(ProfissionaisSaudeConvenio ProfissionalSaude);
+    Task AtualizarProfissionalSaudeConvenio(ProfissionaisSaudeConvenio ProfissionalSaude);
+    Task DeletarProfissionalSaudeConvenio(int idProfissionalSaudeConvenio);
 }

@@ -83,4 +83,33 @@ public class ConvenioController : ControllerBase
         await _service.DeletarPlanoConvenio(idPlano);
         return Ok();
     }
+
+    [HttpGet("ListaProfissionalSaudesConvenio/{idConvenio:int}")]
+    [Produces("application/json")]
+    public async Task<object> ListaProfissionalSaudesConvenio(int idConvenio) => await _service.ListaProfissionaisSaudeConvenio(idConvenio);
+
+    [HttpGet("ObterProfissionalSaudeConvenio/{idProfissionalSaude:int}")]
+    [Produces("application/json")]
+    public async Task<ActionResult<ProfissionaisSaudeConvenio>> ObtemProfissionalSaudeConvenio(int idProfissionalSaude) => await _service.ObtemProfissionalSaudeConvenio(idProfissionalSaude);
+
+    [HttpPost("AdicionarProfissionalSaudeConvenio")]
+    [Produces("application/json")]
+    public async Task<ActionResult<RetornoGenerico<object>>> AdicionarProfissionalSaudeConvenio(ProfissionaisSaudeConvenio ProfissionalSaude) => await _service.AdicionarProfissionalSaudeConvenio(ProfissionalSaude);
+
+    [HttpPut("AtualizarProfissionalSaudeConvenio")]
+    [Produces("application/json")]
+    public async Task<IActionResult> AtualizarProfissionalSaudeConvenio(ProfissionaisSaudeConvenio ProfissionalSaude)
+    {
+        await _service.AtualizarProfissionalSaudeConvenio(ProfissionalSaude);
+
+        return Ok();
+    }
+
+    [HttpDelete("DeletarProfissionalSaudeConvenio/{idProfissionalSaude:int}")]
+    [Produces("application/json")]
+    public async Task<IActionResult> DeletarProfissionalSaudeConvenio(int idProfissionalSaude)
+    {
+        await _service.DeletarProfissionalSaudeConvenio(idProfissionalSaude);
+        return Ok();
+    }
 }

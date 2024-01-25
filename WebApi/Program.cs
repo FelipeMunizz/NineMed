@@ -54,6 +54,7 @@ builder.Services.AddScoped<InterfaceToten, TotenRepository>();
 builder.Services.AddScoped<InterfaceSenhaToten, SenhaTotenRepository>();
 builder.Services.AddScoped<InterfaceConvenio, ConvenioRepository>();
 builder.Services.AddScoped<InterfacePlanosConvenio, PlanosConvenioRepository>();
+builder.Services.AddScoped<InterfaceProfissionalSaudeConvenio, ProfissionalSaudeConvenioRepository>();
 
 #region Clinica
 builder.Services.AddScoped<InterfaceClinica, ClinicaRepository>();
