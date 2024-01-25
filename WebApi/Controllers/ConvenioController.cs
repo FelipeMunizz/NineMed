@@ -1,6 +1,7 @@
 ﻿using Domain.Interfaces.IConvenio;
 using Domain.InterfacesServices.IConvenioService;
 using Entities.Models;
+using Entities.Retorno;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -51,6 +52,64 @@ public class ConvenioController : ControllerBase
     public async Task<IActionResult> DeletarConvenio(int idConvenio)
     {
         await _service.DeletarConvenio(idConvenio);
+        return Ok();
+    }
+
+    [HttpGet("ListaPlanosConvenio/{idConvenio:int}")]
+    [Produces("application/json")]
+    public async Task<object> ListaPlanosConvenio(int idConvenio) => await _service.ListaPlanosConvenio(idConvenio);
+
+    [HttpGet("ObterPlanoConvenio/{idPlano:int}")]
+    [Produces("application/json")]
+    public async Task<ActionResult<PlanosConvenio>> ObtemPlanoConvenio(int idPlano) => await _service.ObtemPlanoConvenio(idPlano);
+
+    [HttpPost("AdicionarPlanoConvenio")]
+    [Produces("application/json")]
+    public async Task<ActionResult<RetornoGenerico<object>>> AdicionarPlanoConvenio(PlanosConvenio plano) => await _service.AdicionarPlanoConvenio(plano);
+
+    [HttpPut("AtualizarPlanoConvenio")]
+    [Produces("application/json")]
+    public async Task<IActionResult> AtualizarPlanoConvenio(PlanosConvenio plano)
+    {
+        await _service.AtualizarPlanoConvenio(plano);
+
+        return Ok();
+    }
+
+    [HttpDelete("DeletarPlanoConvenio/{idPlano:int}")]
+    [Produces("application/json")]
+    public async Task<IActionResult> DeletarPlanoConvenio(int idPlano)
+    {
+        await _service.DeletarPlanoConvenio(idPlano);
+        return Ok();
+    }
+
+    [HttpGet("ListaProfissionalSaudesConvenio/{idConvenio:int}")]
+    [Produces("application/json")]
+    public async Task<object> ListaProfissionalSaudesConvenio(int idConvenio) => await _service.ListaProfissionaisSaudeConvenio(idConvenio);
+
+    [HttpGet("ObterProfissionalSaudeConvenio/{idProfissionalSaude:int}")]
+    [Produces("application/json")]
+    public async Task<ActionResult<ProfissionaisSaudeConvenio>> ObtemProfissionalSaudeConvenio(int idProfissionalSaude) => await _service.ObtemProfissionalSaudeConvenio(idProfissionalSaude);
+
+    [HttpPost("AdicionarProfissionalSaudeConvenio")]
+    [Produces("application/json")]
+    public async Task<ActionResult<RetornoGenerico<object>>> AdicionarProfissionalSaudeConvenio(ProfissionaisSaudeConvenio ProfissionalSaude) => await _service.AdicionarProfissionalSaudeConvenio(ProfissionalSaude);
+
+    [HttpPut("AtualizarProfissionalSaudeConvenio")]
+    [Produces("application/json")]
+    public async Task<IActionResult> AtualizarProfissionalSaudeConvenio(ProfissionaisSaudeConvenio ProfissionalSaude)
+    {
+        await _service.AtualizarProfissionalSaudeConvenio(ProfissionalSaude);
+
+        return Ok();
+    }
+
+    [HttpDelete("DeletarProfissionalSaudeConvenio/{idProfissionalSaude:int}")]
+    [Produces("application/json")]
+    public async Task<IActionResult> DeletarProfissionalSaudeConvenio(int idProfissionalSaude)
+    {
+        await _service.DeletarProfissionalSaudeConvenio(idProfissionalSaude);
         return Ok();
     }
 }
