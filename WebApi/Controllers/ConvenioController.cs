@@ -1,6 +1,7 @@
 ﻿using Domain.Interfaces.IConvenio;
 using Domain.InterfacesServices.IConvenioService;
 using Entities.Models;
+using Entities.Retorno;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -51,6 +52,35 @@ public class ConvenioController : ControllerBase
     public async Task<IActionResult> DeletarConvenio(int idConvenio)
     {
         await _service.DeletarConvenio(idConvenio);
+        return Ok();
+    }
+
+    [HttpGet("ListaPlanosConvenio/{idConvenio:int}")]
+    [Produces("application/json")]
+    public async Task<object> ListaPlanosConvenio(int idConvenio) => await _service.ListaPlanosConvenio(idConvenio);
+
+    [HttpGet("ObterPlanoConvenio/{idPlano:int}")]
+    [Produces("application/json")]
+    public async Task<ActionResult<PlanosConvenio>> ObtemPlanoConvenio(int idPlano) => await _service.ObtemPlanoConvenio(idPlano);
+
+    [HttpPost("AdicionarPlanoConvenio")]
+    [Produces("application/json")]
+    public async Task<ActionResult<RetornoGenerico<object>>> AdicionarPlanoConvenio(PlanosConvenio plano) => await _service.AdicionarPlanoConvenio(plano);
+
+    [HttpPut("AtualizarPlanoConvenio")]
+    [Produces("application/json")]
+    public async Task<IActionResult> AtualizarPlanoConvenio(PlanosConvenio plano)
+    {
+        await _service.AtualizarPlanoConvenio(plano);
+
+        return Ok();
+    }
+
+    [HttpDelete("DeletarPlanoConvenio/{idPlano:int}")]
+    [Produces("application/json")]
+    public async Task<IActionResult> DeletarPlanoConvenio(int idPlano)
+    {
+        await _service.DeletarPlanoConvenio(idPlano);
         return Ok();
     }
 }

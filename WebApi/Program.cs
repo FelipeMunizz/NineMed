@@ -53,6 +53,7 @@ builder.Services.AddSingleton(typeof(InterfaceGeneric<>), typeof(RepositorioGene
 builder.Services.AddScoped<InterfaceToten, TotenRepository>();
 builder.Services.AddScoped<InterfaceSenhaToten, SenhaTotenRepository>();
 builder.Services.AddScoped<InterfaceConvenio, ConvenioRepository>();
+builder.Services.AddScoped<InterfacePlanosConvenio, PlanosConvenioRepository>();
 
 #region Clinica
 builder.Services.AddScoped<InterfaceClinica, ClinicaRepository>();
