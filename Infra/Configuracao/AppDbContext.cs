@@ -35,6 +35,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<ProntuarioPaciente> ProntuarioPaciente { get; set; }
     public DbSet<ExameAtendimento> ExameAtendimento { get; set; }
     public DbSet<PrescricaoAtendimento> PrescricaoAtendimento { get; set; }
+    public DbSet<AtestadoAtendimento> AtestadoAtendimento { get; set; }
     #endregion
 
     #region Metodos Override
