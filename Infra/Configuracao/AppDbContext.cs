@@ -31,6 +31,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Procedimento> Procedimento { get; set; }
     public DbSet<Funcionario> Funcionario { get; set; }
     public DbSet<HorarioFuncionario> HorarioFuncionario { get; set; }
+    public DbSet<Atendimento> Atendimento { get; set; }
     #endregion
 
     #region Metodos Override
