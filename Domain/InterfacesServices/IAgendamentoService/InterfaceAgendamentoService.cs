@@ -20,11 +20,4 @@ public interface InterfaceAgendamentoService
     Task AtualizarAgendamentoProcedimento(AgendamentoProcedimento agendamentoProcedimento);
     Task<object> DeletarAgendamentoProcedimento(int idAgendamentoProcedimento);
     #endregion
-
-    #region Agendamento Pagamento
-    Task<IList<AgendamentoPagamento>> ListaAgendamentoPagamento(int idPagamento);
-    Task<AgendamentoPagamento> ObterAgendamentoPagamento(int idAgendamentoPagamento);
-    Task AdicionarAgendamentoPagamento(AgendamentoPagamento agendamentoPagamento);
-    Task AtualizarAgendamentoPagamento(AgendamentoPagamento agendamentoPagamento);
-    #endregion
 }

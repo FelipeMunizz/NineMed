@@ -12,21 +12,18 @@ public class AgendamentoService : InterfaceAgendamentoService
 {
     private readonly InterfaceAgendamento _repositoryAgendamento;
     private readonly InterfaceAgendamentoProcedimento _repositoryAgendamentoProcedimento;
-    private readonly InterfaceAgendamentoPagamento _repositoryAgendamentoPagamento;
     private readonly InterfaceConfiguracaoClinica _repositoryConfigClinica;
     private readonly InterfaceProcedimento _repositorioProcedimento;
     private readonly InterfaceFuncionarioService _serviceFuncionario;
 
     public AgendamentoService(InterfaceAgendamento repositoryAgendamento,
         InterfaceAgendamentoProcedimento repositoryAgendamentoProcedimento,
-        InterfaceAgendamentoPagamento repositoryAgendamentoPagamento,
         InterfaceConfiguracaoClinica repositoryConfigClinica,
         InterfaceProcedimento repositorioProcedimento,
         InterfaceFuncionarioService serviceFuncionario)
     {
         _repositoryAgendamento = repositoryAgendamento;
         _repositoryAgendamentoProcedimento = repositoryAgendamentoProcedimento;
-        _repositoryAgendamentoPagamento = repositoryAgendamentoPagamento;
         _repositoryConfigClinica = repositoryConfigClinica;
         _repositorioProcedimento = repositorioProcedimento;
         _serviceFuncionario = serviceFuncionario;
@@ -103,11 +100,6 @@ public class AgendamentoService : InterfaceAgendamentoService
         };
     }
 
-    public async Task AdicionarAgendamentoPagamento(AgendamentoPagamento agendamentoPagamento)
-    {
-        await _repositoryAgendamentoPagamento.Add(agendamentoPagamento);
-    }
-
     public async Task AdicionarAgendamentoProcedimento(AgendamentoProcedimento agendamentoProcedimento)
     {
         Procedimento procedimento = await _repositorioProcedimento.GetEntityById(agendamentoProcedimento.IdProcedimento);
@@ -124,11 +116,6 @@ public class AgendamentoService : InterfaceAgendamentoService
     public async Task AtualizarAgendamento(Agendamento agendamento)
     {
         await _repositoryAgendamento.Update(agendamento);
-    }
-
-    public async Task AtualizarAgendamentoPagamento(AgendamentoPagamento agendamentoPagamento)
-    {
-        await _repositoryAgendamentoPagamento.Update(agendamentoPagamento);
     }
 
     public async Task AtualizarAgendamentoProcedimento(AgendamentoProcedimento agendamentoProcedimento)
@@ -156,14 +143,8 @@ public class AgendamentoService : InterfaceAgendamentoService
             };
     }
 
-    public async Task<IList<AgendamentoPagamento>> ListaAgendamentoPagamento(int idPagamento) =>
-        await _repositoryAgendamentoPagamento.ListaAgendamentosPagamento(idPagamento);
-
     public async Task<IList<AgendamentoProcedimento>> ListaAgendamentoProcedimento(int idProcedimento) =>
         await _repositoryAgendamentoProcedimento.ListaAgendamentosProcedimento(idProcedimento);
-
-    public async Task<AgendamentoPagamento> ObterAgendamentoPagamento(int idAgendamentoPagamento) =>
-        await _repositoryAgendamentoPagamento.GetEntityById(idAgendamentoPagamento);
 
     public async Task<AgendamentoProcedimento> ObterAgendamentoProcedimento(int idAgendamentoProcedimento) =>
         await _repositoryAgendamentoProcedimento.GetEntityById(idAgendamentoProcedimento);

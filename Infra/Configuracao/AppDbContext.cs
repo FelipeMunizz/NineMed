@@ -11,7 +11,6 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
 
     #region Models
     public DbSet<FormaPagamento> FormaPagamento { get; set; }
-    public DbSet<AgendamentoPagamento> AgendamentoPagamento { get; set; }
     public DbSet<AgendamentoProcedimento> AgendamentoProcedimento { get; set; }
     public DbSet<Toten> Toten { get; set; }
     public DbSet<SenhaToten> SenhaToten { get; set; }

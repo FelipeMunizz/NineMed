@@ -72,7 +72,6 @@ builder.Services.AddScoped<InterfacePacienteFamiliar, PacienteFamiliarRepoistory
 
 #region Agendamento
 builder.Services.AddScoped<InterfaceAgendamento, AgendamentoRepository>();
-builder.Services.AddScoped<InterfaceAgendamentoPagamento, AgendamentoPagamentoRepositorry>();
 builder.Services.AddScoped<InterfaceAgendamentoProcedimento,  AgendamentoProcedimentoRepository>();
 #endregion
 
