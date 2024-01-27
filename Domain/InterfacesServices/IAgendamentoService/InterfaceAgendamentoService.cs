@@ -7,7 +7,7 @@ public interface InterfaceAgendamentoService
 {
     Task<RetornoGenerico<Agendamento>> AdicionarAgendamento(Agendamento agendamento);
     Task AtualizarAgendamento(Agendamento agendamento);
-    Task<object> ConfirmarAgendamento(int idAgendamento);
+    Task<RetornoGenerico<Agendamento>> ConfirmarAgendamento(int idAgendamento);
     Task<IList<Agendamento>> ListaAgendamentosPaciente(int idPaciente);
     Task<IList<Agendamento>> ListaAgendamentosClinica(int idClinica);
     Task<IList<Agendamento>> ListaAgendamentosDia(int idClinica, DateTime dia);

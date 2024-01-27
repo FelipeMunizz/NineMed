@@ -96,7 +96,7 @@ public class AgendamentoService : InterfaceAgendamentoService
         await _repositoryAgendamento.Update(agendamento);
     }
 
-    public async Task<object> ConfirmarAgendamento(int idAgendamento)
+    public async Task<RetornoGenerico<Agendamento>> ConfirmarAgendamento(int idAgendamento)
     {
         Agendamento agendamento = await ObterAgendamento(idAgendamento);
         if (agendamento != null && !agendamento.SituacaoAgendamento.Equals(SituacaoAgendamento.Confirmado))
@@ -112,7 +112,7 @@ public class AgendamentoService : InterfaceAgendamentoService
             };
         }
 
-        return new RetornoGenerico<object>
+        return new RetornoGenerico<Agendamento>
         {
             Success = false,
             Message = "Não foi possivel confirmar o agendamento"

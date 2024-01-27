@@ -33,7 +33,15 @@ public class AgendamentoController : ControllerBase
 
     [HttpPut("ConfirmarAgendamento/{idAgendamento:int}")]
     [Produces("application/json")]
-    public async Task<object> AtualizarAgendamento(int idAgendamento) => await _service.ConfirmarAgendamento(idAgendamento);
+    public async Task<object> ConfirmarAgendamento(int idAgendamento)
+    {
+        RetornoGenerico<Agendamento> retorno = await _service.ConfirmarAgendamento(idAgendamento);
+
+        if (retorno.Success)
+            return Ok(retorno);
+        else
+            return BadRequest(retorno);
+    }
 
     [HttpPut("AtualizarAgendamento")]
     [Produces("application/json")]
