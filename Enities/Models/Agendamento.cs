@@ -12,6 +12,7 @@ public class Agendamento
     public SituacaoAgendamento SituacaoAgendamento { get; set; }
     public bool Lembrete { get; set; }
     public string? Observacao { get; set; }
+    public int[] IdsProcedimento { get; set; }
 
     [ForeignKey("Clinica")]
     public int IdClinica { get; set; }

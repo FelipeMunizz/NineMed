@@ -3,7 +3,6 @@ using Entities.Models;
 
 namespace Domain.Interfaces.IAgendamento;
 
-public interface InterfaceAgendamentoProcedimento : InterfaceGeneric<AgendamentoProcedimento>
+public interface InterfaceAgendamentoProcedimento : InterfaceGeneric<AtendimentoProcedimento>
 {
-    Task<IList<AgendamentoProcedimento>> ListaAgendamentosProcedimento(int idAgendamento);
 }

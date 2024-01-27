@@ -14,13 +14,8 @@ public class Atendimento
     public string? Diagnostico { get; set; }
     public string? Conduta { get; set;}
 
-    [ForeignKey("Paciente")]
-    public int IdPaciente { get; set; }
+    [ForeignKey("Agendamento")]
+    public int IdAgendamento { get; set; }
     [JsonIgnore]
-    public virtual Paciente? Paciente { get; set; }
-
-    [ForeignKey("Funcionario")]
-    public int IdFuncionario { get; set; }
-    [JsonIgnore]
-    public virtual Funcionario? Funcionario { get; set; }
+    public virtual Agendamento? Agendamento { get; set; }
 }

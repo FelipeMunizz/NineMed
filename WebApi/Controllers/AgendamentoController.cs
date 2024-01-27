@@ -18,34 +18,22 @@ public class AgendamentoController : ControllerBase
         _service = service;
     }
 
+    [AllowAnonymous]
     [HttpPost("AdicionarAgendamento")]
     [Produces("application/json")]
-    public async Task<ActionResult<object>> AdicionarAgendamento(AgendamentoDTO agendamentoDTO)
+    public async Task<ActionResult<object>> AdicionarAgendamento(Agendamento agendamento)
     {
-        List<AgendamentoProcedimento> procedimentos = new List<AgendamentoProcedimento>();
-        Agendamento agendamento = new Agendamento
-        {
-            DataAgendamento = Convert.ToDateTime(agendamentoDTO.DataAgendamento),
-            Repeticao = agendamentoDTO.Repeticao,
-            Lembrete = agendamentoDTO.Lembrete,
-            SituacaoAgendamento = agendamentoDTO.SituacaoAgendamento,
-            IdClinica = agendamentoDTO.IdClinica,
-            IdFuncionario = agendamentoDTO.IdFuncionario,
-            IdPaciente = agendamentoDTO.IdPaciente
-        };
+        RetornoGenerico<Agendamento> retorno = await _service.AdicionarAgendamento(agendamento);
 
-        foreach(var item in agendamentoDTO.Procedimentos)
-        {
-            AgendamentoProcedimento procedimento = new AgendamentoProcedimento
-            {
-                Quantidade = item.Quantidade,
-                IdProcedimento = item.IdProcedimento,
-            };
-            procedimentos.Add(procedimento);
-        }
-
-        return await _service.AdicionarAgendamento(agendamento, procedimentos);
+        if (retorno.Success)
+            return Ok(retorno);
+        else
+            return BadRequest(retorno);
     }
+
+    [HttpPut("ConfirmarAgendamento/{idAgendamento:int}")]
+    [Produces("application/json")]
+    public async Task<object> AtualizarAgendamento(int idAgendamento) => await _service.ConfirmarAgendamento(idAgendamento);
 
     [HttpPut("AtualizarAgendamento")]
     [Produces("application/json")]
@@ -61,46 +49,15 @@ public class AgendamentoController : ControllerBase
 
     [HttpGet("ListaAgendamentosClinica/{idClinica:int}")]
     [Produces("application/json")]
-    public async Task<object> ListaAgendamentosClinica(int idClinica) => await _service.ListaAgendamentosClinica(idClinica); 
-    
+    public async Task<object> ListaAgendamentosClinica(int idClinica) => await _service.ListaAgendamentosClinica(idClinica);
+
     [HttpGet("ListaAgendamentosDia/{idClinica:int}/{dia:datetime}")]
     [Produces("application/json")]
     public async Task<object> ListaAgendamentosDia(int idClinica, DateTime dia) => await _service.ListaAgendamentosDia(idClinica, dia);
 
     [HttpGet("ListaAgendamentosFuncionario/{idFuncionario:int}")]
     [Produces("application/json")]
-    public async Task<object>  ListaAgendamentosFuncionario(int idFuncionario) => await _service.ListaAgendamentosFuncionario(idFuncionario);
-
-    [HttpPost("AdicionarAgendamentoProcedimento")]
-    [Produces("application/json")]
-    public async Task<IActionResult> AdicionarAgendamentoProcedimento(AgendamentoProcedimento agendamentoProcedimento)
-    {
-        await _service.AdicionarAgendamentoProcedimento(agendamentoProcedimento);
-        return Ok();
-    }
-
-    [HttpPut("AtualizarAgendamentoProcedimento")]
-    [Produces("application/json")]
-    public async Task<IActionResult> AtualizarAgendamentoProcedimento(AgendamentoProcedimento agendamentoProcedimento)
-    {
-        await _service.AtualizarAgendamentoProcedimento(agendamentoProcedimento);
-        return Ok();
-    }
-
-    [HttpDelete("DeletarAgendamentoProcedimento")]
-    [Produces("application/json")]
-    public async Task<ActionResult<object>> DeletarAgendamentoProcedimento(int idAgendamentoProcedimento) =>
-        await _service.DeletarAgendamentoProcedimento(idAgendamentoProcedimento);
-
-    [HttpGet("ListaAgendamentoProcedimento/{idProcedimento:int}")]
-    [Produces("application/json")]
-    public async Task<object> ListaAgendamentoProcedimento(int idProcedimento) =>
-        await _service.ListaAgendamentoProcedimento(idProcedimento);
-
-    [HttpGet("ObterAgendamentoProcedimento/{idAgendamentoProcedimento:int}")]
-    [Produces("application/json")]
-    public async Task<ActionResult<AgendamentoProcedimento>> ObterAgendamentoProcedimento(int idAgendamentoProcedimento) =>
-        await _service.ObterAgendamentoProcedimento(idAgendamentoProcedimento);
+    public async Task<object> ListaAgendamentosFuncionario(int idFuncionario) => await _service.ListaAgendamentosFuncionario(idFuncionario);
 
     [HttpGet("ObterAgendamento/{idAgendamento:int}")]
     [Produces("application/json")]

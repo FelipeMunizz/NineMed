@@ -1,23 +1,16 @@
 ﻿using Entities.Models;
+using Entities.Retorno;
 
 namespace Domain.InterfacesServices.IAgendamentoService;
 
 public interface InterfaceAgendamentoService
 {
-    Task<object> AdicionarAgendamento(Agendamento agendamento,
-        IList<AgendamentoProcedimento> agendamentoProcedimentos);
+    Task<RetornoGenerico<Agendamento>> AdicionarAgendamento(Agendamento agendamento);
     Task AtualizarAgendamento(Agendamento agendamento);
+    Task<object> ConfirmarAgendamento(int idAgendamento);
     Task<IList<Agendamento>> ListaAgendamentosPaciente(int idPaciente);
     Task<IList<Agendamento>> ListaAgendamentosClinica(int idClinica);
     Task<IList<Agendamento>> ListaAgendamentosDia(int idClinica, DateTime dia);
     Task<IList<Agendamento>> ListaAgendamentosFuncionario(int idFuncionario);
     Task<Agendamento> ObterAgendamento(int idAgendamento);
-
-    #region Agendamento Procedimento
-    Task<IList<AgendamentoProcedimento>> ListaAgendamentoProcedimento(int idProcedimento);
-    Task<AgendamentoProcedimento> ObterAgendamentoProcedimento(int idAgendamentoProcedimento);
-    Task AdicionarAgendamentoProcedimento(AgendamentoProcedimento agendamentoProcedimento);
-    Task AtualizarAgendamentoProcedimento(AgendamentoProcedimento agendamentoProcedimento);
-    Task<object> DeletarAgendamentoProcedimento(int idAgendamentoProcedimento);
-    #endregion
 }

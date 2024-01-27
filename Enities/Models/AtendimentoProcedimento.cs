@@ -3,15 +3,15 @@ using System.Text.Json.Serialization;
 
 namespace Entities.Models;
 
-public class AgendamentoProcedimento
+public class AtendimentoProcedimento
 {
     public int Id { get; set; }
     public int Quantidade { get; set; }
 
-    [ForeignKey("Agendamento")]
-    public int IdAgendamento { get; set; }
+    [ForeignKey("Atendimento")]
+    public int IdAtendimento { get; set; }
     [JsonIgnore]
-    public virtual Agendamento? Agendamento { get; set; }
+    public virtual Atendimento? Atendimento { get; set; }
 
 
     [ForeignKey("Procedimento")]
