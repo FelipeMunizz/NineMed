@@ -18,7 +18,6 @@ public class AgendamentoController : ControllerBase
         _service = service;
     }
 
-    [AllowAnonymous]
     [HttpPost("AdicionarAgendamento")]
     [Produces("application/json")]
     public async Task<ActionResult<object>> AdicionarAgendamento(Agendamento agendamento)
