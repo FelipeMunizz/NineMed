@@ -2,6 +2,7 @@
 using Domain.Interfaces.IConfiguracaoClinica;
 using Domain.Interfaces.IProcedimento;
 using Domain.InterfacesServices.IAgendamentoService;
+using Domain.InterfacesServices.IConvenioService;
 using Domain.InterfacesServices.IFuncionarioService;
 using Entities.Enums;
 using Entities.Models;
@@ -15,17 +16,21 @@ public class AgendamentoService : InterfaceAgendamentoService
     private readonly InterfaceConfiguracaoClinica _repositoryConfigClinica;
     private readonly InterfaceProcedimento _repositorioProcedimento;
     private readonly InterfaceFuncionarioService _serviceFuncionario;
+    private readonly InterfaceConvenioService _serviceConvenio;
 
-    public AgendamentoService(InterfaceAgendamento repositoryAgendamento,
-        InterfaceConfiguracaoClinica repositoryConfigClinica,
-        InterfaceProcedimento repositorioProcedimento,
-        InterfaceFuncionarioService serviceFuncionario)
+    public AgendamentoService(InterfaceAgendamento repositoryAgendamento, 
+        InterfaceConfiguracaoClinica repositoryConfigClinica, 
+        InterfaceProcedimento repositorioProcedimento, 
+        InterfaceFuncionarioService serviceFuncionario, 
+        InterfaceConvenioService serviceConvenio)
     {
         _repositoryAgendamento = repositoryAgendamento;
         _repositoryConfigClinica = repositoryConfigClinica;
         _repositorioProcedimento = repositorioProcedimento;
         _serviceFuncionario = serviceFuncionario;
+        _serviceConvenio = serviceConvenio;
     }
+
     public async Task<IList<Agendamento>> ListaAgendamentosPaciente(int idPaciente) => await _repositoryAgendamento.ListaAgendamentosCliente(idPaciente);
     public async Task<IList<Agendamento>> ListaAgendamentosClinica(int idClinica) => await _repositoryAgendamento.ListaAgendamentosClinica(idClinica);
     public async Task<IList<Agendamento>> ListaAgendamentosDia(int idClinica, DateTime dia) => await _repositoryAgendamento.ListaAgendamentosDia(idClinica, dia);
@@ -71,16 +76,17 @@ public class AgendamentoService : InterfaceAgendamentoService
             TempoAgendado = tempoAgendado
         };
 
-        await _serviceFuncionario.AdicionarHorarioFuncionario(horarioFuncionario);
-
-        //TO-DO: Validar se profissional da Saude atendo o convenio e/ou plano; 
-        if (funcionario.ProfissionalSaude)
+        if (funcionario.ProfissionalSaude 
+            && await _serviceConvenio.ProfissionalAtendeConvenio(funcionario.Id, agendamento.IdConvenio))
+        {
+            await _serviceFuncionario.AdicionarHorarioFuncionario(horarioFuncionario);
             agendamento = await _repositoryAgendamento.Add(agendamento);
+        }
         else
             return new RetornoGenerico<Agendamento>
             {
                 Success = false,
-                Message = "Apenas profissionais da saúde podem ter horários agendados."
+                Message = "Apenas profissionais da saúde podem ter horários agendados. Ou o profissional não atende este convenio."
             };
 
         return new RetornoGenerico<Agendamento>

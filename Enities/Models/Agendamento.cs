@@ -29,4 +29,9 @@ public class Agendamento
     public int IdFuncionario { get; set; }
     [JsonIgnore]
     public virtual Funcionario? Funcionario { get; set; }
+
+    [ForeignKey("Convenio")]
+    public int IdConvenio { get; set; }
+    [JsonIgnore]
+    public virtual Convenio? Convenio { get; set; }
 }
