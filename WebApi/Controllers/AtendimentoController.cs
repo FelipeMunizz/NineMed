@@ -50,5 +50,43 @@ public class AtendimentoController : ControllerBase
     [HttpGet("ListaAtentedimentoPaciente/{idPaciente:int}")]
     [Produces("application/json")]
     public async Task<object> ListaAtentedimentoPaciente(int idPaciente) => await _repository.ListaAtentedimentoPaciente(idPaciente);
+
+    [HttpGet("ObterExameAtendimento/{idExame:int}")]
+    [Produces("application/json")]
+    public async Task<ActionResult<ExameAtendimento>> ObterExameAtendimento(int idExame) =>
+        await _service.ObterExameAtendimento(idExame);
+
+    [HttpGet("ListaExamesAtentedimento/{idAtendimento:int}")]
+    [Produces("application/json")]
+    public async Task<object> ListaExamesAtentedimento(int idAtendimento) => 
+        await _service.ListarExamesAtendimento(idAtendimento);
+
+    [HttpPost("AdicionarExameAtendimento")]
+    [Produces("application/json")]
+    public async Task<ActionResult<object>> AdicionarExameAtendimento(ExameAtendimento exame)
+    {
+        RetornoGenerico<ExameAtendimento> retorno = await _service.AdicionarExameAtendimento(exame);
+
+        if (retorno.Success)
+            return Ok(retorno);
+        else
+            return BadRequest(retorno);
+    }
+
+    [HttpPut("AtualizarExameAtendimento")]
+    [Produces("application/json")]
+    public async Task<IActionResult> AtualizarExameAtendimento(ExameAtendimento exame)
+    {
+        await _service.AtualizarExameAtendimento(exame);
+        return Ok();
+    }
+
+    [HttpDelete("DeletarExameAtendimento/{idExame:int}")]
+    [Produces("application/json")]
+    public async Task<IActionResult> DeletarExameAtendimento(int idExame)
+    {
+        await _service.DeletarExameAtendimento(idExame);
+        return Ok();
+    }
 }
 
