@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Entities.Models;
 
-public class ProntuarioPaciente
+public class PacienteProntuario
 {
     public int Id { get; set; }
     public string? AntecedenteClinico { get; set; }

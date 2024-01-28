@@ -31,7 +31,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Funcionario> Funcionario { get; set; }
     public DbSet<HorarioFuncionario> HorarioFuncionario { get; set; }
     public DbSet<Atendimento> Atendimento { get; set; }
-    public DbSet<ProntuarioPaciente> ProntuarioPaciente { get; set; }
+    public DbSet<PacienteProntuario> ProntuarioPaciente { get; set; }
     public DbSet<ExameAtendimento> ExameAtendimento { get; set; }
     public DbSet<PrescricaoAtendimento> PrescricaoAtendimento { get; set; }
     public DbSet<AtestadoAtendimento> AtestadoAtendimento { get; set; }

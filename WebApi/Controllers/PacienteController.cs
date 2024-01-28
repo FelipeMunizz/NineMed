@@ -247,4 +247,40 @@ public class PacienteController : ControllerBase
         return Ok();
     }
     #endregion
+
+    #region Prontuario
+    [HttpGet("ObterProntuario/{idProntuario:int}")]
+    [Produces("application/json")]
+    public async Task<ActionResult<PacienteProntuario>> ObterProntuarioPaciente(int idProntuario) =>
+        await _service.ObtemProntuaio(idProntuario);
+
+    [HttpGet("ObterPacienteProntuario/{idPaciente:int}")]
+    [Produces("application/json")]
+    public async Task<ActionResult<PacienteProntuario>> ObterPacienteProntuario(int idPaciente) =>
+        await _service.ObtemPacienteProntuaio(idPaciente);
+
+    [HttpPost("AdicionarProntuarioPaciente")]
+    [Produces("application/json")]
+    public async Task<IActionResult> AdicionarProntuarioPaciente(PacienteProntuario Prontuario)
+    {
+        await _service.AdicionarPacienteProntuario(Prontuario);
+        return Ok();
+    }
+
+    [HttpPut("AtualizarProntuarioPaciente")]
+    [Produces("application/json")]
+    public async Task<IActionResult> AtualizarProntuarioPaciente(PacienteProntuario Prontuario)
+    {
+        await _service.AtualizarPacienteProntuario(Prontuario);
+        return Ok();
+    }
+
+    [HttpDelete("DeletarProntuarioPaciente/{idProntuario:int}")]
+    [Produces("application/json")]
+    public async Task<IActionResult> DeletarProntuarioPaciente(int idProntuario)
+    {
+        await _service.DeletarPacienteProntuario(idProntuario);
+        return Ok();
+    }
+    #endregion
 }
