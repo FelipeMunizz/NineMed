@@ -88,5 +88,43 @@ public class AtendimentoController : ControllerBase
         await _service.DeletarExameAtendimento(idExame);
         return Ok();
     }
+
+    [HttpGet("ObterPrescricaoAtendimento/{idPrescricao:int}")]
+    [Produces("application/json")]
+    public async Task<ActionResult<PrescricaoAtendimento>> ObterPrescricaoAtendimento(int idPrescricao) =>
+        await _service.ObterPrescricaoAtendimento(idPrescricao);
+
+    [HttpGet("ListaPrescricaosAtentedimento/{idAtendimento:int}")]
+    [Produces("application/json")]
+    public async Task<object> ListaPrescricaosAtentedimento(int idAtendimento) =>
+        await _service.ListarPrescricaosAtendimento(idAtendimento);
+
+    [HttpPost("AdicionarPrescricaoAtendimento")]
+    [Produces("application/json")]
+    public async Task<ActionResult<object>> AdicionarPrescricaoAtendimento(PrescricaoAtendimento Prescricao)
+    {
+        RetornoGenerico<PrescricaoAtendimento> retorno = await _service.AdicionarPrescricaoAtendimento(Prescricao);
+
+        if (retorno.Success)
+            return Ok(retorno);
+        else
+            return BadRequest(retorno);
+    }
+
+    [HttpPut("AtualizarPrescricaoAtendimento")]
+    [Produces("application/json")]
+    public async Task<IActionResult> AtualizarPrescricaoAtendimento(PrescricaoAtendimento Prescricao)
+    {
+        await _service.AtualizarPrescricaoAtendimento(Prescricao);
+        return Ok();
+    }
+
+    [HttpDelete("DeletarPrescricaoAtendimento/{idPrescricao:int}")]
+    [Produces("application/json")]
+    public async Task<IActionResult> DeletarPrescricaoAtendimento(int idPrescricao)
+    {
+        await _service.DeletarPrescricaoAtendimento(idPrescricao);
+        return Ok();
+    }
 }
 

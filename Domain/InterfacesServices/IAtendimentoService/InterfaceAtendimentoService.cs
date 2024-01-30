@@ -16,4 +16,12 @@ public interface InterfaceAtendimentoService
     Task<ExameAtendimento> ObterExameAtendimento(int idExame);
     Task<IList<ExameAtendimento>> ListarExamesAtendimento(int idAtendimento);
     #endregion
+
+    #region Prescrição
+    Task<RetornoGenerico<PrescricaoAtendimento>> AdicionarPrescricaoAtendimento(PrescricaoAtendimento prescricao);
+    Task AtualizarPrescricaoAtendimento(PrescricaoAtendimento prescricao);
+    Task DeletarPrescricaoAtendimento(int idPrescricao);
+    Task<PrescricaoAtendimento> ObterPrescricaoAtendimento(int idPrescricao);
+    Task<IList<PrescricaoAtendimento>> ListarPrescricaosAtendimento(int idAtendimento);
+    #endregion
 }

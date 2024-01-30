@@ -9,12 +9,15 @@ public class AtendimentoService : InterfaceAtendimentoService
 {
     private readonly InterfaceAtendimento _repository;
     private readonly InterfaceExameAtendimento _exameRepository;
+    private readonly InterfacePrescricaoAtendimento _prescricaoRepository;
 
     public AtendimentoService(InterfaceAtendimento repository,
-        InterfaceExameAtendimento exameRepository)
+        InterfaceExameAtendimento exameRepository,
+        InterfacePrescricaoAtendimento prescricaoRepository)
     {
         _repository = repository;
         _exameRepository = exameRepository;
+        _prescricaoRepository = prescricaoRepository;
     }
 
     #region Atendimento
@@ -76,5 +79,34 @@ public class AtendimentoService : InterfaceAtendimentoService
     }
     public async Task<ExameAtendimento> ObterExameAtendimento(int idExame) => await _exameRepository.GetEntityById(idExame);
     public async Task<IList<ExameAtendimento>> ListarExamesAtendimento(int idAtendimento) => await _exameRepository.ListaAxamesAtendimento(idAtendimento);
+    #endregion
+
+    #region Prescrição
+    public async Task<RetornoGenerico<PrescricaoAtendimento>> AdicionarPrescricaoAtendimento(PrescricaoAtendimento Prescricao)
+    {
+        Prescricao = await _prescricaoRepository.Add(Prescricao);
+
+        if (Prescricao.Id > 0)
+            return new RetornoGenerico<PrescricaoAtendimento>
+            {
+                Success = true,
+                Message = "Prescrição adicionada com sucesso"
+            };
+        else
+            return new RetornoGenerico<PrescricaoAtendimento> { Success = false, Message = "Não foi possivel adicionar a Prescricão." };
+    }
+    public async Task AtualizarPrescricaoAtendimento(PrescricaoAtendimento Prescricao)
+    {
+        await _prescricaoRepository.Update(Prescricao);
+    }
+    public async Task DeletarPrescricaoAtendimento(int idPrescricao)
+    {
+        PrescricaoAtendimento Prescricao = await ObterPrescricaoAtendimento(idPrescricao);
+
+        if (Prescricao != null)
+            await _prescricaoRepository.Delete(Prescricao);
+    }
+    public async Task<PrescricaoAtendimento> ObterPrescricaoAtendimento(int idPrescricao) => await _prescricaoRepository.GetEntityById(idPrescricao);
+    public async Task<IList<PrescricaoAtendimento>> ListarPrescricaosAtendimento(int idAtendimento) => await _prescricaoRepository.ListaPrescricaoAtendimento(idAtendimento);
     #endregion
 }

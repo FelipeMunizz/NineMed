@@ -13,6 +13,7 @@ public class Atendimento
     public decimal? IMC { get; set; }
     public string? Diagnostico { get; set; }
     public string? Conduta { get; set;}
+    public bool Finalizado { get; set; }
 
     [ForeignKey("Agendamento")]
     public int IdAgendamento { get; set; }
