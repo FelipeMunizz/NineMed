@@ -172,5 +172,45 @@ public class AtendimentoController : ControllerBase
         return Ok();
     }
     #endregion
+
+    #region Anexos
+    [HttpGet("ObterAnexosAtendimento/{idAnexos:int}")]
+    [Produces("application/json")]
+    public async Task<ActionResult<AnexosAtendimento>> ObterAnexosAtendimento(int idAnexos) =>
+        await _service.ObterAnexosAtendimento(idAnexos);
+
+    [HttpGet("ListaAnexossAtentedimento/{idAtendimento:int}")]
+    [Produces("application/json")]
+    public async Task<object> ListaAnexossAtentedimento(int idAtendimento) =>
+        await _service.ListarAnexossAtendimento(idAtendimento);
+
+    [HttpPost("AdicionarAnexosAtendimento")]
+    [Produces("application/json")]
+    public async Task<ActionResult<object>> AdicionarAnexosAtendimento(AnexosAtendimento Anexos)
+    {
+        RetornoGenerico<AnexosAtendimento> retorno = await _service.AdicionarAnexosAtendimento(Anexos);
+
+        if (retorno.Success)
+            return Ok(retorno);
+        else
+            return BadRequest(retorno);
+    }
+
+    [HttpPut("AtualizarAnexosAtendimento")]
+    [Produces("application/json")]
+    public async Task<IActionResult> AtualizarAnexosAtendimento(AnexosAtendimento Anexos)
+    {
+        await _service.AtualizarAnexosAtendimento(Anexos);
+        return Ok();
+    }
+
+    [HttpDelete("DeletarAnexosAtendimento/{idAnexos:int}")]
+    [Produces("application/json")]
+    public async Task<IActionResult> DeletarAnexosAtendimento(int idAnexos)
+    {
+        await _service.DeletarAnexosAtendimento(idAnexos);
+        return Ok();
+    }
+    #endregion
 }
 

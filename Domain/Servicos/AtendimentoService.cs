@@ -11,16 +11,19 @@ public class AtendimentoService : InterfaceAtendimentoService
     private readonly InterfaceExameAtendimento _exameRepository;
     private readonly InterfacePrescricaoAtendimento _prescricaoRepository;
     private readonly InterfaceAtestadoAtendimento _atestadoRepository;
+    private readonly InterfaceAnexosAtendimento _anexosRepository;
 
     public AtendimentoService(InterfaceAtendimento repository,
         InterfaceExameAtendimento exameRepository,
         InterfacePrescricaoAtendimento prescricaoRepository,
-        InterfaceAtestadoAtendimento atestadoRepository)
+        InterfaceAtestadoAtendimento atestadoRepository,
+        InterfaceAnexosAtendimento anexosRepository)
     {
         _repository = repository;
         _exameRepository = exameRepository;
         _prescricaoRepository = prescricaoRepository;
         _atestadoRepository = atestadoRepository;
+        _anexosRepository = anexosRepository;
     }
 
     #region Atendimento
@@ -140,5 +143,34 @@ public class AtendimentoService : InterfaceAtendimentoService
     }
     public async Task<AtestadoAtendimento> ObterAtestadoAtendimento(int idAtestado) => await _atestadoRepository.GetEntityById(idAtestado);
     public async Task<IList<AtestadoAtendimento>> ListarAtestadosAtendimento(int idAtendimento) => await _atestadoRepository.ListaAtestadoAtendimento(idAtendimento);
+    #endregion
+
+    #region Anexos
+    public async Task<RetornoGenerico<AnexosAtendimento>> AdicionarAnexosAtendimento(AnexosAtendimento Anexos)
+    {
+        Anexos = await _anexosRepository.Add(Anexos);
+
+        if (Anexos.Id > 0)
+            return new RetornoGenerico<AnexosAtendimento>
+            {
+                Success = true,
+                Message = "Prescrição adicionada com sucesso"
+            };
+        else
+            return new RetornoGenerico<AnexosAtendimento> { Success = false, Message = "Não foi possivel adicionar a Prescricão." };
+    }
+    public async Task AtualizarAnexosAtendimento(AnexosAtendimento Anexos)
+    {
+        await _anexosRepository.Update(Anexos);
+    }
+    public async Task DeletarAnexosAtendimento(int idAnexos)
+    {
+        AnexosAtendimento Anexos = await ObterAnexosAtendimento(idAnexos);
+
+        if (Anexos != null)
+            await _anexosRepository.Delete(Anexos);
+    }
+    public async Task<AnexosAtendimento> ObterAnexosAtendimento(int idAnexos) => await _anexosRepository.GetEntityById(idAnexos);
+    public async Task<IList<AnexosAtendimento>> ListarAnexossAtendimento(int idAtendimento) => await _anexosRepository.ListaAnexosAtendimento(idAtendimento);
     #endregion
 }

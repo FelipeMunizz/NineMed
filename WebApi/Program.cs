@@ -87,6 +87,8 @@ builder.Services.AddScoped<InterfaceAgendamento, AgendamentoRepository>();
 builder.Services.AddScoped<InterfaceAtendimento, AtendimentoRepository>();
 builder.Services.AddScoped<InterfaceExameAtendimento, ExamesAtendimentoRepository>();
 builder.Services.AddScoped<InterfacePrescricaoAtendimento, PrescricaoAtendimentoRepository>();
+builder.Services.AddScoped<InterfaceAnexosAtendimento, AnexosAtendimentoRepository>();
+builder.Services.AddScoped<InterfaceAtestadoAtendimento, AtestadoAtendimentoRepository>();
 #endregion
 
 builder.Services.AddScoped<InterfaceFuncionario, FuncionarioRepository>();

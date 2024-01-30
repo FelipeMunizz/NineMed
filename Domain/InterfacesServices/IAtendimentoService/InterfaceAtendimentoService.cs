@@ -32,4 +32,12 @@ public interface InterfaceAtendimentoService
     Task<AtestadoAtendimento> ObterAtestadoAtendimento(int idAtestado);
     Task<IList<AtestadoAtendimento>> ListarAtestadosAtendimento(int idAtendimento);
     #endregion
+
+    #region Anexos
+    Task<RetornoGenerico<AnexosAtendimento>> AdicionarAnexosAtendimento(AnexosAtendimento Anexos);
+    Task AtualizarAnexosAtendimento(AnexosAtendimento Anexos);
+    Task DeletarAnexosAtendimento(int idAnexos);
+    Task<AnexosAtendimento> ObterAnexosAtendimento(int idAnexos);
+    Task<IList<AnexosAtendimento>> ListarAnexossAtendimento(int idAtendimento);
+    #endregion
 }
