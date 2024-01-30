@@ -21,6 +21,7 @@ public class AtendimentoController : ControllerBase
         _repository = repository;
     }
 
+    #region Atendimento
     [HttpPost("AdicionarAtendimento")]
     [Produces("application/json")]
     public async Task<ActionResult<object>> AdicionarAtendimento(Atendimento atendimento)
@@ -50,7 +51,9 @@ public class AtendimentoController : ControllerBase
     [HttpGet("ListaAtentedimentoPaciente/{idPaciente:int}")]
     [Produces("application/json")]
     public async Task<object> ListaAtentedimentoPaciente(int idPaciente) => await _repository.ListaAtentedimentoPaciente(idPaciente);
+    #endregion
 
+    #region Exames
     [HttpGet("ObterExameAtendimento/{idExame:int}")]
     [Produces("application/json")]
     public async Task<ActionResult<ExameAtendimento>> ObterExameAtendimento(int idExame) =>
@@ -58,7 +61,7 @@ public class AtendimentoController : ControllerBase
 
     [HttpGet("ListaExamesAtentedimento/{idAtendimento:int}")]
     [Produces("application/json")]
-    public async Task<object> ListaExamesAtentedimento(int idAtendimento) => 
+    public async Task<object> ListaExamesAtentedimento(int idAtendimento) =>
         await _service.ListarExamesAtendimento(idAtendimento);
 
     [HttpPost("AdicionarExameAtendimento")]
@@ -88,7 +91,9 @@ public class AtendimentoController : ControllerBase
         await _service.DeletarExameAtendimento(idExame);
         return Ok();
     }
+    #endregion
 
+    #region Prescricao
     [HttpGet("ObterPrescricaoAtendimento/{idPrescricao:int}")]
     [Produces("application/json")]
     public async Task<ActionResult<PrescricaoAtendimento>> ObterPrescricaoAtendimento(int idPrescricao) =>
@@ -126,5 +131,6 @@ public class AtendimentoController : ControllerBase
         await _service.DeletarPrescricaoAtendimento(idPrescricao);
         return Ok();
     }
+    #endregion
 }
 
