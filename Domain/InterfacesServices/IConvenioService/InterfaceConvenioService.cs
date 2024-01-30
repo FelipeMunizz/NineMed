@@ -18,4 +18,5 @@ public interface InterfaceConvenioService
     Task<RetornoGenerico<object>> AdicionarProfissionalSaudeConvenio(ProfissionaisSaudeConvenio ProfissionalSaude);
     Task AtualizarProfissionalSaudeConvenio(ProfissionaisSaudeConvenio ProfissionalSaude);
     Task DeletarProfissionalSaudeConvenio(int idProfissionalSaudeConvenio);
+    Task<bool> ProfissionalAtendeConvenio(int idFuncionario, int idConvenio);
 }

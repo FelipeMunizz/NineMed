@@ -12,6 +12,7 @@ public class Agendamento
     public SituacaoAgendamento SituacaoAgendamento { get; set; }
     public bool Lembrete { get; set; }
     public string? Observacao { get; set; }
+    public int[] IdsProcedimento { get; set; }
 
     [ForeignKey("Clinica")]
     public int IdClinica { get; set; }
@@ -28,4 +29,9 @@ public class Agendamento
     public int IdFuncionario { get; set; }
     [JsonIgnore]
     public virtual Funcionario? Funcionario { get; set; }
+
+    [ForeignKey("Convenio")]
+    public int IdConvenio { get; set; }
+    [JsonIgnore]
+    public virtual Convenio? Convenio { get; set; }
 }

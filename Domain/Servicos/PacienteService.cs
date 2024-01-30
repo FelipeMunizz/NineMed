@@ -1,6 +1,7 @@
 ﻿using Domain.Interfaces.IPaciente;
 using Domain.InterfacesServices.IPacienteService;
 using Entities.Models;
+using Entities.Retorno;
 using Helper.Logs;
 
 namespace Domain.Servicos;
@@ -12,18 +13,21 @@ public class PacienteService : InterfacePacienteService
     private readonly InterfacePacienteEndereco _enderecoRepositorio;
     private readonly InterfacePacienteConvenio _convenioRepositorio;
     private readonly InterfacePacienteFamiliar _familiarRepositorio;
+    private readonly InterfacePacienteProntuario _prontuarioRepositorio;
 
     public PacienteService(InterfacePaciente pacienteRepositorio,
                            InterfacePacienteContato contatoRepositorio,
                            InterfacePacienteEndereco enderecoRepositorio,
                            InterfacePacienteConvenio convenioRepositorio,
-                           InterfacePacienteFamiliar familiarRepositorio)
+                           InterfacePacienteFamiliar familiarRepositorio,
+                           InterfacePacienteProntuario prontuarioRepositorio)
     {
         _pacienteRepositorio = pacienteRepositorio;
         _contatoRepositorio = contatoRepositorio;
         _enderecoRepositorio = enderecoRepositorio;
         _convenioRepositorio = convenioRepositorio;
         _familiarRepositorio = familiarRepositorio;
+        _prontuarioRepositorio = prontuarioRepositorio;
     }
 
     #region Paciente
@@ -35,6 +39,7 @@ public class PacienteService : InterfacePacienteService
     {
         try
         {
+            PacienteProntuario prontuario = new PacienteProntuario();
             paciente = await _pacienteRepositorio.Add(paciente);
             if (paciente.Id > 0)
             {
@@ -42,16 +47,18 @@ public class PacienteService : InterfacePacienteService
                 contato.IdPaciente = paciente.Id;
                 convenio.IdPaciente = paciente.Id;
                 familiar.IdPaciente = paciente.Id;
+                prontuario.IdPaciente = paciente.Id;
             }
             else
             {
                 LogProxy.GravarLog($"Erro ao salvar Paciente: {paciente.Nome}, CPF {paciente.CPF}");
                 throw new Exception("Erro ao adicionar a Paciente");
             }
-            await _enderecoRepositorio.Add(endereco);
-            await _contatoRepositorio.Add(contato);
-            await _convenioRepositorio.Add(convenio);
-            await _familiarRepositorio.Add(familiar);
+            await AdicionarEnderecoPaciente(endereco);
+            await AdicionarContatoPaciente(contato);
+            await AdicionarPacienteConvenio(convenio);
+            await AdicionarPacienteFamiliar(familiar);
+            await AdicionarPacienteProntuario(prontuario);
         }
         catch (Exception ex)
         {
@@ -142,6 +149,55 @@ public class PacienteService : InterfacePacienteService
         PacienteConvenio convenio = await _convenioRepositorio.GetEntityById(idConvenio);
 
         await _convenioRepositorio.Delete(convenio);
+    }
+    #endregion
+
+    #region Prontuario
+    public async Task<RetornoGenerico<PacienteProntuario>> AdicionarPacienteProntuario(PacienteProntuario prontuario)
+    {
+        PacienteProntuario pacienteProntuario = await ObtemPacienteProntuaio(prontuario.IdPaciente);
+        if(pacienteProntuario != null)
+        {
+            prontuario = await _prontuarioRepositorio.Add(prontuario);
+
+            if (prontuario.Id == 0)
+                return new RetornoGenerico<PacienteProntuario>
+                {
+                    Success = false,
+                    Message = "Não foi possivel adicionar prontuario"
+                };
+            return new RetornoGenerico<PacienteProntuario>
+            {
+                Success = true,
+                Message = "Prontuario adicionado com sucesso",
+                Result = prontuario
+            };
+        }
+        else
+        {
+            return new RetornoGenerico<PacienteProntuario>
+            {
+                Success = false,
+                Message = "Paciente já possui um pronturario",
+                Result = pacienteProntuario
+            };
+        }
+    }
+
+    public async Task AtualizarPacienteProntuario(PacienteProntuario prontuario)
+    {
+        await _prontuarioRepositorio.Update(prontuario);
+    }
+
+    public async Task<PacienteProntuario> ObtemProntuaio(int idProntuario) => await _prontuarioRepositorio.GetEntityById(idProntuario);
+
+    public async Task<PacienteProntuario> ObtemPacienteProntuaio(int idPaciente) => await _prontuarioRepositorio.ObtemPacienteProntuario(idPaciente);
+
+    public async Task DeletarPacienteProntuario(int idProntuario)
+    {
+        PacienteProntuario prontuario = await ObtemProntuaio(idProntuario);
+        if(prontuario != null)
+            await _prontuarioRepositorio.Delete(prontuario);
     }
     #endregion
 }

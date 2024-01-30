@@ -19,11 +19,29 @@ public class ProfissionalSaudeConvenioRepository : RepositorioGenerico<Profissio
     {
         using (var banco = new AppDbContext(_context))
         {
-            return await(
+            return await (
                 from psc in banco.ProfissionaisSaudeConvenio
                 where psc.IdConvenio.Equals(idConvenio)
                 select psc
                 ).AsNoTracking().ToListAsync();
+        }
+    }
+
+    public async Task<bool> ProfissionalAtendeConvenio(int idFuncionario, int idConvenio)
+    {
+        using (var banco = new AppDbContext(_context))
+        {
+            var profissional =
+                await (
+                    from psc in banco.ProfissionaisSaudeConvenio
+                    where psc.IdConvenio == idConvenio
+                    && psc.IdFuncionario == idFuncionario
+                    select psc
+                ).FirstOrDefaultAsync();
+
+            if (profissional != null)
+                return true;
+            return false;
         }
     }
 }

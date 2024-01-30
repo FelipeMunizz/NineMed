@@ -1,4 +1,5 @@
 ﻿using Entities.Models;
+using Entities.Retorno;
 
 namespace Domain.InterfacesServices.IPacienteService;
 
@@ -38,5 +39,13 @@ public interface InterfacePacienteService
     Task AtualizarPacienteConvenio(PacienteConvenio convenio);
     Task<PacienteConvenio> ObterPacienteConvenio(int idConvenio);
     Task DeletarPacienteConvenio(int idConvenio);
+    #endregion
+
+    #region Prontuario
+    Task<RetornoGenerico<PacienteProntuario>> AdicionarPacienteProntuario(PacienteProntuario prontuario);
+    Task AtualizarPacienteProntuario(PacienteProntuario prontuario);
+    Task<PacienteProntuario> ObtemPacienteProntuaio(int idPaciente);
+    Task<PacienteProntuario> ObtemProntuaio(int idProntuario);
+    Task DeletarPacienteProntuario(int idProntuario);
     #endregion
 }

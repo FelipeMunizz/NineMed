@@ -1,7 +1,10 @@
-﻿using Domain.Interfaces.IFuncionario;
+﻿using Dapper;
+using Domain.Interfaces.IFuncionario;
 using Entities.Models;
+using Helper.Configuracoes;
 using Infra.Configuracao;
 using Infra.Repositorio.Generico;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data.Entity;
 
@@ -30,16 +33,21 @@ public class HorarioFuncionarioRepository : RepositorioGenerico<HorarioFuncionar
 
     public async Task<int> HorarioFuncionarioIntervalo(int idFuncionario, DateTime dtAgendamento, TimeOnly tempoAgendado)
     {
-        using (var banco = new AppDbContext(_context))
+        using (var connection = new SqlConnection(Config.ConectionString))
         {
             DateTime horarioFinal = dtAgendamento.AddHours(tempoAgendado.Hour).AddMinutes(tempoAgendado.Minute);
+            await connection.OpenAsync();
 
-            return await (
-                from hf in banco.HorarioFuncionario
-                where hf.IdFuncionario == idFuncionario
-                && hf.DataHorario >= horarioFinal
-                select hf
-            ).CountAsync();
+            string sql = @"
+                        SELECT * FROM horariofuncionario
+                        WHERE idFuncionario = @IdFuncionario
+                        AND dataHorario BETWEEN @DataInicio AND @DataFim
+                      ";
+            var horarios = await connection.QueryAsync<Toten>(sql, new { IdFuncionario = idFuncionario, DataInicio = dtAgendamento, DataFim = horarioFinal });
+
+            await connection.CloseAsync();
+
+            return horarios.Count();
         }
     }
 

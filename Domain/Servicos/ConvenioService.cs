@@ -121,4 +121,7 @@ public class ConvenioService : InterfaceConvenioService
         if (profissionalSaude != null)
             await _profissionalSaude.Delete(profissionalSaude);
     }
+
+    public async Task<bool> ProfissionalAtendeConvenio(int idFuncionario, int idConvenio) =>
+        await _profissionalSaude.ProfissionalAtendeConvenio(idFuncionario, idConvenio);
 }
