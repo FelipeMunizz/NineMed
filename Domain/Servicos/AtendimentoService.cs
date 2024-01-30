@@ -10,14 +10,17 @@ public class AtendimentoService : InterfaceAtendimentoService
     private readonly InterfaceAtendimento _repository;
     private readonly InterfaceExameAtendimento _exameRepository;
     private readonly InterfacePrescricaoAtendimento _prescricaoRepository;
+    private readonly InterfaceAtestadoAtendimento _atestadoRepository;
 
     public AtendimentoService(InterfaceAtendimento repository,
         InterfaceExameAtendimento exameRepository,
-        InterfacePrescricaoAtendimento prescricaoRepository)
+        InterfacePrescricaoAtendimento prescricaoRepository,
+        InterfaceAtestadoAtendimento atestadoRepository)
     {
         _repository = repository;
         _exameRepository = exameRepository;
         _prescricaoRepository = prescricaoRepository;
+        _atestadoRepository = atestadoRepository;
     }
 
     #region Atendimento
@@ -108,5 +111,34 @@ public class AtendimentoService : InterfaceAtendimentoService
     }
     public async Task<PrescricaoAtendimento> ObterPrescricaoAtendimento(int idPrescricao) => await _prescricaoRepository.GetEntityById(idPrescricao);
     public async Task<IList<PrescricaoAtendimento>> ListarPrescricaosAtendimento(int idAtendimento) => await _prescricaoRepository.ListaPrescricaoAtendimento(idAtendimento);
+    #endregion
+
+    #region Atestado
+    public async Task<RetornoGenerico<AtestadoAtendimento>> AdicionarAtestadoAtendimento(AtestadoAtendimento Atestado)
+    {
+        Atestado = await _atestadoRepository.Add(Atestado);
+
+        if (Atestado.Id > 0)
+            return new RetornoGenerico<AtestadoAtendimento>
+            {
+                Success = true,
+                Message = "Prescrição adicionada com sucesso"
+            };
+        else
+            return new RetornoGenerico<AtestadoAtendimento> { Success = false, Message = "Não foi possivel adicionar a Prescricão." };
+    }
+    public async Task AtualizarAtestadoAtendimento(AtestadoAtendimento Atestado)
+    {
+        await _atestadoRepository.Update(Atestado);
+    }
+    public async Task DeletarAtestadoAtendimento(int idAtestado)
+    {
+        AtestadoAtendimento Atestado = await ObterAtestadoAtendimento(idAtestado);
+
+        if (Atestado != null)
+            await _atestadoRepository.Delete(Atestado);
+    }
+    public async Task<AtestadoAtendimento> ObterAtestadoAtendimento(int idAtestado) => await _atestadoRepository.GetEntityById(idAtestado);
+    public async Task<IList<AtestadoAtendimento>> ListarAtestadosAtendimento(int idAtendimento) => await _atestadoRepository.ListaAtestadoAtendimento(idAtendimento);
     #endregion
 }

@@ -24,4 +24,12 @@ public interface InterfaceAtendimentoService
     Task<PrescricaoAtendimento> ObterPrescricaoAtendimento(int idPrescricao);
     Task<IList<PrescricaoAtendimento>> ListarPrescricaosAtendimento(int idAtendimento);
     #endregion
+
+    #region Atestado
+    Task<RetornoGenerico<AtestadoAtendimento>> AdicionarAtestadoAtendimento(AtestadoAtendimento Atestado);
+    Task AtualizarAtestadoAtendimento(AtestadoAtendimento Atestado);
+    Task DeletarAtestadoAtendimento(int idAtestado);
+    Task<AtestadoAtendimento> ObterAtestadoAtendimento(int idAtestado);
+    Task<IList<AtestadoAtendimento>> ListarAtestadosAtendimento(int idAtendimento);
+    #endregion
 }

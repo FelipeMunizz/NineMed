@@ -132,5 +132,45 @@ public class AtendimentoController : ControllerBase
         return Ok();
     }
     #endregion
+
+    #region Atestado
+    [HttpGet("ObterAtestadoAtendimento/{idAtestado:int}")]
+    [Produces("application/json")]
+    public async Task<ActionResult<AtestadoAtendimento>> ObterAtestadoAtendimento(int idAtestado) =>
+        await _service.ObterAtestadoAtendimento(idAtestado);
+
+    [HttpGet("ListaAtestadosAtentedimento/{idAtendimento:int}")]
+    [Produces("application/json")]
+    public async Task<object> ListaAtestadosAtentedimento(int idAtendimento) =>
+        await _service.ListarAtestadosAtendimento(idAtendimento);
+
+    [HttpPost("AdicionarAtestadoAtendimento")]
+    [Produces("application/json")]
+    public async Task<ActionResult<object>> AdicionarAtestadoAtendimento(AtestadoAtendimento Atestado)
+    {
+        RetornoGenerico<AtestadoAtendimento> retorno = await _service.AdicionarAtestadoAtendimento(Atestado);
+
+        if (retorno.Success)
+            return Ok(retorno);
+        else
+            return BadRequest(retorno);
+    }
+
+    [HttpPut("AtualizarAtestadoAtendimento")]
+    [Produces("application/json")]
+    public async Task<IActionResult> AtualizarAtestadoAtendimento(AtestadoAtendimento Atestado)
+    {
+        await _service.AtualizarAtestadoAtendimento(Atestado);
+        return Ok();
+    }
+
+    [HttpDelete("DeletarAtestadoAtendimento/{idAtestado:int}")]
+    [Produces("application/json")]
+    public async Task<IActionResult> DeletarAtestadoAtendimento(int idAtestado)
+    {
+        await _service.DeletarAtestadoAtendimento(idAtestado);
+        return Ok();
+    }
+    #endregion
 }
 
