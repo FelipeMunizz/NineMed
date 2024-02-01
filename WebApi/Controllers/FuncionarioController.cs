@@ -1,6 +1,7 @@
 ﻿using Domain.Interfaces.IFuncionario;
 using Domain.InterfacesServices.IFuncionarioService;
 using Entities.Models;
+using Entities.Retorno;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,11 +31,14 @@ public class FuncionarioController : ControllerBase
 
     [HttpPost("AdicionarFuncionario")]
     [Produces("application/json")]
-    public async Task<IActionResult> AdicionarFuncionario(Funcionario funcionario)
+    public async Task<ActionResult<RetornoGenerico<Funcionario>>> AdicionarFuncionario(Funcionario funcionario)
     {
-        await _service.AdicionarFuncionario(funcionario);
+        RetornoGenerico<Funcionario> retorno = await _service.AdicionarFuncionario(funcionario);
 
-        return Ok();
+        if (retorno.Success)
+            return Ok(retorno);
+
+        return BadRequest(retorno);
     }
 
     [HttpPut("AtualizarFuncionario")]

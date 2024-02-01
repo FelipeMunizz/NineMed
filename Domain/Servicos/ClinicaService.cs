@@ -1,6 +1,7 @@
 ﻿using Domain.Interfaces.IClinica;
 using Domain.InterfacesServices.IClinicaService;
 using Entities.Models;
+using Entities.Retorno;
 using Helper.Logs;
 
 namespace Domain.Servicos;
@@ -11,8 +12,8 @@ public class ClinicaService : InterfaceClinicaService
     private readonly InterfaceContatoClinica _contatoClinicaRepositorio;
     private readonly InterfaceEnderecoClinica _enderecoClinicaRepositorio;
 
-    public ClinicaService(InterfaceClinica clinicaRepositorio, 
-                          InterfaceContatoClinica contatoClinicaRepositorio, 
+    public ClinicaService(InterfaceClinica clinicaRepositorio,
+                          InterfaceContatoClinica contatoClinicaRepositorio,
                           InterfaceEnderecoClinica enderecoClinicaRepositorio)
     {
         _clinicaRepositorio = clinicaRepositorio;
@@ -21,7 +22,7 @@ public class ClinicaService : InterfaceClinicaService
     }
 
     #region Clinica
-    public async Task AdicionarClinica(Clinica clinica, EnderecoClinica endereco, ContatoClinica contato)
+    public async Task<RetornoGenerico<Clinica>> AdicionarClinica(Clinica clinica, EnderecoClinica endereco, ContatoClinica contato)
     {
         try
         {
@@ -34,16 +35,32 @@ public class ClinicaService : InterfaceClinicaService
             else
             {
                 LogProxy.GravarLog($"Erro ao salvar Clinica: CNPJ {clinica.CNPJ}");
-                throw new Exception("Erro ao adicionar a clinica");
+                return new RetornoGenerico<Clinica>
+                {
+                    Success = false,
+                    Message = "Erro ao salvar a clinica"
+                };
             }
 
             await _enderecoClinicaRepositorio.Add(endereco);
             await _contatoClinicaRepositorio.Add(contato);
+
+            return new RetornoGenerico<Clinica>
+            {
+                Success = true,
+                Message = "Clinica Adicionada com Sucesso",
+                Result = clinica
+            };
         }
         catch (Exception ex)
         {
             LogProxy.GravarLogException(ex);
-            throw;
+
+            return new RetornoGenerico<Clinica>
+            {
+                Success = false,
+                Message = "Erro ao salvar a clinica"
+            };
         }
     }
 

@@ -1,6 +1,7 @@
 ﻿using Domain.Interfaces.IFuncionario;
 using Domain.InterfacesServices.IFuncionarioService;
 using Entities.Models;
+using Entities.Retorno;
 
 namespace Domain.Servicos;
 
@@ -18,9 +19,23 @@ public class FuncionarioService : InterfaceFuncionarioService
     public async Task<Funcionario> ObterFuncionario(int idFuncionario) => await _repository.GetEntityById(idFuncionario);
     public async Task<Funcionario> ObterFuncionarioEmail(string email) => await _repository.ObterFuncionarioEmail(email);
 
-    public async Task AdicionarFuncionario(Funcionario obj)
-    {        
-        await _repository.Add(obj);
+    public async Task<RetornoGenerico<Funcionario>> AdicionarFuncionario(Funcionario obj)
+    {
+        obj = await _repository.Add(obj);
+
+        if (obj.Id > 0)
+            return new RetornoGenerico<Funcionario>
+            {
+                Success = true,
+                Message = "Funcionario adicionado com sucesso",
+                Result = obj
+            };
+        else
+            return new RetornoGenerico<Funcionario>
+            {
+                Success = false,
+                Message = "Não foi possivel adicionar funcionario",
+            };
     }
 
     public async Task AtualizarFuncionario(Funcionario obj)
@@ -52,7 +67,7 @@ public class FuncionarioService : InterfaceFuncionarioService
     {
         HorarioFuncionario horario = await _repositoryHorario.GetEntityById(idHorario);
 
-        if(horario != null)
+        if (horario != null)
             await _repositoryHorario.Delete(horario);
     }
 
@@ -68,6 +83,6 @@ public class FuncionarioService : InterfaceFuncionarioService
 
     public async Task<IList<HorarioFuncionario>> ListaHorariosFuncionarioPeriodo(int idFuncionario, DateTime dtInicio, DateTime dtFim)
     {
-        return await _repositoryHorario.ListaHorariosFuncionarioPeriodo(idFuncionario , dtInicio, dtFim);
+        return await _repositoryHorario.ListaHorariosFuncionarioPeriodo(idFuncionario, dtInicio, dtFim);
     }
 }

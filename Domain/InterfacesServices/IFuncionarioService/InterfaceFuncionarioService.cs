@@ -1,10 +1,11 @@
 ﻿using Entities.Models;
+using Entities.Retorno;
 
 namespace Domain.InterfacesServices.IFuncionarioService;
 
 public interface InterfaceFuncionarioService
 {
-    Task AdicionarFuncionario(Funcionario obj);
+    Task<RetornoGenerico<Funcionario>> AdicionarFuncionario(Funcionario obj);
     Task AtualizarFuncionario(Funcionario obj);
     Task DeletarFuncionario(int idFuncionaro);
     Task<Funcionario> ObterFuncionario(int idFuncionario);

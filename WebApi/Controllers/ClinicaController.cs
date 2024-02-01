@@ -1,6 +1,7 @@
 ﻿using Domain.Interfaces.IClinica;
 using Domain.InterfacesServices.IClinicaService;
 using Entities.Models;
+using Entities.Retorno;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.DTOs;
@@ -31,49 +32,47 @@ public class ClinicaController : ControllerBase
 
     [HttpPost("AdicionarClinica")]
     [Produces("application/json")]
-    public async Task<IActionResult> AdicionarClinica(ClinicaDTO clinicaDTO)
+    public async Task<ActionResult<RetornoGenerico<Clinica>>> AdicionarClinica(ClinicaDTO clinicaDTO)
     {
-        try
+        string nome = string.IsNullOrEmpty(clinicaDTO.Fantasia) ? clinicaDTO.RazaoSocial : clinicaDTO.Fantasia;
+        Clinica clinica = new Clinica
         {
-            Clinica clinica = new Clinica
-            {
-                Nome = clinicaDTO.Fantasia,
-                CNPJ = clinicaDTO.CNPJ,
-                RazaoSocial = clinicaDTO.RazaoSocial,
-                Fantasia = clinicaDTO.Fantasia,
-                InscricaoEstadual = clinicaDTO.InscricaoEstadual,
-                InscricaoMunicipal = clinicaDTO.InscricaoMunicipal,
-                Logo = clinicaDTO.Logo
-            };
+            Nome = nome,
+            CNPJ = clinicaDTO.CNPJ,
+            RazaoSocial = clinicaDTO.RazaoSocial,
+            Fantasia = nome,
+            InscricaoEstadual = clinicaDTO.InscricaoEstadual,
+            InscricaoMunicipal = clinicaDTO.InscricaoMunicipal,
+            Logo = clinicaDTO.Logo
+        };
 
-            EnderecoClinica endereco = new EnderecoClinica
-            {
-                Logradouro = clinicaDTO.Logradouro,
-                Numero = clinicaDTO.Numero,
-                Complemento = clinicaDTO.Complemento,
-                CEP = clinicaDTO.CEP,
-                Bairro = clinicaDTO.Bairro,
-                Cidade = clinicaDTO.Cidade,
-                Estado = clinicaDTO.Estado,
-            };
-
-            ContatoClinica contato = new ContatoClinica
-            {
-                Nome = clinicaDTO.NomeContato,
-                TipoContato = clinicaDTO.TipoContato,
-                Email = clinicaDTO.Email,
-                NumeroContato = clinicaDTO.NumeroContato,
-                HorarioComercial = clinicaDTO.HorarioComercial,
-                Lembretes = clinicaDTO.Lembretes
-            };
-
-            await _service.AdicionarClinica(clinica, endereco, contato);
-            return Ok();
-        }
-        catch (Exception)
+        EnderecoClinica endereco = new EnderecoClinica
         {
-            return BadRequest();
-        }
+            Logradouro = clinicaDTO.Logradouro,
+            Numero = clinicaDTO.Numero,
+            Complemento = clinicaDTO.Complemento,
+            CEP = clinicaDTO.CEP,
+            Bairro = clinicaDTO.Bairro,
+            Cidade = clinicaDTO.Cidade,
+            Estado = clinicaDTO.Estado,
+        };
+
+        ContatoClinica contato = new ContatoClinica
+        {
+            Nome = string.IsNullOrEmpty(clinicaDTO.NomeContato) ? nome : clinicaDTO.NomeContato,
+            TipoContato = clinicaDTO.TipoContato,
+            Email = clinicaDTO.Email,
+            NumeroContato = clinicaDTO.NumeroContato,
+            HorarioComercial = clinicaDTO.HorarioComercial,
+            Lembretes = clinicaDTO.Lembretes
+        };
+
+        RetornoGenerico<Clinica> retorno = await _service.AdicionarClinica(clinica, endereco, contato);
+
+        if (retorno.Success)
+            return Ok(retorno);
+
+        return BadRequest(retorno);
     }
 
     [HttpPut("AtualizarClinica")]
@@ -81,7 +80,7 @@ public class ClinicaController : ControllerBase
     public async Task<IActionResult> AtualizarClinica(Clinica clinica)
     {
         try
-        {            
+        {
             await _service.AtualizarClinica(clinica);
             return Ok();
         }
