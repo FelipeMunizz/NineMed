@@ -29,6 +29,10 @@ public class FuncionarioController : ControllerBase
     [Produces("application/json")]
     public async Task<ActionResult<Funcionario>> ObterFuncionario(int idFuncionario) => await _service.ObterFuncionario(idFuncionario);
 
+    [HttpGet("ObterFuncionarioEmail")]
+    [Produces("application/json")]
+    public async Task<ActionResult<Funcionario>> ObterFuncionarioEmail(string email) => await _service.ObterFuncionarioEmail(email);
+
     [HttpPost("AdicionarFuncionario")]
     [Produces("application/json")]
     public async Task<ActionResult<RetornoGenerico<Funcionario>>> AdicionarFuncionario(Funcionario funcionario)
