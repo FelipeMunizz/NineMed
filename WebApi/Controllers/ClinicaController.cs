@@ -52,6 +52,7 @@ public class ClinicaController : ControllerBase
             Numero = clinicaDTO.Numero,
             Complemento = clinicaDTO.Complemento,
             CEP = clinicaDTO.CEP,
+            CodMunicipio = clinicaDTO.CodMunicipio,
             Bairro = clinicaDTO.Bairro,
             Cidade = clinicaDTO.Cidade,
             Estado = clinicaDTO.Estado,
@@ -98,11 +99,11 @@ public class ClinicaController : ControllerBase
         return Ok();
     }
 
-    [HttpGet("ListaEnderecosClinica")]
+    [HttpGet("ListaEnderecosClinica/{idClinica:int}")]
     [Produces("application/json")]
     public async Task<object> ListaEnderecosClinica(int idClinica) => await _service.ListaEnderecosClinica(idClinica);
 
-    [HttpGet("ObterEnderecoClinica")]
+    [HttpGet("ObterEnderecoClinica/{idEndereco:int}")]
     [Produces("application/json")]
     public async Task<object> ObterEnderecoClinica(int idEndereco) => await _service.ObterEnderecoClinica(idEndereco);
 
@@ -131,7 +132,7 @@ public class ClinicaController : ControllerBase
         return Ok();
     }
 
-    [HttpGet("ListaContatoClinica")]
+    [HttpGet("ListaContatoClinica/{idClinica:int}")]
     [Produces("application/json")]
     public async Task<object> ListaContatoClinica(int idClinica) => await _service.ListaContatoClinica(idClinica);
 

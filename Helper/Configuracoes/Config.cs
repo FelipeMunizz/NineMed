@@ -9,7 +9,7 @@ public static class Config
     public static string ConectionString = StringsConnection(ambiente);
 
     private static string DiretorioLog()
-    {
+    {   
         string pastaLogs = "LogsGerados";
         string diretorioBin = AppDomain.CurrentDomain.BaseDirectory;
         string caminhoPastaLogs = Path.Combine(diretorioBin, pastaLogs);

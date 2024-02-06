@@ -38,7 +38,7 @@ public class AccountController : ControllerBase
                 .AddIssuer("NineMed.Security.Bearer")
                 .AddAudience("NineMed.Security.Bearer")
                 .AddClaim("UsuarioEmail", model.Email)
-                .AddExpiry(60)
+                .AddExpiry(1440)
                 .Builder();
 
             return new RetornoToken
