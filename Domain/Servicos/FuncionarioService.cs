@@ -2,6 +2,8 @@
 using Domain.InterfacesServices.IFuncionarioService;
 using Entities.Models;
 using Entities.Retorno;
+using Entities.Users;
+using Microsoft.AspNetCore.Identity;
 
 namespace Domain.Servicos;
 
@@ -9,11 +11,15 @@ public class FuncionarioService : InterfaceFuncionarioService
 {
     private readonly InterfaceFuncionario _repository;
     private readonly InterfaceHorarioFuncionario _repositoryHorario;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public FuncionarioService(InterfaceFuncionario repository, InterfaceHorarioFuncionario repositoryHorario)
+    public FuncionarioService(InterfaceFuncionario repository, 
+        InterfaceHorarioFuncionario repositoryHorario, 
+        UserManager<ApplicationUser> userManager)
     {
         _repository = repository;
         _repositoryHorario = repositoryHorario;
+        _userManager = userManager;
     }
 
     public async Task<Funcionario> ObterFuncionario(int idFuncionario) => await _repository.GetEntityById(idFuncionario);
@@ -41,6 +47,29 @@ public class FuncionarioService : InterfaceFuncionarioService
     public async Task AtualizarFuncionario(Funcionario obj)
     {
         await _repository.Update(obj);
+    }
+
+    public async Task<RetornoGenerico<bool>> AtualizarSenhaFuncionario(LoginUserDTO loginUserDTO)
+    {
+        var user = await _userManager.FindByEmailAsync(loginUserDTO.Email);
+
+        if (user == null)
+            return new RetornoGenerico<bool>
+            {
+                Success = false,
+                Message = "Usuario não encontrado",
+                Result = false
+            };
+
+        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+        var result = await _userManager.ResetPasswordAsync(user, token, loginUserDTO.Password);
+
+        return new RetornoGenerico<bool>
+        {
+            Success = true,
+            Message = "Senha atualizada com sucesso",
+            Result = true
+        };
     }
 
     public async Task DeletarFuncionario(int idFuncionaro)

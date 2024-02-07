@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebApi.DTOs;
+namespace Entities.Users;
 
 public class EditUserDTO
 {

@@ -2,6 +2,7 @@
 using Domain.InterfacesServices.IFuncionarioService;
 using Entities.Models;
 using Entities.Retorno;
+using Entities.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -52,6 +53,18 @@ public class FuncionarioController : ControllerBase
         await _service.AtualizarFuncionario(funcionario);
 
         return Ok();
+    }
+
+    [HttpPut("AtualizarSenhaFuncionario")]
+    [Produces("application/json")]
+    public async Task<ActionResult<RetornoGenerico<bool>>> AtualizarSenhaFuncionario(LoginUserDTO loginUser)
+    {
+        RetornoGenerico<bool> retorno = await _service.AtualizarSenhaFuncionario(loginUser);
+
+        if(retorno.Success) 
+            return Ok(retorno); 
+        
+        return BadRequest(retorno);
     }
 
     [HttpDelete("DeletarFuncionario/{idFuncionario:int}")]

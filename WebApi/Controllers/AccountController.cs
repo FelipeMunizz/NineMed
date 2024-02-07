@@ -1,10 +1,10 @@
 ﻿using Domain.InterfacesServices.IFuncionarioService;
-using Entities.Enums;
 using Entities.Models;
+using Entities.Retorno;
+using Entities.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.DTOs;
 using WebApi.Token;
 
 namespace WebApi.Controllers;
@@ -50,10 +50,4 @@ public class AccountController : ControllerBase
         else
             return Unauthorized();
     }
-}
-
-public class RetornoToken
-{
-    public string Token { get; set; }
-    public string Email { get; set; }
 }

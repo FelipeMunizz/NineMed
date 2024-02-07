@@ -1,4 +1,5 @@
 ﻿using Entities.Models;
+using Entities.Users;
 using Helper.Logs;
 using Helper.Utility;
 using Microsoft.AspNetCore.Authorization;
@@ -7,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Newtonsoft.Json;
 using System.Text;
-using WebApi.DTOs;
 
 namespace WebApi.Controllers;
 
