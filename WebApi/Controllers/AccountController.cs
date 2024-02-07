@@ -50,10 +50,6 @@ public class AccountController : ControllerBase
         else
             return Unauthorized();
     }
-
-    [HttpGet]
-    [AllowAnonymous]
-    public string Teste() => DateTime.Now.ToString("yyyy-MM-dd");
 }
 
 public class RetornoToken
