@@ -39,6 +39,11 @@ public class UsersController : ControllerBase
         if (!await ValidaDocumento(login.Documento))
             return BadRequest("Documento inválido");
 
+        var res = await _user.FindByEmailAsync(login.Email);
+
+        if (res == null)
+            return BadRequest("Email já cadastrado");
+
         IdentityResult result = await _user.CreateAsync(user, login.Password);
 
         if (result.Errors.Any())
