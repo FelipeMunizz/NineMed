@@ -41,7 +41,7 @@ public class UsersController : ControllerBase
 
         var res = await _user.FindByEmailAsync(login.Email);
 
-        if (res == null)
+        if (res != null)
             return BadRequest("Email já cadastrado");
 
         IdentityResult result = await _user.CreateAsync(user, login.Password);
