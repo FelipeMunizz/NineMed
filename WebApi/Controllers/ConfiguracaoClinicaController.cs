@@ -25,6 +25,10 @@ public class ConfiguracaoClinicaController : ControllerBase
     public async Task<ActionResult<ConfiguracaoClinica>> ObterConfiguracaoClinica(int idConfiguracaoClinica)
         => await _repositorio.GetEntityById(idConfiguracaoClinica);
 
+    [HttpGet("ObterConfiguracaoIdClinica/{idClinica:int}")]
+    public async Task<ActionResult<ConfiguracaoClinica>> ObterConfiguracaoIdClinica(int idClinica)
+        => await _repositorio.ObterConfiguracaoClinica(idClinica);
+
     [HttpPost("AdicionarConfiguracaoClinica")]
     [Produces("application/json")]
     public async Task<IActionResult> AdicionarConfiguracaoClinica(ConfiguracaoClinica configuracaoClinica)
