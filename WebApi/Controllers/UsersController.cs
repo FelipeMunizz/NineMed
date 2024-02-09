@@ -89,6 +89,15 @@ public class UsersController : ControllerBase
             return BadRequest("Erro ao atualizar usuário.");
     }
 
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    [HttpGet("ObterIdUsuario/{email}")]
+    [Produces("application/json")]
+    public async Task<ActionResult<string>> ObterIdUsuario(string email)
+    {
+        var user = await _user.FindByEmailAsync(email);
+
+        return user.Id;
+    }
     private async Task<bool> ValidaDocumento(string documento)
     {
         try
