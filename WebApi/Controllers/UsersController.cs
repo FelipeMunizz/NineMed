@@ -90,9 +90,9 @@ public class UsersController : ControllerBase
     }
 
     [Authorize(AuthenticationSchemes = "Bearer")]
-    [HttpGet("ObterIdUsuario/{email}")]
+    [HttpGet("ObterUsuario/{email}")]
     [Produces("application/json")]
-    public async Task<ActionResult<object>> ObterIdUsuario(string email) => await _user.FindByEmailAsync(email);
+    public async Task<ActionResult<object>> ObterUsuario(string email) => await _user.FindByEmailAsync(email);
 
     private async Task<bool> ValidaDocumento(string documento)
     {
