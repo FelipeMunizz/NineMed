@@ -96,7 +96,7 @@ public class UsersController : ControllerBase
 
 
     [Authorize(AuthenticationSchemes = "Bearer")]
-    [HttpDelete("DeletarUsuario/{id}")]
+    [HttpDelete("DeletarUsuario")]
     [Produces("application/json")]
     public async Task<IActionResult> DeletarUsuario(string id)
     {
