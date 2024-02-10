@@ -94,6 +94,19 @@ public class UsersController : ControllerBase
     [Produces("application/json")]
     public async Task<ActionResult<object>> ObterUsuario([FromQuery]string email) => await _user.FindByEmailAsync(email);
 
+
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    [HttpDelete("DeletarUsuario/{id}")]
+    [Produces("application/json")]
+    public async Task<IActionResult> DeletarUsuario(string id)
+    {
+        var user = await _user.FindByIdAsync(id);
+        if (user == null) return BadRequest();
+
+        await _user.DeleteAsync(user);
+        return Ok();
+    }
+
     private async Task<bool> ValidaDocumento(string documento)
     {
         try
