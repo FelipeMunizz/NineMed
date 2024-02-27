@@ -25,6 +25,9 @@ public class ProcedimentoController : ControllerBase
     [Produces("application/json")]
     public async Task<object> ListaProcedimentoClinica(int idClinica) => await _repository.ListaProcedimentoClinica(idClinica);
 
+    [HttpGet("ObterProcedimento/{idProcedimento:int}")]
+    public async Task<ActionResult<Procedimento>> ObterProcedimento(int idProcedimento) => await _repository.GetEntityById(idProcedimento);
+
     [HttpPost("AdicionarProcedimento")]
     [Produces("application/json")]
     public async Task<IActionResult> AdicionarProcedimento(Procedimento procedimento)
