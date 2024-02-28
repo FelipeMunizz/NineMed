@@ -10,6 +10,7 @@ using Domain.Interfaces.IConvenio;
 using Domain.Interfaces.IFuncionario;
 using Domain.Interfaces.IPaciente;
 using Domain.Interfaces.IProcedimento;
+using Domain.Interfaces.ISubCategoria;
 using Domain.Interfaces.IToten;
 using Domain.InterfacesServices.IAgendamentoService;
 using Domain.InterfacesServices.IAtendimentoService;
@@ -21,6 +22,7 @@ using Domain.InterfacesServices.IConvenioService;
 using Domain.InterfacesServices.IFuncionarioService;
 using Domain.InterfacesServices.IPacienteService;
 using Domain.InterfacesServices.IProcedimentoService;
+using Domain.InterfacesServices.ISubCategoriaService;
 using Domain.InterfacesServices.ITotenService;
 using Domain.Servicos;
 using Entities.Models;
@@ -37,6 +39,7 @@ using Infra.Repositorio.FuncionarioRepositorio;
 using Infra.Repositorio.Generico;
 using Infra.Repositorio.PacienteRepositorio;
 using Infra.Repositorio.ProcedimentoRepositorio;
+using Infra.Repositorio.SubCategoriaRepositorio;
 using Infra.Repositorio.TotenRepositorio;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -103,6 +106,7 @@ builder.Services.AddScoped<InterfaceProcedimento, ProcedimentoRepository>();
 builder.Services.AddScoped<InterfaceConfiguracaoClinica, ConfiguracaoClinicaRepository>();
 builder.Services.AddScoped<IBanco, BancoRepository>();
 builder.Services.AddScoped<InterfaceContaBancaria, ContaBancariaRepository>();
+builder.Services.AddScoped<InterfaceSubCategoria, SubCategoriaRepository>();
 #endregion
 
 #region Servicos
@@ -117,6 +121,7 @@ builder.Services.AddScoped<InterfaceAgendamentoService, AgendamentoService>();
 builder.Services.AddScoped<InterfaceAtendimentoService, AtendimentoService>();
 builder.Services.AddScoped<InterfaceBancoService, BancoService>();
 builder.Services.AddScoped<InterfaceContaBancariaService, ContaBancariaService>();
+builder.Services.AddScoped<InterfaceSubCategoriaService, SubCategoriaService>();
 #endregion
 
 builder.Services.AddSwaggerGen(c =>
