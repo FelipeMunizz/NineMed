@@ -1,6 +1,7 @@
 ﻿using Domain.Interfaces.IPaciente;
 using Domain.InterfacesServices.IPacienteService;
 using Entities.Models;
+using Entities.Retorno;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.DTOs;
@@ -107,20 +108,22 @@ public class PacienteController : ControllerBase
     #region Endereco
     [HttpGet("ListaEnderecoPaciente/{idPaciente:int}")]
     [Produces("application/json")]
-    public async Task<object> ListaEnderecoPaciente(int idPaciente) => 
+    public async Task<object> ListaEnderecoPaciente(int idPaciente) =>
         await _service.ListaEnderecosPaciente(idPaciente);
 
     [HttpGet("ObterEnderecoPaciente/{idEndereco:int}")]
     [Produces("application/json")]
-    public async Task<ActionResult<EnderecoPaciente>> ObterEnderecoPaciente(int idEndereco) => 
+    public async Task<ActionResult<EnderecoPaciente>> ObterEnderecoPaciente(int idEndereco) =>
         await _service.ObterEnderecoPaciente(idEndereco);
 
     [HttpPost("AdicionarEnderecoPaciente")]
     [Produces("application/json")]
-    public async Task<IActionResult> AdicionarEnderecoPaciente(EnderecoPaciente endereco)
+    public async Task<ActionResult<RetornoGenerico<EnderecoPaciente>>> AdicionarEnderecoPaciente(EnderecoPaciente endereco)
     {
-        await _service.AdicionarEnderecoPaciente(endereco);
-        return Ok();
+        RetornoGenerico<EnderecoPaciente> retorno = await _service.AdicionarEnderecoPaciente(endereco);
+        if (retorno.Success)
+            return Ok(retorno);
+        else return BadRequest(retorno);
     }
 
     [HttpPut("AtualizarEnderecoPaciente")]
@@ -153,10 +156,12 @@ public class PacienteController : ControllerBase
 
     [HttpPost("AdicionarContatoPaciente")]
     [Produces("application/json")]
-    public async Task<IActionResult> AdicionarContatoPaciente(ContatoPaciente contato)
+    public async Task<ActionResult<RetornoGenerico<ContatoPaciente>>> AdicionarContatoPaciente(ContatoPaciente contato)
     {
-        await _service.AdicionarContatoPaciente(contato);
-        return Ok();
+        RetornoGenerico <ContatoPaciente> retorno = await _service.AdicionarContatoPaciente(contato);
+        if(retorno.Success)
+            return Ok(retorno);
+        else return BadRequest(retorno);
     }
 
     [HttpPut("AtualizarContatoPaciente")]
@@ -189,9 +194,9 @@ public class PacienteController : ControllerBase
 
     [HttpPost("AdicionarConvenioPaciente")]
     [Produces("application/json")]
-    public async Task<IActionResult> AdicionarConvenioPaciente(PacienteConvenio Convenio)
+    public async Task<ActionResult<RetornoGenerico<PacienteConvenio>>> AdicionarConvenioPaciente(PacienteConvenio Convenio)
     {
-        await _service.AdicionarPacienteConvenio(Convenio);
+        RetornoGenerico<PacienteConvenio> retorno = await _service.AdicionarPacienteConvenio(Convenio);
         return Ok();
     }
 
@@ -225,10 +230,12 @@ public class PacienteController : ControllerBase
 
     [HttpPost("AdicionarFamiliarPaciente")]
     [Produces("application/json")]
-    public async Task<IActionResult> AdicionarFamiliarPaciente(PacienteFamiliar Familiar)
+    public async Task<ActionResult<RetornoGenerico<PacienteFamiliar>>> AdicionarFamiliarPaciente(PacienteFamiliar Familiar)
     {
-        await _service.AdicionarPacienteFamiliar(Familiar);
-        return Ok();
+        RetornoGenerico<PacienteFamiliar> retorno = await _service.AdicionarPacienteFamiliar(Familiar);
+        if (retorno.Success)
+            return Ok(retorno);
+        else return BadRequest(retorno);
     }
 
     [HttpPut("AtualizarFamiliarPaciente")]
@@ -261,10 +268,12 @@ public class PacienteController : ControllerBase
 
     [HttpPost("AdicionarProntuarioPaciente")]
     [Produces("application/json")]
-    public async Task<IActionResult> AdicionarProntuarioPaciente(PacienteProntuario Prontuario)
+    public async Task<ActionResult<RetornoGenerico<PacienteProntuario>>> AdicionarProntuarioPaciente(PacienteProntuario Prontuario)
     {
-        await _service.AdicionarPacienteProntuario(Prontuario);
-        return Ok();
+        RetornoGenerico<PacienteProntuario> retorno = await _service.AdicionarPacienteProntuario(Prontuario);
+        if (retorno.Success)
+            return Ok(retorno);
+        else return BadRequest(retorno);
     }
 
     [HttpPut("AtualizarProntuarioPaciente")]

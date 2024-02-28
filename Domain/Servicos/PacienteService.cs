@@ -3,6 +3,7 @@ using Domain.InterfacesServices.IPacienteService;
 using Entities.Models;
 using Entities.Retorno;
 using Helper.Logs;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace Domain.Servicos;
 
@@ -95,7 +96,23 @@ public class PacienteService : InterfacePacienteService
     #region Contato
     public async Task<IList<ContatoPaciente>> ListaContatoPaciente(int idPaciente) => await _contatoRepositorio.ListaContatosPaciente(idPaciente);
 
-    public async Task AdicionarContatoPaciente(ContatoPaciente contato) => await _contatoRepositorio.Add(contato);
+    public async Task<RetornoGenerico<ContatoPaciente>> AdicionarContatoPaciente(ContatoPaciente contato)
+    {
+        contato = await _contatoRepositorio.Add(contato);
+        if (contato.Id > 0)
+            return new RetornoGenerico<ContatoPaciente>
+            {
+                Success = true,
+                Message = "Contato adicionado com sucesso.",
+                Result = contato
+            };
+        else
+            return new RetornoGenerico<ContatoPaciente>
+            {
+                Success = false,
+                Message = "Erro ao adicionar o contato."
+            };
+    }
 
     public async Task AtualizarContatoPaciente(ContatoPaciente contato) => await _contatoRepositorio.Update(contato);
 
@@ -112,7 +129,23 @@ public class PacienteService : InterfacePacienteService
     #region Endereco
     public async Task<IList<EnderecoPaciente>> ListaEnderecosPaciente(int idPaciente) => await _enderecoRepositorio.ListaEnderecosPaciente(idPaciente);
 
-    public async Task AdicionarEnderecoPaciente(EnderecoPaciente Endereco) => await _enderecoRepositorio.Add(Endereco);
+    public async Task<RetornoGenerico<EnderecoPaciente>> AdicionarEnderecoPaciente(EnderecoPaciente endereco)
+    {
+        endereco = await _enderecoRepositorio.Add(endereco);
+        if (endereco.Id > 0)
+            return new RetornoGenerico<EnderecoPaciente>
+            {
+                Success = true,
+                Message = "Endereco adicionado com sucesso.",
+                Result = endereco
+            };
+        else
+            return new RetornoGenerico<EnderecoPaciente>
+            {
+                Success = false,
+                Message = "Erro ao adicionar o endereco."
+            };
+    }
 
     public async Task AtualizarEnderecoPaciente(EnderecoPaciente Endereco) => await _enderecoRepositorio.Update(Endereco);
 
@@ -128,7 +161,23 @@ public class PacienteService : InterfacePacienteService
 
     #region Familiar
     public async Task<IList<PacienteFamiliar>> ListaPacienteFamiliar(int idFamiliar) => await _familiarRepositorio.ListaFamiliaresPaciente(idFamiliar);
-    public async Task AdicionarPacienteFamiliar(PacienteFamiliar familiar) => await _familiarRepositorio.Add(familiar);
+    public async Task<RetornoGenerico<PacienteFamiliar>> AdicionarPacienteFamiliar(PacienteFamiliar familiar)
+    {
+        familiar = await _familiarRepositorio.Add(familiar);
+        if (familiar.Id > 0)
+            return new RetornoGenerico<PacienteFamiliar>
+            {
+                Success = true,
+                Message = "Familiar adicionado com sucesso.",
+                Result = familiar
+            };
+        else
+            return new RetornoGenerico<PacienteFamiliar>
+            {
+                Success = false,
+                Message = "Erro ao adicionar o Familiar."
+            };
+    }
     public async Task AtualizarPacienteFamiliar(PacienteFamiliar familiar) => await _familiarRepositorio.Update(familiar);
     public async Task<PacienteFamiliar> ObterPacienteFamiliar(int idFamiliar) => await _familiarRepositorio.GetEntityById(idFamiliar);
     public async Task DeletarPacienteFamiliar(int idFamiliar)
@@ -141,7 +190,23 @@ public class PacienteService : InterfacePacienteService
 
     #region Convenio
     public async Task<IList<PacienteConvenio>> ListaConveniosPaciente(int idConvenio) => await _convenioRepositorio.ListaConveniosPaciente(idConvenio);
-    public async Task AdicionarPacienteConvenio(PacienteConvenio Convenio) => await _convenioRepositorio.Add(Convenio);
+    public async Task<RetornoGenerico<PacienteConvenio>> AdicionarPacienteConvenio(PacienteConvenio convenio)
+    {
+        convenio = await _convenioRepositorio.Add(convenio);
+        if (convenio.Id > 0)
+            return new RetornoGenerico<PacienteConvenio>
+            {
+                Success = true,
+                Message = "Convenio adicionado com sucesso.",
+                Result = convenio
+            };
+        else
+            return new RetornoGenerico<PacienteConvenio>
+            {
+                Success = false,
+                Message = "Erro ao adicionar o Convenio."
+            };
+    }
     public async Task AtualizarPacienteConvenio(PacienteConvenio Convenio) => await _convenioRepositorio.Update(Convenio);
     public async Task<PacienteConvenio> ObterPacienteConvenio(int idConvenio) => await _convenioRepositorio.GetEntityById(idConvenio);
     public async Task DeletarPacienteConvenio(int idConvenio)
@@ -156,7 +221,7 @@ public class PacienteService : InterfacePacienteService
     public async Task<RetornoGenerico<PacienteProntuario>> AdicionarPacienteProntuario(PacienteProntuario prontuario)
     {
         PacienteProntuario pacienteProntuario = await ObtemPacienteProntuaio(prontuario.IdPaciente);
-        if(pacienteProntuario != null)
+        if (pacienteProntuario != null)
         {
             prontuario = await _prontuarioRepositorio.Add(prontuario);
 
@@ -196,7 +261,7 @@ public class PacienteService : InterfacePacienteService
     public async Task DeletarPacienteProntuario(int idProntuario)
     {
         PacienteProntuario prontuario = await ObtemProntuaio(idProntuario);
-        if(prontuario != null)
+        if (prontuario != null)
             await _prontuarioRepositorio.Delete(prontuario);
     }
     #endregion

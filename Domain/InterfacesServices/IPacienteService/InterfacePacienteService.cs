@@ -11,7 +11,7 @@ public interface InterfacePacienteService
 
     #region Endereco
     Task<IList<EnderecoPaciente>> ListaEnderecosPaciente(int idPaciente);
-    Task AdicionarEnderecoPaciente(EnderecoPaciente endereco);
+    Task<RetornoGenerico<EnderecoPaciente>> AdicionarEnderecoPaciente(EnderecoPaciente endereco);
     Task AtualizarEnderecoPaciente(EnderecoPaciente endereco);
     Task<EnderecoPaciente> ObterEnderecoPaciente(int idEndereco);
     Task DeletarEnderecoPaciente(int idEndereco);
@@ -19,7 +19,7 @@ public interface InterfacePacienteService
 
     #region Contato
     Task<IList<ContatoPaciente>> ListaContatoPaciente(int idPaciente);
-    Task AdicionarContatoPaciente(ContatoPaciente contato);
+    Task<RetornoGenerico<ContatoPaciente>> AdicionarContatoPaciente(ContatoPaciente contato);
     Task AtualizarContatoPaciente(ContatoPaciente contato);
     Task<ContatoPaciente> ObterContatoPaciente(int idContato);
     Task DeletarContatoPaciente(int idContato);
@@ -27,7 +27,7 @@ public interface InterfacePacienteService
 
     #region Familiar
     Task<IList<PacienteFamiliar>> ListaPacienteFamiliar(int idFamiliar);
-    Task AdicionarPacienteFamiliar(PacienteFamiliar familiar);
+    Task<RetornoGenerico<PacienteFamiliar>> AdicionarPacienteFamiliar(PacienteFamiliar familiar);
     Task AtualizarPacienteFamiliar(PacienteFamiliar familiar);
     Task<PacienteFamiliar> ObterPacienteFamiliar(int idFamiliar);
     Task DeletarPacienteFamiliar(int idFamiliar);
@@ -35,7 +35,7 @@ public interface InterfacePacienteService
 
     #region Convenio
     Task<IList<PacienteConvenio>> ListaConveniosPaciente(int idConvenio);
-    Task AdicionarPacienteConvenio(PacienteConvenio convenio);
+    Task<RetornoGenerico<PacienteConvenio>> AdicionarPacienteConvenio(PacienteConvenio convenio);
     Task AtualizarPacienteConvenio(PacienteConvenio convenio);
     Task<PacienteConvenio> ObterPacienteConvenio(int idConvenio);
     Task DeletarPacienteConvenio(int idConvenio);
