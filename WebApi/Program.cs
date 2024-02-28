@@ -5,6 +5,7 @@ using Domain.Interfaces.IAtendimento;
 using Domain.Interfaces.IBanco;
 using Domain.Interfaces.IClinica;
 using Domain.Interfaces.IConfiguracaoClinica;
+using Domain.Interfaces.IContaBancaria;
 using Domain.Interfaces.IConvenio;
 using Domain.Interfaces.IFuncionario;
 using Domain.Interfaces.IPaciente;
@@ -15,6 +16,7 @@ using Domain.InterfacesServices.IAtendimentoService;
 using Domain.InterfacesServices.IBancoService;
 using Domain.InterfacesServices.IClinicaService;
 using Domain.InterfacesServices.IConfiguracaoClinicaService;
+using Domain.InterfacesServices.IContaBancariaService;
 using Domain.InterfacesServices.IConvenioService;
 using Domain.InterfacesServices.IFuncionarioService;
 using Domain.InterfacesServices.IPacienteService;
@@ -29,6 +31,7 @@ using Infra.Repositorio.AtendimentoRepositorio;
 using Infra.Repositorio.BancoRepositorio;
 using Infra.Repositorio.ClinicaRepositorio;
 using Infra.Repositorio.ConfiguracaoClinicaRepositorio;
+using Infra.Repositorio.ContaBancariaRepositorio;
 using Infra.Repositorio.ConvenioRepositorio;
 using Infra.Repositorio.FuncionarioRepositorio;
 using Infra.Repositorio.Generico;
@@ -99,6 +102,7 @@ builder.Services.AddScoped<InterfaceHorarioFuncionario, HorarioFuncionarioReposi
 builder.Services.AddScoped<InterfaceProcedimento, ProcedimentoRepository>();
 builder.Services.AddScoped<InterfaceConfiguracaoClinica, ConfiguracaoClinicaRepository>();
 builder.Services.AddScoped<IBanco, BancoRepository>();
+builder.Services.AddScoped<InterfaceContaBancaria, ContaBancariaRepository>();
 #endregion
 
 #region Servicos
@@ -112,6 +116,7 @@ builder.Services.AddScoped<InterfaceConfiguracaoClinicaService, ConfiguracaoClin
 builder.Services.AddScoped<InterfaceAgendamentoService, AgendamentoService>();
 builder.Services.AddScoped<InterfaceAtendimentoService, AtendimentoService>();
 builder.Services.AddScoped<InterfaceBancoService, BancoService>();
+builder.Services.AddScoped<InterfaceContaBancariaService, ContaBancariaService>();
 #endregion
 
 builder.Services.AddSwaggerGen(c =>
