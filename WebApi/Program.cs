@@ -2,6 +2,7 @@
 using Domain.Interfaces.Generics;
 using Domain.Interfaces.IAgendamento;
 using Domain.Interfaces.IAtendimento;
+using Domain.Interfaces.IBanco;
 using Domain.Interfaces.IClinica;
 using Domain.Interfaces.IConfiguracaoClinica;
 using Domain.Interfaces.IConvenio;
@@ -11,6 +12,7 @@ using Domain.Interfaces.IProcedimento;
 using Domain.Interfaces.IToten;
 using Domain.InterfacesServices.IAgendamentoService;
 using Domain.InterfacesServices.IAtendimentoService;
+using Domain.InterfacesServices.IBancoService;
 using Domain.InterfacesServices.IClinicaService;
 using Domain.InterfacesServices.IConfiguracaoClinicaService;
 using Domain.InterfacesServices.IConvenioService;
@@ -24,6 +26,7 @@ using Helper.Configuracoes;
 using Infra.Configuracao;
 using Infra.Repositorio.AgendamentoRepositorio;
 using Infra.Repositorio.AtendimentoRepositorio;
+using Infra.Repositorio.BancoRepositorio;
 using Infra.Repositorio.ClinicaRepositorio;
 using Infra.Repositorio.ConfiguracaoClinicaRepositorio;
 using Infra.Repositorio.ConvenioRepositorio;
@@ -95,6 +98,7 @@ builder.Services.AddScoped<InterfaceFuncionario, FuncionarioRepository>();
 builder.Services.AddScoped<InterfaceHorarioFuncionario, HorarioFuncionarioRepository>();
 builder.Services.AddScoped<InterfaceProcedimento, ProcedimentoRepository>();
 builder.Services.AddScoped<InterfaceConfiguracaoClinica, ConfiguracaoClinicaRepository>();
+builder.Services.AddScoped<IBanco, BancoRepository>();
 #endregion
 
 #region Servicos
@@ -107,6 +111,7 @@ builder.Services.AddScoped<InterfacePacienteService, PacienteService>();
 builder.Services.AddScoped<InterfaceConfiguracaoClinicaService, ConfiguracaoClinicaService>();
 builder.Services.AddScoped<InterfaceAgendamentoService, AgendamentoService>();
 builder.Services.AddScoped<InterfaceAtendimentoService, AtendimentoService>();
+builder.Services.AddScoped<InterfaceBancoService, BancoService>();
 #endregion
 
 builder.Services.AddSwaggerGen(c =>
