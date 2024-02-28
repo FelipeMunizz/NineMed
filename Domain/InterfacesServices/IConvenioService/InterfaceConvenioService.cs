@@ -5,7 +5,7 @@ namespace Domain.InterfacesServices.IConvenioService;
 
 public interface InterfaceConvenioService
 {
-    Task AdicionarConvenio(Convenio convenio);
+    Task<RetornoGenerico<Convenio>> AdicionarConvenio(Convenio convenio);
     Task AtualizarConvenio(Convenio convenio);
     Task DeletarConvenio(int idConvenio);
     Task<IList<PlanosConvenio>> ListaPlanosConvenio(int idConvenio);

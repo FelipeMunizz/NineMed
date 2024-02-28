@@ -21,9 +21,23 @@ public class ConvenioService : InterfaceConvenioService
         _funcioanrio = funcioanrio;
     }
 
-    public async Task AdicionarConvenio(Convenio convenio)
+    public async Task<RetornoGenerico<Convenio>> AdicionarConvenio(Convenio convenio)
     {
-        await _convenio.Add(convenio);
+        convenio = await _convenio.Add(convenio);
+        if (convenio.Id > 0)
+            return new RetornoGenerico<Convenio>
+            {
+                Success = true,
+                Message = "Convenio adicionado com sucesso.",
+                Result = convenio
+            };
+        else
+            return new RetornoGenerico<Convenio>
+            {
+                Success = false,
+                Message = "Erro ao adicionar o convenio."
+            };
+        
     }
 
     public async Task AtualizarConvenio(Convenio convenio)

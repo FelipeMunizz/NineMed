@@ -31,11 +31,14 @@ public class ConvenioController : ControllerBase
 
     [HttpPost("AdicionarConvenio")]
     [Produces("application/json")]
-    public async Task<IActionResult> AdicionarConvenio(Convenio convenio)
+    public async Task<ActionResult<RetornoGenerico<object>>> AdicionarConvenio(Convenio convenio)
     {
-        await _service.AdicionarConvenio(convenio);
+        
+        RetornoGenerico<Convenio> retorno = await _service.AdicionarConvenio(convenio);
 
-        return Ok();
+        if (retorno.Success)
+            return Ok(retorno);
+        else return BadRequest(retorno);
     }
 
     [HttpPut("AtualizarConvenio")]
