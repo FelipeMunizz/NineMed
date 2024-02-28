@@ -1,6 +1,6 @@
 ﻿namespace Entities.Enums;
 
-public enum TipoCategoriaFinanceira
+public enum TipoLancamento
 {
     Receita,
     Despesa

@@ -6,7 +6,7 @@ namespace Entities.Models;
 
 public class CategoriaFinanceira : Base
 {
-    public TipoCategoriaFinanceira Tipo {  get; set; }
+    public TipoLancamento Tipo {  get; set; }
 
     [ForeignKey("Clinica")]
     public int IdClinica { get; set; }
