@@ -38,6 +38,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<AnexosAtendimento> AnexosAtendimento { get; set; }
     public DbSet<Banco> Banco { get; set; }
     public DbSet<ContaBancaria> ContaBancaria { get; set; }
+    public DbSet<CategoriaFinanceira> CategoriaFinanceira { get; set; }
     #endregion
 
     #region Metodos Override
