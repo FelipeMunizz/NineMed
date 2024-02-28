@@ -1,6 +1,7 @@
 ﻿using Domain.Interfaces.IConfiguracaoClinica;
 using Domain.InterfacesServices.IConfiguracaoClinicaService;
 using Entities.Models;
+using Entities.Retorno;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,10 +32,14 @@ public class ConfiguracaoClinicaController : ControllerBase
 
     [HttpPost("AdicionarConfiguracaoClinica")]
     [Produces("application/json")]
-    public async Task<IActionResult> AdicionarConfiguracaoClinica(ConfiguracaoClinica configuracaoClinica)
+    public async Task<ActionResult<RetornoGenerico<object>>> AdicionarConfiguracaoClinica(ConfiguracaoClinica configuracaoClinica)
     {
-        await _service.AdicionarConfiguracaoClinica(configuracaoClinica);
-        return Ok();
+        RetornoGenerico<ConfiguracaoClinica> retorno = await _service.AdicionarConfiguracaoClinica(configuracaoClinica);
+
+        if (retorno.Success)
+            return Ok(retorno);
+        else return BadRequest(retorno);
+        
     }
 
     [HttpPut("AtualizarConfiguracaoClinica")]
