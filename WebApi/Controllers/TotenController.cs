@@ -30,6 +30,10 @@ public class TotenController : ControllerBase
     [Produces("application/json")]
     public async Task<ActionResult<Toten>> ObterToten(int idToten) => await _repositoryToten.GetEntityById(idToten);
 
+    [HttpGet("ObterSenhaToten/{idSenha:int}")]
+    [Produces("application/json")]
+    public async Task<ActionResult<SenhaToten>> ObterSenhaToten(int idSenha) => await _repositorySenhas.GetEntityById(idSenha);
+
     [HttpGet("ListarSenhasToten")]
     [Produces("application/json")]
     public async Task<ActionResult<List<SenhaToten>>> ListarSenhasToten() => await _repositorySenhas.List();
