@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'ninemed'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7AAC18DB0DB74070A799024E1532B519 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_45C48AB1A64146A79D70B8D8F067E068 }}
           package: .
