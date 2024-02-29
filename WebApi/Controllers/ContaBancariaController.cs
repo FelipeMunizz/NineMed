@@ -2,12 +2,14 @@
 using Domain.InterfacesServices.IContaBancariaService;
 using Entities.Models;
 using Entities.Retorno;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize(AuthenticationSchemes = "Bearer")]
 public class ContaBancariaController : ControllerBase
 {
     private readonly InterfaceContaBancariaService _service;
