@@ -16,6 +16,8 @@ public class LancamentoService : InterfaceLancamentoService
 
     public async Task<RetornoGenerico<Lancamento>> AdicionarLancamento(Lancamento lancamento)
     {
+        lancamento.DataLancamento = DateTime.Now;
+        
         lancamento = await _repository.Add(lancamento);
 
         if (lancamento.Id == 0)
