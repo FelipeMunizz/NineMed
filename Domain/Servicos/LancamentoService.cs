@@ -24,13 +24,13 @@ public class LancamentoService : InterfaceLancamentoService
             return new RetornoGenerico<Lancamento>
             {
                 Success = false,
-                Message = "Não foi possível adicionar o Lancamento"
+                Message = "Não foi possível adicionar o Lançamento"
             };
         else
             return new RetornoGenerico<Lancamento>
             {
                 Success = true,
-                Message = "Lancamento adicionado com sucesso",
+                Message = "Lançamento adicionado com sucesso",
                 Result = lancamento
             };
     }
@@ -47,12 +47,12 @@ public class LancamentoService : InterfaceLancamentoService
             return new RetornoGenerico<object>
             {
                 Success = false,
-                Message = "Não foi possível localizar o Lancamento"
+                Message = "Não foi possível localizar o Lançamento"
             };
 
         await _repository.Delete(lancamento);
 
-        return new RetornoGenerico<object> { Success = true, Message = "Lancamento Deletado com sucesso" };
+        return new RetornoGenerico<object> { Success = true, Message = "Lançamento Deletado com sucesso" };
     }
 
     public async Task<IList<Lancamento>> ListaLancamentoReceitas(int idClinica) => await _repository.ListaLancamentoReceitas(idClinica);
