@@ -1,12 +1,14 @@
 ﻿using Domain.InterfacesServices.ICategoriaFinanceiraService;
 using Entities.Models;
 using Entities.Retorno;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize(AuthenticationSchemes = "Bearer")]
 public class CategoriaFinanceiraController : ControllerBase
 {
     private readonly InterfaceCategoriaFinanceiraService _service;

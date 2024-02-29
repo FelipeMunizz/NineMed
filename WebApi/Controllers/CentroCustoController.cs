@@ -1,12 +1,14 @@
 ﻿using Domain.InterfacesServices.ICentroCustoService;
 using Entities.Models;
 using Entities.Retorno;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize(AuthenticationSchemes = "Bearer")]
 public class CentroCustoController : ControllerBase
 {
     private readonly InterfaceCentroCustoService _service;

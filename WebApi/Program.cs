@@ -10,6 +10,7 @@ using Domain.Interfaces.IConfiguracaoFinanceira;
 using Domain.Interfaces.IContaBancaria;
 using Domain.Interfaces.IConvenio;
 using Domain.Interfaces.IFuncionario;
+using Domain.Interfaces.ILancamento;
 using Domain.Interfaces.IPaciente;
 using Domain.Interfaces.IProcedimento;
 using Domain.Interfaces.ISubCategoria;
@@ -24,6 +25,7 @@ using Domain.InterfacesServices.IConfiguracaoFinanceiraService;
 using Domain.InterfacesServices.IContaBancariaService;
 using Domain.InterfacesServices.IConvenioService;
 using Domain.InterfacesServices.IFuncionarioService;
+using Domain.InterfacesServices.ILancamentoService;
 using Domain.InterfacesServices.IPacienteService;
 using Domain.InterfacesServices.IProcedimentoService;
 using Domain.InterfacesServices.ISubCategoriaService;
@@ -43,6 +45,7 @@ using Infra.Repositorio.ContaBancariaRepositorio;
 using Infra.Repositorio.ConvenioRepositorio;
 using Infra.Repositorio.FuncionarioRepositorio;
 using Infra.Repositorio.Generico;
+using Infra.Repositorio.LancamentoRepositorio;
 using Infra.Repositorio.PacienteRepositorio;
 using Infra.Repositorio.ProcedimentoRepositorio;
 using Infra.Repositorio.SubCategoriaRepositorio;
@@ -115,6 +118,7 @@ builder.Services.AddScoped<InterfaceContaBancaria, ContaBancariaRepository>();
 builder.Services.AddScoped<InterfaceSubCategoria, SubCategoriaRepository>();
 builder.Services.AddScoped<InterfaceCentroCusto, CentroCustoRepository>();
 builder.Services.AddScoped<InterfaceConfiguracaoFinanceira, ConfiguracaoFinanceiraRepository>();
+builder.Services.AddScoped<InterfaceLancamento, LancamentoRepository>();
 #endregion
 
 #region Servicos
@@ -132,6 +136,7 @@ builder.Services.AddScoped<InterfaceContaBancariaService, ContaBancariaService>(
 builder.Services.AddScoped<InterfaceSubCategoriaService, SubCategoriaService>();
 builder.Services.AddScoped<InterfaceCentroCustoService,  CentroCustoService>();
 builder.Services.AddScoped<InterfaceConfiguracaoFinanceiraService, ConfiguracaoFinanceiraService>();
+builder.Services.AddScoped<InterfaceLancamentoService,  LancamentoService>();
 #endregion
 
 builder.Services.AddSwaggerGen(c =>
