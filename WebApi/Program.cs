@@ -6,6 +6,7 @@ using Domain.Interfaces.IBanco;
 using Domain.Interfaces.ICentroCusto;
 using Domain.Interfaces.IClinica;
 using Domain.Interfaces.IConfiguracaoClinica;
+using Domain.Interfaces.IConfiguracaoFinanceira;
 using Domain.Interfaces.IContaBancaria;
 using Domain.Interfaces.IConvenio;
 using Domain.Interfaces.IFuncionario;
@@ -19,6 +20,7 @@ using Domain.InterfacesServices.IBancoService;
 using Domain.InterfacesServices.ICentroCustoService;
 using Domain.InterfacesServices.IClinicaService;
 using Domain.InterfacesServices.IConfiguracaoClinicaService;
+using Domain.InterfacesServices.IConfiguracaoFinanceiraService;
 using Domain.InterfacesServices.IContaBancariaService;
 using Domain.InterfacesServices.IConvenioService;
 using Domain.InterfacesServices.IFuncionarioService;
@@ -36,6 +38,7 @@ using Infra.Repositorio.BancoRepositorio;
 using Infra.Repositorio.CentroCustoRepositorio;
 using Infra.Repositorio.ClinicaRepositorio;
 using Infra.Repositorio.ConfiguracaoClinicaRepositorio;
+using Infra.Repositorio.ConfiguracaoFinanceiraRepositorio;
 using Infra.Repositorio.ContaBancariaRepositorio;
 using Infra.Repositorio.ConvenioRepositorio;
 using Infra.Repositorio.FuncionarioRepositorio;
@@ -111,6 +114,7 @@ builder.Services.AddScoped<IBanco, BancoRepository>();
 builder.Services.AddScoped<InterfaceContaBancaria, ContaBancariaRepository>();
 builder.Services.AddScoped<InterfaceSubCategoria, SubCategoriaRepository>();
 builder.Services.AddScoped<InterfaceCentroCusto, CentroCustoRepository>();
+builder.Services.AddScoped<InterfaceConfiguracaoFinanceira, ConfiguracaoFinanceiraRepository>();
 #endregion
 
 #region Servicos
@@ -127,6 +131,7 @@ builder.Services.AddScoped<InterfaceBancoService, BancoService>();
 builder.Services.AddScoped<InterfaceContaBancariaService, ContaBancariaService>();
 builder.Services.AddScoped<InterfaceSubCategoriaService, SubCategoriaService>();
 builder.Services.AddScoped<InterfaceCentroCustoService,  CentroCustoService>();
+builder.Services.AddScoped<InterfaceConfiguracaoFinanceiraService, ConfiguracaoFinanceiraService>();
 #endregion
 
 builder.Services.AddSwaggerGen(c =>
