@@ -3,6 +3,7 @@ using Domain.Interfaces.Generics;
 using Domain.Interfaces.IAgendamento;
 using Domain.Interfaces.IAtendimento;
 using Domain.Interfaces.IBanco;
+using Domain.Interfaces.ICentroCusto;
 using Domain.Interfaces.IClinica;
 using Domain.Interfaces.IConfiguracaoClinica;
 using Domain.Interfaces.IContaBancaria;
@@ -15,6 +16,7 @@ using Domain.Interfaces.IToten;
 using Domain.InterfacesServices.IAgendamentoService;
 using Domain.InterfacesServices.IAtendimentoService;
 using Domain.InterfacesServices.IBancoService;
+using Domain.InterfacesServices.ICentroCustoService;
 using Domain.InterfacesServices.IClinicaService;
 using Domain.InterfacesServices.IConfiguracaoClinicaService;
 using Domain.InterfacesServices.IContaBancariaService;
@@ -31,6 +33,7 @@ using Infra.Configuracao;
 using Infra.Repositorio.AgendamentoRepositorio;
 using Infra.Repositorio.AtendimentoRepositorio;
 using Infra.Repositorio.BancoRepositorio;
+using Infra.Repositorio.CentroCustoRepositorio;
 using Infra.Repositorio.ClinicaRepositorio;
 using Infra.Repositorio.ConfiguracaoClinicaRepositorio;
 using Infra.Repositorio.ContaBancariaRepositorio;
@@ -107,6 +110,7 @@ builder.Services.AddScoped<InterfaceConfiguracaoClinica, ConfiguracaoClinicaRepo
 builder.Services.AddScoped<IBanco, BancoRepository>();
 builder.Services.AddScoped<InterfaceContaBancaria, ContaBancariaRepository>();
 builder.Services.AddScoped<InterfaceSubCategoria, SubCategoriaRepository>();
+builder.Services.AddScoped<InterfaceCentroCusto, CentroCustoRepository>();
 #endregion
 
 #region Servicos
@@ -122,6 +126,7 @@ builder.Services.AddScoped<InterfaceAtendimentoService, AtendimentoService>();
 builder.Services.AddScoped<InterfaceBancoService, BancoService>();
 builder.Services.AddScoped<InterfaceContaBancariaService, ContaBancariaService>();
 builder.Services.AddScoped<InterfaceSubCategoriaService, SubCategoriaService>();
+builder.Services.AddScoped<InterfaceCentroCustoService,  CentroCustoService>();
 #endregion
 
 builder.Services.AddSwaggerGen(c =>
