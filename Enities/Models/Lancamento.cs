@@ -14,7 +14,7 @@ public class Lancamento
     public DateTime DataVencimento { get; set; }
 
     [ForeignKey("Paciente")]
-    public int IdPaciente { get; set; }
+    public int? IdPaciente { get; set; }
     [JsonIgnore]
     public virtual Paciente? Paciente { get; set; }
 
@@ -24,12 +24,12 @@ public class Lancamento
     public virtual Funcionario? Funcionario { get; set; }
 
     [ForeignKey("Convenio")]
-    public int IdConvenio { get; set; }
+    public int? IdConvenio { get; set; }
     [JsonIgnore]
     public virtual Convenio? Convenio { get; set; }
 
     [ForeignKey("Procedimento")]
-    public int IdProcedimento { get; set; }
+    public int? IdProcedimento { get; set; }
     [JsonIgnore]
     public virtual Procedimento? Procedimento { get; set; }
 
@@ -49,7 +49,7 @@ public class Lancamento
     public virtual FormaPagamento? FormaPagamento { get; set; }
 
     [ForeignKey("CentroCusto")]
-    public int IdCentroCusto { get; set; }
+    public int? IdCentroCusto { get; set; }
     [JsonIgnore]
     public virtual CentroCusto? CentroCusto { get; set; }
 
