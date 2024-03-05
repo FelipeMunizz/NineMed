@@ -21,7 +21,7 @@ public class LancamentoRepository : RepositorioGenerico<Lancamento>, InterfaceLa
         using (var banco = new AppDbContext(_context))
         {
             TipoLancamento tipo = TipoLancamento.Despesa;
-            return await(
+            return await (
                 from l in banco.Lancamento
                 where l.IdClinica.Equals(idClinica) && l.Tipo.Equals(tipo)
                 select l
@@ -35,11 +35,31 @@ public class LancamentoRepository : RepositorioGenerico<Lancamento>, InterfaceLa
         {
             TipoLancamento tipo = TipoLancamento.Receita;
 
-            return await(
+            return await (
                 from l in banco.Lancamento
                 where l.IdClinica.Equals(idClinica) && l.Tipo.Equals(tipo)
                 select l
                 ).AsNoTracking().ToListAsync();
+        }
+    }
+
+    public async Task<decimal> RetornoSaldoGeral(int idContaBancaria)
+    {
+        using (var banco = new AppDbContext(_context))
+        {
+            var saldo = await(
+            from lancamento in banco.Lancamento
+            join contaBancaria in banco.ContaBancaria on lancamento.IdContaBancaria equals contaBancaria.Id
+            where contaBancaria.Id == 1
+            group lancamento by 1 into g
+            select new
+            {
+                Receitas = g.Sum(x => x.Tipo == TipoLancamento.Receita ? x.Valor : 0),
+                Despesas = g.Sum(x => x.Tipo == TipoLancamento.Despesa ? x.Valor : 0)
+            }
+        ).FirstOrDefaultAsync();
+
+            return saldo != null ? saldo.Receitas - saldo.Despesas : 0;
         }
     }
 }

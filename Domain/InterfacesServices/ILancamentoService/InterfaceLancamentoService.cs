@@ -11,4 +11,5 @@ public interface InterfaceLancamentoService
     Task<IList<Lancamento>> ListaLancamentoDespesas(int idClinica);
     Task<Lancamento> ObterLancamento(int idLancamento);
     Task<RetornoGenerico<object>> DeletarLancamento(int idLancamento);
+    Task<RetornoGenerico<decimal>> RetornoSaldoGeral(int idContaBancaria);
 }

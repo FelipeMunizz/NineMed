@@ -2,6 +2,7 @@
 using Domain.InterfacesServices.ILancamentoService;
 using Entities.Models;
 using Entities.Retorno;
+using System.Drawing;
 
 namespace Domain.Servicos;
 
@@ -62,5 +63,28 @@ public class LancamentoService : InterfaceLancamentoService
     public async Task<Lancamento> ObterLancamento(int idLancamento)
     {
         return await _repository.GetEntityById(idLancamento);
+    }
+
+    public async Task<RetornoGenerico<decimal>> RetornoSaldoGeral(int idContaBancaria)
+    {
+        try
+        {
+            decimal valor = await _repository.RetornoSaldoGeral(idContaBancaria);
+
+            return new RetornoGenerico<decimal>
+            {
+                Success = true,
+                Message = "",
+                Result = valor
+            };
+        }
+        catch
+        {
+            return new RetornoGenerico<decimal>
+            {
+                Success = false,
+                Message = "Não foi possivel obter o valor do saldo geral."
+            };
+        }
     }
 }

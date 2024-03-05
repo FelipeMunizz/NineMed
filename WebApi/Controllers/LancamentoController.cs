@@ -30,6 +30,9 @@ public class LancamentoController : ControllerBase
     [Produces("application/json")]
     public async Task<ActionResult<Lancamento>> ObterLancamento(int idLancamento) => await _service.ObterLancamento(idLancamento);
 
+    [HttpGet("RetornoSaldoGeral/{idContaBancaria:int}")]
+    public async Task<ActionResult<RetornoGenerico<decimal>>> RetornoSaldoGeral(int idContaBancaria) => await _service.RetornoSaldoGeral(idContaBancaria);
+
     [HttpPost("AdicionarLancamento")]
     [Produces("application/json")]
     public async Task<ActionResult<RetornoGenerico<Lancamento>>> AdicionarLancamento(Lancamento lancamento) => await _service.AdicionarLancamento(lancamento);
