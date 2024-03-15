@@ -10,6 +10,7 @@ using Domain.Interfaces.IConfiguracaoClinica;
 using Domain.Interfaces.IConfiguracaoFinanceira;
 using Domain.Interfaces.IContaBancaria;
 using Domain.Interfaces.IConvenio;
+using Domain.Interfaces.IFormaPagamento;
 using Domain.Interfaces.IFuncionario;
 using Domain.Interfaces.ILancamento;
 using Domain.Interfaces.IPaciente;
@@ -26,6 +27,7 @@ using Domain.InterfacesServices.IConfiguracaoClinicaService;
 using Domain.InterfacesServices.IConfiguracaoFinanceiraService;
 using Domain.InterfacesServices.IContaBancariaService;
 using Domain.InterfacesServices.IConvenioService;
+using Domain.InterfacesServices.IFormaPagamentoService;
 using Domain.InterfacesServices.IFuncionarioService;
 using Domain.InterfacesServices.ILancamentoService;
 using Domain.InterfacesServices.IPacienteService;
@@ -46,6 +48,7 @@ using Infra.Repositorio.ConfiguracaoClinicaRepositorio;
 using Infra.Repositorio.ConfiguracaoFinanceiraRepositorio;
 using Infra.Repositorio.ContaBancariaRepositorio;
 using Infra.Repositorio.ConvenioRepositorio;
+using Infra.Repositorio.FormaPagamentoRepositorio;
 using Infra.Repositorio.FuncionarioRepositorio;
 using Infra.Repositorio.Generico;
 using Infra.Repositorio.LancamentoRepositorio;
@@ -123,6 +126,7 @@ builder.Services.AddScoped<InterfaceCentroCusto, CentroCustoRepository>();
 builder.Services.AddScoped<InterfaceConfiguracaoFinanceira, ConfiguracaoFinanceiraRepository>();
 builder.Services.AddScoped<InterfaceLancamento, LancamentoRepository>();
 builder.Services.AddScoped<InterfaceCategoriaFinanceira, CategoriaFinanceiraRepository>();
+builder.Services.AddScoped<InterfaceFormaPagamento, FormaPagamentoRepository>();   
 #endregion
 
 #region Servicos
@@ -142,6 +146,7 @@ builder.Services.AddScoped<InterfaceCentroCustoService,  CentroCustoService>();
 builder.Services.AddScoped<InterfaceConfiguracaoFinanceiraService, ConfiguracaoFinanceiraService>();
 builder.Services.AddScoped<InterfaceLancamentoService,  LancamentoService>();
 builder.Services.AddScoped<InterfaceCategoriaFinanceiraService, CategoriaFinanceiraService>();
+builder.Services.AddScoped<InterfaceFormaPagamentoService, FormaPagamentoService>();
 #endregion
 
 builder.Services.AddSwaggerGen(c =>
