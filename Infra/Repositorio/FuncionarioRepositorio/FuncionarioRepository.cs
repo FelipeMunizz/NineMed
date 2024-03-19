@@ -27,6 +27,18 @@ public class FuncionarioRepository : RepositorioGenerico<Funcionario>, Interface
         }
     }
 
+    public async Task<IList<Funcionario>> ListarProfissionaisSaude(int idClinica)
+    {
+        using (var banco = new AppDbContext(_context))
+        {
+            return await (
+                    from f in banco.Funcionario
+                    where f.IdClinica.Equals(idClinica) && f.ProfissionalSaude == true
+                    select f
+                    ).AsNoTracking().ToListAsync();
+        }
+    }
+
     public async Task<Funcionario> ObterFuncionarioEmail(string email)
     {
         using (var banco = new AppDbContext(_context))

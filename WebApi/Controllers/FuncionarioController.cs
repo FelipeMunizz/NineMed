@@ -26,6 +26,10 @@ public class FuncionarioController : ControllerBase
     [Produces("application/json")]
     public async Task<object> ListarFuncionariosClinica(int idClinica) => await _repository.ListarFuncionariosClinica(idClinica);
 
+    [HttpGet("ListarProfissionaisSaude/{idClinica:int}")]
+    [Produces("application/json")]
+    public async Task<object> ListarProfissionaisSaude(int idClinica) => await _repository.ListarProfissionaisSaude(idClinica);
+
     [HttpGet("ObterFuncionario/{idFuncionario:int}")]
     [Produces("application/json")]
     public async Task<ActionResult<Funcionario>> ObterFuncionario(int idFuncionario) => await _service.ObterFuncionario(idFuncionario);
