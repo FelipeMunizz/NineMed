@@ -1,4 +1,5 @@
 ﻿using Domain.InterfacesServices.ISubCategoriaService;
+using Entities.Enums;
 using Entities.Models;
 using Entities.Retorno;
 using Microsoft.AspNetCore.Authorization;
@@ -8,7 +9,7 @@ namespace WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize(AuthenticationSchemes = "Bearer")]
+//[Authorize(AuthenticationSchemes = "Bearer")]
 public class SubCategoriaController : ControllerBase
 {
     private readonly InterfaceSubCategoriaService _service;
@@ -21,6 +22,10 @@ public class SubCategoriaController : ControllerBase
     [HttpGet("ListarSubCategoriaFinanceiras/{idCategoriaFinanceira:int}")]
     [Produces("application/json")]
     public async Task<object> ListarSubCategoriaFinanceiras(int idCategoriaFinanceira) => await _service.ListarSubCategoriaFinanceiras(idCategoriaFinanceira);
+
+    [HttpGet("ListaSubCategoriaTipo/{idClinica:int}")]
+    [Produces("application/json")]
+    public async Task<object> ListaSubCategoriaTipo(int idClinica, [FromQuery]TipoLancamento tipo) => await _service.ListaSubCategoriaTipo(tipo, idClinica);
 
     [HttpGet("ObterSubCategoria/{idSubCategoria:int}")]
     [Produces("application/json")]

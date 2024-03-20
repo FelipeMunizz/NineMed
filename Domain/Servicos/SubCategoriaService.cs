@@ -1,5 +1,6 @@
 ﻿using Domain.Interfaces.ISubCategoria;
 using Domain.InterfacesServices.ISubCategoriaService;
+using Entities.Enums;
 using Entities.Models;
 using Entities.Retorno;
 
@@ -57,6 +58,8 @@ public class SubCategoriaService : InterfaceSubCategoriaService
     {
         return await _repository.ListarSubCategoriaFinanceiras(idClinica);
     }
+
+    public Task<IList<SubCategoria>> ListaSubCategoriaTipo(TipoLancamento tipo, int idClinica) => _repository.ListaSubCategoriaTipo(tipo, idClinica);
 
     public async Task<SubCategoria> ObterSubCategoria(int idSubCategoria)
     {
