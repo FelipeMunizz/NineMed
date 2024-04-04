@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
 
-[Authorize(AuthenticationSchemes = "Bearer")]
+//[Authorize(AuthenticationSchemes = "Bearer")]
 [Route("api/[controller]")]
 [ApiController]
 public class TotenController : ControllerBase

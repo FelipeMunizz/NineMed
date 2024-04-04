@@ -89,7 +89,8 @@ public class TotenService : InterfaceTotenService
                 TipoAtendimento = obj.TipoAtendimento,
                 StatusAtendimento = StatusAtendimento.Chegada,
                 DataHoraCriacao = DateTime.Now,
-                DataHoraAtualizacao = DateTime.Now
+                DataHoraAtualizacao = DateTime.Now,
+                IdToten = obj.IdToten
             };
 
             novaSenha = await _repositorySenhas.Add(novaSenha);
