@@ -1,5 +1,6 @@
 ﻿using Domain.Interfaces.IToten;
 using Domain.InterfacesServices.ITotenService;
+using Entities.Enums;
 using Entities.Models;
 using Entities.Retorno;
 using Microsoft.AspNetCore.Authorization;
@@ -38,6 +39,11 @@ public class TotenController : ControllerBase
     [HttpGet("ListarSenhasToten")]
     [Produces("application/json")]
     public async Task<ActionResult<List<SenhaToten>>> ListarSenhasToten() => await _repositorySenhas.List();
+
+    [HttpGet("ListaSenhaTotenTipoAtendimento/{tipoAtendimento:int}/{idToten:int}")]
+    [Produces("application/json")]
+    public async Task<object> ListaSenhaTotenTipoAtendimento(TipoAtendimento tipoAtendimento, int idToten)
+        => await _service.ListaSenhaTotenTipoAtendimento(tipoAtendimento, idToten);
 
     [HttpPost("AdicionarToten")]
     [Produces("application/json")]

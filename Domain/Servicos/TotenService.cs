@@ -38,6 +38,9 @@ public class TotenService : InterfaceTotenService
     #endregion
 
     #region SenhasToten
+    public async Task<IList<SenhaToten>> ListaSenhaTotenTipoAtendimento(TipoAtendimento tipoAtendimento, int idToten)
+        => await _repositorySenhas.ListaSenhaTotenTipoAtendimento(tipoAtendimento, idToten); 
+
     public async Task<RetornoGenerico<SenhaToten>> AdicionarSenhaToten(SenhaToten obj)
     {
         try

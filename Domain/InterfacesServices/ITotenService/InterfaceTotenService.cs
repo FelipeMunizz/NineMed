@@ -1,4 +1,5 @@
-﻿using Entities.Models;
+﻿using Entities.Enums;
+using Entities.Models;
 using Entities.Retorno;
 
 namespace Domain.InterfacesServices.ITotenService;
@@ -11,4 +12,5 @@ public interface InterfaceTotenService
     Task<RetornoGenerico<SenhaToten>> AdicionarSenhaToten(SenhaToten obj);
     Task AtualizarSenhaToten(SenhaToten obj);
     Task DeletarSenhasTotenDiarias(int idToten);
+    Task<IList<SenhaToten>> ListaSenhaTotenTipoAtendimento(TipoAtendimento tipoAtendimento, int idToten);
 }
