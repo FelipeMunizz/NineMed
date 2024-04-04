@@ -1,6 +1,7 @@
 ﻿using Domain.Interfaces.IToten;
 using Domain.InterfacesServices.ITotenService;
 using Entities.Models;
+using Entities.Retorno;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -64,11 +65,8 @@ public class TotenController : ControllerBase
 
     [HttpPost("AdicionarSenhaToten")]
     [Produces("application/json")]
-    public async Task<IActionResult> AdicionarSenhaToten(SenhaToten senhaToten)
-    {
-        await _service.AdicionarSenhaToten(senhaToten);
-        return Ok();
-    }
+    public async Task<ActionResult<RetornoGenerico<SenhaToten>>> AdicionarSenhaToten(SenhaToten senhaToten) 
+        => await _service.AdicionarSenhaToten(senhaToten);
 
     [HttpPut("AtualizarSenhaToten")]
     [Produces("application/json")]

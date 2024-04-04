@@ -2,6 +2,7 @@
 using Domain.InterfacesServices.ITotenService;
 using Entities.Enums;
 using Entities.Models;
+using Entities.Retorno;
 using Helper.Logs;
 
 namespace Domain.Servicos;
@@ -37,7 +38,7 @@ public class TotenService : InterfaceTotenService
     #endregion
 
     #region SenhasToten
-    public async Task AdicionarSenhaToten(SenhaToten obj)
+    public async Task<RetornoGenerico<SenhaToten>> AdicionarSenhaToten(SenhaToten obj)
     {
         try
         {
@@ -91,12 +92,24 @@ public class TotenService : InterfaceTotenService
                 DataHoraAtualizacao = DateTime.Now
             };
 
-            await _repositorySenhas.Add(novaSenha);
+            novaSenha = await _repositorySenhas.Add(novaSenha);
+
+            return new RetornoGenerico<SenhaToten>
+            {
+                Success = true,
+                Message = "Senha gerada com sucesso",
+                Result = novaSenha
+            };
 
         }
         catch (Exception ex)
         {
             LogProxy.GravarLogException(ex);
+            return new RetornoGenerico<SenhaToten>
+            {
+                Success = false,
+                Message = ex.Message,
+            };
         }
     }
 
