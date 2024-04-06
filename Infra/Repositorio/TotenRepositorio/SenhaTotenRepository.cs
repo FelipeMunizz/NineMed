@@ -22,7 +22,9 @@ public class SenhaTotenRepository : RepositorioGenerico<SenhaToten>, InterfaceSe
         {
             return await (
                     from s in banco.SenhaToten
-                    where s.TipoAtendimento.Equals(tipoAtendimento) && s.IdToten.Equals(idToten)
+                    where s.TipoAtendimento.Equals(tipoAtendimento)
+                        && s.StatusAtendimento == StatusAtendimento.Chegada
+                        && s.IdToten.Equals(idToten)
                     select s
                 ).AsNoTracking().ToListAsync();
         }
