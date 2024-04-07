@@ -38,6 +38,8 @@ public class TotenService : InterfaceTotenService
     #endregion
 
     #region SenhasToten
+    public async Task<IList<SenhaToten>> ListaSenhasPainel(int idToten) => await _repositorySenhas.ListaSenhasPainel(idToten);
+
     public async Task<IList<SenhaToten>> ListaSenhaTotenTipoAtendimento(TipoAtendimento tipoAtendimento, int idToten)
         => await _repositorySenhas.ListaSenhaTotenTipoAtendimento(tipoAtendimento, idToten); 
 

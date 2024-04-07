@@ -16,6 +16,21 @@ public class SenhaTotenRepository : RepositorioGenerico<SenhaToten>, InterfaceSe
         _context = new DbContextOptions<AppDbContext>();
     }
 
+    public async Task<IList<SenhaToten>> ListaSenhasPainel(int idToten)
+    {
+        using (var banco = new AppDbContext(_context))
+        {
+            return await (
+                from s in banco.SenhaToten
+                where 
+                    s.IdToten == idToten && 
+                    s.StatusAtendimento != StatusAtendimento.Chegada
+                orderby s.DataHoraAtualizacao descending
+                select s
+                ).AsNoTracking().ToListAsync();
+        }
+    }
+
     public async Task<IList<SenhaToten>> ListaSenhaTotenTipoAtendimento(TipoAtendimento tipoAtendimento, int idToten)
     {
         using (var banco = new AppDbContext(_context))

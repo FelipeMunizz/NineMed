@@ -13,4 +13,5 @@ public interface InterfaceTotenService
     Task AtualizarSenhaToten(SenhaToten obj);
     Task DeletarSenhasTotenDiarias(int idToten);
     Task<IList<SenhaToten>> ListaSenhaTotenTipoAtendimento(TipoAtendimento tipoAtendimento, int idToten);
+    Task<IList<SenhaToten>> ListaSenhasPainel(int idToten);
 }

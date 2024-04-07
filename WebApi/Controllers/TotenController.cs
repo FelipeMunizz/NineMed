@@ -40,6 +40,11 @@ public class TotenController : ControllerBase
     [Produces("application/json")]
     public async Task<ActionResult<List<SenhaToten>>> ListarSenhasToten() => await _repositorySenhas.List();
 
+    [AllowAnonymous]
+    [HttpGet("ListarSenhasPainel/{idToten:int}")]
+    [Produces("application/json")]
+    public async Task<object> ListarSenhasPainel(int idToten) => await _repositorySenhas.ListaSenhasPainel(idToten);
+
     [HttpGet("ListaSenhaTotenTipoAtendimento/{tipoAtendimento:int}/{idToten:int}")]
     [Produces("application/json")]
     public async Task<object> ListaSenhaTotenTipoAtendimento(TipoAtendimento tipoAtendimento, int idToten)
