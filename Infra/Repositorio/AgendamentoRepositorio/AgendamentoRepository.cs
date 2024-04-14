@@ -1,7 +1,11 @@
-﻿using Domain.Interfaces.IAgendamento;
+﻿using Dapper;
+using Domain.Interfaces.IAgendamento;
+using Entities.Enums;
 using Entities.Models;
+using Helper.Configuracoes;
 using Infra.Configuracao;
 using Infra.Repositorio.Generico;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Repositorio.AgendamentoRepositorio;
@@ -28,42 +32,146 @@ public class AgendamentoRepository : RepositorioGenerico<Agendamento>, Interface
 
     public async Task<IList<Agendamento>> ListaAgendamentosClinica(int idClinica)
     {
-        using (var banco = new AppDbContext(_context))
+        IList<Agendamento> agendamentos = new List<Agendamento>();
+
+        using (var connection = new SqlConnection(Config.ConectionString))
         {
-            return await (
-                from a in banco.Agendamento
-                where a.IdClinica == idClinica
-                select a
-                ).AsNoTracking().ToListAsync();
+            await connection.OpenAsync();
+            string query = $@"
+            SELECT *
+            FROM agendamento
+            WHERE IdClinica = @IdClinica
+        ";
+
+            using (var command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@IdClinica", idClinica);
+
+                using (var reader = await command.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        var agendamento = new Agendamento
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            DataAgendamento = reader.GetDateTime(reader.GetOrdinal("DataAgendamento")),
+                            Repeticao = (RepeticaoAgendamento)reader.GetInt32(reader.GetOrdinal("Repeticao")),
+                            SituacaoAgendamento = (SituacaoAgendamento)reader.GetInt32(reader.GetOrdinal("SituacaoAgendamento")),
+                            Lembrete = reader.GetBoolean(reader.GetOrdinal("Lembrete")),
+                            Observacao = reader.IsDBNull(reader.GetOrdinal("Observacao")) ? null : reader.GetString(reader.GetOrdinal("Observacao")),
+                            IdClinica = reader.GetInt32(reader.GetOrdinal("IdClinica")),
+                            IdPaciente = reader.GetInt32(reader.GetOrdinal("IdPaciente")),
+                            IdFuncionario = reader.GetInt32(reader.GetOrdinal("IdFuncionario")),
+                            IdConvenio = reader.GetInt32(reader.GetOrdinal("IdConvenio")),
+                            IdsProcedimento = reader.IsDBNull(reader.GetOrdinal("IdsProcedimento"))
+                                ? new int[0]
+                                : reader.GetString(reader.GetOrdinal("IdsProcedimento")).Split(',').Select(int.Parse).ToArray()
+                        };
+
+                        agendamentos.Add(agendamento);
+                    }
+                }
+            }
         }
+
+        return agendamentos;
     }
 
     public async Task<IList<Agendamento>> ListaAgendamentosDia(int idClinica, DateTime dia)
     {
-        using (var banco = new AppDbContext(_context))
+        using (var connection = new SqlConnection(Config.ConectionString))
         {
-            DateTime inicioDia = dia.Date; 
-            DateTime fimDia = dia.Date.AddHours(23).AddMinutes(59).AddSeconds(59);
+            await connection.OpenAsync();
+            string query = $@"
+            SELECT *
+            FROM agendamento
+            WHERE IdClinica = @IdClinica
+            AND DataAgendamento >= @InicioDia
+            AND DataAgendamento <= @FimDia
+        ";
 
-            return await (
-                from a in banco.Agendamento
-                where a.IdClinica == idClinica
-                && a.DataAgendamento >= inicioDia
-                && a.DataAgendamento <= fimDia
-                select a
-            ).AsNoTracking().ToListAsync();
+            using (var command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@IdClinica", idClinica);
+                command.Parameters.AddWithValue("@InicioDia", dia.Date);
+                command.Parameters.AddWithValue("@FimDia", dia.Date.AddHours(23).AddMinutes(59).AddSeconds(59));
+
+                var agendamentos = new List<Agendamento>();
+
+                using (var reader = await command.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        var agendamento = new Agendamento
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            DataAgendamento = reader.GetDateTime(reader.GetOrdinal("DataAgendamento")),
+                            Repeticao = (RepeticaoAgendamento)reader.GetInt32(reader.GetOrdinal("Repeticao")),
+                            SituacaoAgendamento = (SituacaoAgendamento)reader.GetInt32(reader.GetOrdinal("SituacaoAgendamento")),
+                            Lembrete = reader.GetBoolean(reader.GetOrdinal("Lembrete")),
+                            Observacao = reader.IsDBNull(reader.GetOrdinal("Observacao")) ? null : reader.GetString(reader.GetOrdinal("Observacao")),
+                            IdClinica = reader.GetInt32(reader.GetOrdinal("IdClinica")),
+                            IdPaciente = reader.GetInt32(reader.GetOrdinal("IdPaciente")),
+                            IdFuncionario = reader.GetInt32(reader.GetOrdinal("IdFuncionario")),
+                            IdConvenio = reader.GetInt32(reader.GetOrdinal("IdConvenio")),
+                            IdsProcedimento = reader.IsDBNull(reader.GetOrdinal("IdsProcedimento"))
+                                ? new int[0]
+                                : reader.GetString(reader.GetOrdinal("IdsProcedimento")).Split(',').Select(int.Parse).ToArray()
+                        };
+
+                        agendamentos.Add(agendamento);
+                    }
+                }
+
+                return agendamentos;
+            }
         }
     }
 
     public async Task<IList<Agendamento>> ListaAgendamentosFuncionario(int idFuncionario)
     {
-        using (var banco = new AppDbContext(_context))
+        using (var connection = new SqlConnection(Config.ConectionString))
         {
-            return await(
-                from a in banco.Agendamento
-                where a.IdFuncionario.Equals(idFuncionario)
-                select a
-                ).AsNoTracking().ToListAsync();
+            await connection.OpenAsync();
+            string query = $@"
+            SELECT *
+            FROM agendamento
+            WHERE IdFuncionario = @IdFuncionario
+        ";
+
+            using (var command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@IdFuncionario", idFuncionario);
+
+                var agendamentos = new List<Agendamento>();
+
+                using (var reader = await command.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        var agendamento = new Agendamento
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            DataAgendamento = reader.GetDateTime(reader.GetOrdinal("DataAgendamento")),
+                            Repeticao = (RepeticaoAgendamento)reader.GetInt32(reader.GetOrdinal("Repeticao")),
+                            SituacaoAgendamento = (SituacaoAgendamento)reader.GetInt32(reader.GetOrdinal("SituacaoAgendamento")),
+                            Lembrete = reader.GetBoolean(reader.GetOrdinal("Lembrete")),
+                            Observacao = reader.IsDBNull(reader.GetOrdinal("Observacao")) ? null : reader.GetString(reader.GetOrdinal("Observacao")),
+                            IdClinica = reader.GetInt32(reader.GetOrdinal("IdClinica")),
+                            IdPaciente = reader.GetInt32(reader.GetOrdinal("IdPaciente")),
+                            IdFuncionario = reader.GetInt32(reader.GetOrdinal("IdFuncionario")),
+                            IdConvenio = reader.GetInt32(reader.GetOrdinal("IdConvenio")),
+                            IdsProcedimento = reader.IsDBNull(reader.GetOrdinal("IdsProcedimento"))
+                                ? new int[0]
+                                : reader.GetString(reader.GetOrdinal("IdsProcedimento")).Split(',').Select(int.Parse).ToArray()
+                        };
+
+                        agendamentos.Add(agendamento);
+                    }
+                }
+
+                return agendamentos;
+            }
         }
     }
 }
