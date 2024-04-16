@@ -51,6 +51,13 @@ public class AgendamentoRepository : RepositorioGenerico<Agendamento>, Interface
                 {
                     while (await reader.ReadAsync())
                     {
+                        List<int> ids = reader.GetString(reader.GetOrdinal("IdsProcedimento"))
+                                .Replace("[", "")
+                                .Replace("]", "")
+                                .Split(',')
+                                .Select(int.Parse)
+                                .ToList();
+                        int[] idsProcedimentos = ids.ToArray();
                         var agendamento = new Agendamento
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
@@ -63,9 +70,7 @@ public class AgendamentoRepository : RepositorioGenerico<Agendamento>, Interface
                             IdPaciente = reader.GetInt32(reader.GetOrdinal("IdPaciente")),
                             IdFuncionario = reader.GetInt32(reader.GetOrdinal("IdFuncionario")),
                             IdConvenio = reader.GetInt32(reader.GetOrdinal("IdConvenio")),
-                            IdsProcedimento = reader.IsDBNull(reader.GetOrdinal("IdsProcedimento"))
-                                ? new int[0]
-                                : reader.GetString(reader.GetOrdinal("IdsProcedimento")).Split(',').Select(int.Parse).ToArray()
+                            IdsProcedimento = idsProcedimentos
                         };
 
                         agendamentos.Add(agendamento);
@@ -102,6 +107,13 @@ public class AgendamentoRepository : RepositorioGenerico<Agendamento>, Interface
                 {
                     while (await reader.ReadAsync())
                     {
+                        List<int> ids = reader.GetString(reader.GetOrdinal("IdsProcedimento"))
+                                .Replace("[", "")
+                                .Replace("]", "")
+                                .Split(',')
+                                .Select(int.Parse)
+                                .ToList();
+                        int[] idsProcedimentos = ids.ToArray();
                         var agendamento = new Agendamento
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
@@ -114,9 +126,7 @@ public class AgendamentoRepository : RepositorioGenerico<Agendamento>, Interface
                             IdPaciente = reader.GetInt32(reader.GetOrdinal("IdPaciente")),
                             IdFuncionario = reader.GetInt32(reader.GetOrdinal("IdFuncionario")),
                             IdConvenio = reader.GetInt32(reader.GetOrdinal("IdConvenio")),
-                            IdsProcedimento = reader.IsDBNull(reader.GetOrdinal("IdsProcedimento"))
-                                ? new int[0]
-                                : reader.GetString(reader.GetOrdinal("IdsProcedimento")).Split(',').Select(int.Parse).ToArray()
+                            IdsProcedimento = idsProcedimentos
                         };
 
                         agendamentos.Add(agendamento);
@@ -149,6 +159,13 @@ public class AgendamentoRepository : RepositorioGenerico<Agendamento>, Interface
                 {
                     while (await reader.ReadAsync())
                     {
+                        List<int> ids = reader.GetString(reader.GetOrdinal("IdsProcedimento"))
+                                .Replace("[", "")
+                                .Replace("]", "")
+                                .Split(',')
+                                .Select(int.Parse)
+                                .ToList();
+                        int[] idsProcedimentos = ids.ToArray();
                         var agendamento = new Agendamento
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
@@ -161,9 +178,7 @@ public class AgendamentoRepository : RepositorioGenerico<Agendamento>, Interface
                             IdPaciente = reader.GetInt32(reader.GetOrdinal("IdPaciente")),
                             IdFuncionario = reader.GetInt32(reader.GetOrdinal("IdFuncionario")),
                             IdConvenio = reader.GetInt32(reader.GetOrdinal("IdConvenio")),
-                            IdsProcedimento = reader.IsDBNull(reader.GetOrdinal("IdsProcedimento"))
-                                ? new int[0]
-                                : reader.GetString(reader.GetOrdinal("IdsProcedimento")).Split(',').Select(int.Parse).ToArray()
+                            IdsProcedimento = idsProcedimentos
                         };
 
                         agendamentos.Add(agendamento);
