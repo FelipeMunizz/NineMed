@@ -1,4 +1,4 @@
-﻿ using Domain.Interfaces.IConvenio;
+﻿using Domain.Interfaces.IConvenio;
 using Domain.Interfaces.IFuncionario;
 using Domain.InterfacesServices.IConvenioService;
 using Entities.Models;
@@ -37,7 +37,7 @@ public class ConvenioService : InterfaceConvenioService
                 Success = false,
                 Message = "Erro ao adicionar o convenio."
             };
-        
+
     }
 
     public async Task AtualizarConvenio(Convenio convenio)
@@ -48,7 +48,7 @@ public class ConvenioService : InterfaceConvenioService
     public async Task DeletarConvenio(int idConvenio)
     {
         Convenio convenio = await _convenio.GetEntityById(idConvenio);
-        if(convenio != null)
+        if (convenio != null)
             await _convenio.Delete(convenio);
     }
 
@@ -67,14 +67,14 @@ public class ConvenioService : InterfaceConvenioService
                 Result = null
             };
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             return new RetornoGenerico<object>
             {
                 Success = false,
                 Message = "Não foi possivel adicionar o plano",
                 Result = ex
-                
+
             };
         }
     }
@@ -87,11 +87,11 @@ public class ConvenioService : InterfaceConvenioService
     public async Task DeletarPlanoConvenio(int idPlanoConvenio)
     {
         PlanosConvenio plano = await ObtemPlanoConvenio(idPlanoConvenio);
-        if(plano != null)
+        if (plano != null)
             await _planos.Delete(plano);
     }
 
-    public async Task<IList<ProfissionaisSaudeConvenio>> ListaProfissionaisSaudeConvenio(int idConvenio) => 
+    public async Task<IList<ProfissionaisSaudeConvenio>> ListaProfissionaisSaudeConvenio(int idConvenio) =>
         await _profissionalSaude.ListaProfissionaisConvenio(idConvenio);
 
     public async Task<ProfissionaisSaudeConvenio> ObtemProfissionalSaudeConvenio(int idProfissional) =>
@@ -103,7 +103,16 @@ public class ConvenioService : InterfaceConvenioService
         {
             Funcionario funcionario = await _funcioanrio.GetEntityById(profissionaisSaude.IdFuncionario);
             if (funcionario.ProfissionalSaude)
-                await _profissionalSaude.Add(profissionaisSaude);
+            {
+                if (!await _profissionalSaude.ProfissionalAtendeConvenio(funcionario.Id, profissionaisSaude.IdConvenio))
+                    await _profissionalSaude.Add(profissionaisSaude);
+                else
+                    return new RetornoGenerico<object>
+                    {
+                        Success = true,
+                        Message = "Profissional já atende o convênio"
+                    };
+            }
             else
                 return new RetornoGenerico<object>
                 {
