@@ -40,7 +40,7 @@ public class AgendamentoService : InterfaceAgendamentoService
     {
         ConfiguracaoClinica configClinica = await _repositoryConfigClinica.ObterConfiguracaoClinica(agendamento.IdClinica);
 
-        if (!ValidaHorarioClinica(agendamento.DataAgendamento, configClinica))
+        if (!ValidaHorarioClinica(agendamento.HoraAgendamento, configClinica))
             return new RetornoGenerico<Agendamento>
             {
                 Success = false,
@@ -59,6 +59,15 @@ public class AgendamentoService : InterfaceAgendamentoService
         }
 
         TimeOnly tempoAgendado = TimeOnly.FromDateTime(DateTime.MinValue.AddMinutes(tempoTotalAgendamento));
+
+        agendamento.DataAgendamento = new DateTime(
+                agendamento.DataAgendamento.Year,
+                agendamento.DataAgendamento.Month,
+                agendamento.DataAgendamento.Day,
+                agendamento.HoraAgendamento.Hour,
+                agendamento.HoraAgendamento.Minute,
+                agendamento.HoraAgendamento.Second
+            );
 
         var horario = await _serviceFuncionario.HorarioFuncionarioIntervalo(agendamento.IdFuncionario, agendamento.DataAgendamento, tempoAgendado);
 
@@ -128,11 +137,9 @@ public class AgendamentoService : InterfaceAgendamentoService
     public async Task<Agendamento> ObterAgendamento(int idAgendamento) =>
         await _repositoryAgendamento.GetEntityById(idAgendamento);
 
-    private bool ValidaHorarioClinica(DateTime horarioAgendamento, ConfiguracaoClinica configClinica)
+    private bool ValidaHorarioClinica(TimeOnly horarioAgendamento, ConfiguracaoClinica configClinica)
     {
-        TimeOnly horario = new TimeOnly(horarioAgendamento.Hour, horarioAgendamento.Minute);
-
-        if (horario < configClinica.HorarioAbertura || horario >= configClinica.HorarioFechamento)
+        if (horarioAgendamento < configClinica.HorarioAbertura || horarioAgendamento >= configClinica.HorarioFechamento)
         {
             return false;
         }

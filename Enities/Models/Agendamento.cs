@@ -8,6 +8,7 @@ public class Agendamento
 {
     public int Id { get; set; }
     public DateTime DataAgendamento { get; set; }
+    public TimeOnly HoraAgendamento { get; set; }
     public RepeticaoAgendamento Repeticao { get; set; }
     public SituacaoAgendamento SituacaoAgendamento { get; set; }
     public bool Lembrete { get; set; }
