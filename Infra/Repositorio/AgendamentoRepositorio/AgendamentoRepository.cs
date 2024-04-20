@@ -1,5 +1,4 @@
-﻿using Dapper;
-using Domain.Interfaces.IAgendamento;
+﻿using Domain.Interfaces.IAgendamento;
 using Entities.Enums;
 using Entities.Models;
 using Helper.Configuracoes;
@@ -37,11 +36,11 @@ public class AgendamentoRepository : RepositorioGenerico<Agendamento>, Interface
         using (var connection = new SqlConnection(Config.ConectionString))
         {
             await connection.OpenAsync();
-            string query = $@"
-            SELECT *
-            FROM agendamento
-            WHERE IdClinica = @IdClinica
-        ";
+            string query = @"
+        SELECT *
+        FROM agendamento
+        WHERE IdClinica = @IdClinica
+    ";
 
             using (var command = new SqlCommand(query, connection))
             {
@@ -51,13 +50,17 @@ public class AgendamentoRepository : RepositorioGenerico<Agendamento>, Interface
                 {
                     while (await reader.ReadAsync())
                     {
+                        TimeSpan horaAgendamentoSpan = TimeSpan.Zero;
+
                         List<int> ids = reader.GetString(reader.GetOrdinal("IdsProcedimento"))
-                                .Replace("[", "")
-                                .Replace("]", "")
-                                .Split(',')
-                                .Select(int.Parse)
-                                .ToList();
+                            .Replace("[", "")
+                            .Replace("]", "")
+                            .Split(',')
+                            .Select(int.Parse)
+                            .ToList();
                         int[] idsProcedimentos = ids.ToArray();
+
+                        horaAgendamentoSpan = reader.GetTimeSpan(reader.GetOrdinal("HoraAgendamento"));
                         var agendamento = new Agendamento
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
@@ -73,6 +76,8 @@ public class AgendamentoRepository : RepositorioGenerico<Agendamento>, Interface
                             IdsProcedimento = idsProcedimentos
                         };
 
+                        agendamento.HoraAgendamento = new TimeOnly(horaAgendamentoSpan.Hours, horaAgendamentoSpan.Minutes, horaAgendamentoSpan.Seconds);
+
                         agendamentos.Add(agendamento);
                     }
                 }
@@ -81,6 +86,7 @@ public class AgendamentoRepository : RepositorioGenerico<Agendamento>, Interface
 
         return agendamentos;
     }
+
 
     public async Task<IList<Agendamento>> ListaAgendamentosDia(int idClinica, DateTime dia)
     {
@@ -107,13 +113,17 @@ public class AgendamentoRepository : RepositorioGenerico<Agendamento>, Interface
                 {
                     while (await reader.ReadAsync())
                     {
+                        TimeSpan horaAgendamentoSpan = TimeSpan.Zero;
+
                         List<int> ids = reader.GetString(reader.GetOrdinal("IdsProcedimento"))
-                                .Replace("[", "")
-                                .Replace("]", "")
-                                .Split(',')
-                                .Select(int.Parse)
-                                .ToList();
+                            .Replace("[", "")
+                            .Replace("]", "")
+                            .Split(',')
+                            .Select(int.Parse)
+                            .ToList();
                         int[] idsProcedimentos = ids.ToArray();
+
+                        horaAgendamentoSpan = reader.GetTimeSpan(reader.GetOrdinal("HoraAgendamento"));
                         var agendamento = new Agendamento
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
@@ -128,6 +138,8 @@ public class AgendamentoRepository : RepositorioGenerico<Agendamento>, Interface
                             IdConvenio = reader.GetInt32(reader.GetOrdinal("IdConvenio")),
                             IdsProcedimento = idsProcedimentos
                         };
+
+                        agendamento.HoraAgendamento = new TimeOnly(horaAgendamentoSpan.Hours, horaAgendamentoSpan.Minutes, horaAgendamentoSpan.Seconds);
 
                         agendamentos.Add(agendamento);
                     }
@@ -159,13 +171,17 @@ public class AgendamentoRepository : RepositorioGenerico<Agendamento>, Interface
                 {
                     while (await reader.ReadAsync())
                     {
+                        TimeSpan horaAgendamentoSpan = TimeSpan.Zero;
+
                         List<int> ids = reader.GetString(reader.GetOrdinal("IdsProcedimento"))
-                                .Replace("[", "")
-                                .Replace("]", "")
-                                .Split(',')
-                                .Select(int.Parse)
-                                .ToList();
+                            .Replace("[", "")
+                            .Replace("]", "")
+                            .Split(',')
+                            .Select(int.Parse)
+                            .ToList();
                         int[] idsProcedimentos = ids.ToArray();
+
+                        horaAgendamentoSpan = reader.GetTimeSpan(reader.GetOrdinal("HoraAgendamento"));
                         var agendamento = new Agendamento
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
@@ -180,6 +196,8 @@ public class AgendamentoRepository : RepositorioGenerico<Agendamento>, Interface
                             IdConvenio = reader.GetInt32(reader.GetOrdinal("IdConvenio")),
                             IdsProcedimento = idsProcedimentos
                         };
+
+                        agendamento.HoraAgendamento = new TimeOnly(horaAgendamentoSpan.Hours, horaAgendamentoSpan.Minutes, horaAgendamentoSpan.Seconds);
 
                         agendamentos.Add(agendamento);
                     }

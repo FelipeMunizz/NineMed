@@ -134,8 +134,11 @@ public class AgendamentoService : InterfaceAgendamentoService
         };
     }
 
-    public async Task<Agendamento> ObterAgendamento(int idAgendamento) =>
-        await _repositoryAgendamento.GetEntityById(idAgendamento);
+    public async Task<Agendamento> ObterAgendamento(int idAgendamento)
+    {
+       var teste = await _repositoryAgendamento.GetEntityById(idAgendamento);
+        return teste;
+    }
 
     private bool ValidaHorarioClinica(TimeOnly horarioAgendamento, ConfiguracaoClinica configClinica)
     {
