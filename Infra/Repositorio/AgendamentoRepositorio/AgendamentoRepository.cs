@@ -7,6 +7,8 @@ using Infra.Configuracao;
 using Infra.Repositorio.Generico;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
+using System.Reflection;
 
 namespace Infra.Repositorio.AgendamentoRepositorio;
 
@@ -214,6 +216,10 @@ public class AgendamentoRepository : RepositorioGenerico<Agendamento>, Interface
         {
             using (var banco = new AppDbContext(_context))
             {
+                var enumDescriptions = Enum.GetValues(typeof(SituacaoAgendamento))
+                                .Cast<SituacaoAgendamento>()
+                                .ToDictionary(e => e.ToString(), e => EnumHelper.GetEnumDescription(e));
+
                 var resultado = await (
                     from a in banco.Agendamento
                     where a.DataAgendamento >= DateTime.Now.AddDays(-30)
@@ -221,8 +227,8 @@ public class AgendamentoRepository : RepositorioGenerico<Agendamento>, Interface
                     group a by a.SituacaoAgendamento into g
                     select new
                     {
-                        SituacaoAgendamento = g.Key,
-                        Quantidade = g.Count()
+                        Name = enumDescriptions.ContainsKey(g.Key.ToString()) ? enumDescriptions[g.Key.ToString()] : g.Key.ToString(),
+                        Value = g.Count()
                     }
             ).AsNoTracking().ToListAsync();
 
@@ -238,6 +244,16 @@ public class AgendamentoRepository : RepositorioGenerico<Agendamento>, Interface
         {
 
             throw;
+        }
+    }
+
+    public static class EnumHelper
+    {
+        public static string GetEnumDescription(Enum value)
+        {
+            FieldInfo field = value.GetType().GetField(value.ToString());
+            DescriptionAttribute attribute = field.GetCustomAttribute<DescriptionAttribute>();
+            return attribute == null ? value.ToString() : attribute.Description;
         }
     }
 }
