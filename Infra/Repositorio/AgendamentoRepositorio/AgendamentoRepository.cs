@@ -216,22 +216,22 @@ public class AgendamentoRepository : RepositorioGenerico<Agendamento>, Interface
             {
                 var resultado = await (
                     from a in banco.Agendamento
-                    where a.DataAgendamento.Month == DateTime.Now.Month
+                    where a.DataAgendamento >= DateTime.Now.AddDays(-30)
+                       && a.DataAgendamento <= DateTime.Now
                     group a by a.SituacaoAgendamento into g
-                select new
-                {
-                    SituacaoAgendamento = g.Key,
-                    Quantidade = g.Count()
-                }
-            ).ToListAsync();
+                    select new
+                    {
+                        SituacaoAgendamento = g.Key,
+                        Quantidade = g.Count()
+                    }
+            ).AsNoTracking().ToListAsync();
 
-                var teste = new RetornoGenerico<object>
+                return new RetornoGenerico<object>
                 {
                     Success = true,
                     Message = "Gerado com Sucesso",
                     Result = resultado
                 };
-                return teste;
             }
         }
         catch (Exception)
