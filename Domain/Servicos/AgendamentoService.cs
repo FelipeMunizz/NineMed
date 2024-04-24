@@ -35,7 +35,7 @@ public class AgendamentoService : InterfaceAgendamentoService
     public async Task<IList<Agendamento>> ListaAgendamentosClinica(int idClinica) => await _repositoryAgendamento.ListaAgendamentosClinica(idClinica);
     public async Task<IList<Agendamento>> ListaAgendamentosDia(int idClinica, DateTime dia) => await _repositoryAgendamento.ListaAgendamentosDia(idClinica, dia);
     public async Task<IList<Agendamento>> ListaAgendamentosFuncionario(int idFuncionario) => await _repositoryAgendamento.ListaAgendamentosFuncionario(idFuncionario);
-
+    public async Task<RetornoGenerico<object>> GraficoAgendamento(int idClincia) => await _repositoryAgendamento.GraficoAgendamento(idClincia);
     public async Task<RetornoGenerico<Agendamento>> AdicionarAgendamento(Agendamento agendamento)
     {
         ConfiguracaoClinica configClinica = await _repositoryConfigClinica.ObterConfiguracaoClinica(agendamento.IdClinica);

@@ -1,6 +1,7 @@
 ﻿using Domain.Interfaces.IAgendamento;
 using Entities.Enums;
 using Entities.Models;
+using Entities.Retorno;
 using Helper.Configuracoes;
 using Infra.Configuracao;
 using Infra.Repositorio.Generico;
@@ -86,7 +87,6 @@ public class AgendamentoRepository : RepositorioGenerico<Agendamento>, Interface
 
         return agendamentos;
     }
-
 
     public async Task<IList<Agendamento>> ListaAgendamentosDia(int idClinica, DateTime dia)
     {
@@ -205,6 +205,39 @@ public class AgendamentoRepository : RepositorioGenerico<Agendamento>, Interface
 
                 return agendamentos;
             }
+        }
+    }
+
+    public async Task<RetornoGenerico<object>> GraficoAgendamento(int idClinica)
+    {
+        try
+        {
+            using (var banco = new AppDbContext(_context))
+            {
+                var resultado = await (
+                    from a in banco.Agendamento
+                    where a.DataAgendamento.Month == DateTime.Now.Month
+                    group a by a.SituacaoAgendamento into g
+                select new
+                {
+                    SituacaoAgendamento = g.Key,
+                    Quantidade = g.Count()
+                }
+            ).ToListAsync();
+
+                var teste = new RetornoGenerico<object>
+                {
+                    Success = true,
+                    Message = "Gerado com Sucesso",
+                    Result = resultado
+                };
+                return teste;
+            }
+        }
+        catch (Exception)
+        {
+
+            throw;
         }
     }
 }
