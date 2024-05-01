@@ -72,5 +72,11 @@ public class AgendamentoController : ControllerBase
 
     [HttpGet("GraficoAgendamento/{idClinica:int}")]
     [Produces("application/json")]
-    public async Task<ActionResult<RetornoGenerico<object>>> GraficoAgendamento(int idClinica) => await _service.GraficoAgendamento(idClinica);
+    public async Task<ActionResult<RetornoGenerico<object>>> GraficoAgendamento(int idClinica) => 
+        await _service.GraficoAgendamento(idClinica);
+
+    [HttpGet("AgendamentoPacienteDiario/{idClinica:int}")]
+    [Produces("application/json")]
+    public async Task<ActionResult<RetornoGenerico<object>>> AgendamentoPacienteDiario(int idClinica) =>
+        await _service.AgendamentoPacienteDiario(idClinica);
 }

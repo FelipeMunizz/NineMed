@@ -247,6 +247,44 @@ public class AgendamentoRepository : RepositorioGenerico<Agendamento>, Interface
         }
     }
 
+    public async Task<RetornoGenerico<object>> AgendamentoPacienteDiario(int idClinica)
+    {
+        try
+        {
+            DateTime diaAtual = DateTime.Now.Date;
+            using (var banco = new AppDbContext(_context))
+            {
+                var resultado = await (
+                    from a in banco.Agendamento
+                    join p in banco.Paciente on a.IdPaciente equals p.Id
+                    where
+                        a.IdClinica.Equals(idClinica)
+                     && a.SituacaoAgendamento == SituacaoAgendamento.Confirmado
+                     && a.DataAgendamento >= diaAtual
+                     && a.DataAgendamento <= diaAtual.AddDays(1)
+                     orderby a.HoraAgendamento ascending
+                    select new
+                    {
+                        NomePaciente = p.Nome,
+                        HoraAgendamento = a.HoraAgendamento
+                    }
+                ).AsNoTracking().ToListAsync();
+
+                return new RetornoGenerico<object>
+                {
+                    Success = true,
+                    Message = "Gerado com sucesso",
+                    Result = resultado
+                };
+            }
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+
     public static class EnumHelper
     {
         public static string GetEnumDescription(Enum value)

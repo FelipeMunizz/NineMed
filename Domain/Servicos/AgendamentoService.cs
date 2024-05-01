@@ -140,6 +140,9 @@ public class AgendamentoService : InterfaceAgendamentoService
         return teste;
     }
 
+    public async Task<RetornoGenerico<object>> AgendamentoPacienteDiario(int idClinica) => 
+        await _repositoryAgendamento.AgendamentoPacienteDiario(idClinica);
+
     private bool ValidaHorarioClinica(TimeOnly horarioAgendamento, ConfiguracaoClinica configClinica)
     {
         if (horarioAgendamento < configClinica.HorarioAbertura || horarioAgendamento >= configClinica.HorarioFechamento)
