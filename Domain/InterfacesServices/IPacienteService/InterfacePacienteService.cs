@@ -8,6 +8,7 @@ public interface InterfacePacienteService
     Task AdicionarPaciente(Paciente paciente, EnderecoPaciente endereco, ContatoPaciente contato, PacienteConvenio convenio, PacienteFamiliar familiar);
     Task AtualizarPaciente(Paciente paciente);
     Task DeletarPaciente(int idPaciente);
+    Task<RetornoGenerico<object>> GraficoPacienteConvenio(int idClinica);
 
     #region Endereco
     Task<IList<EnderecoPaciente>> ListaEnderecosPaciente(int idPaciente);

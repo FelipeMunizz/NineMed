@@ -90,6 +90,8 @@ public class PacienteService : InterfacePacienteService
 
         await _pacienteRepositorio.Delete(paciente);
     }
+
+    public async Task<RetornoGenerico<object>> GraficoPacienteConvenio(int idClinica) => await _pacienteRepositorio.GraficoPacienteConvenio(idClinica);
     #endregion
 
     #region Contato

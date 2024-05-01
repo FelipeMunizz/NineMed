@@ -1,6 +1,7 @@
 ﻿using Domain.Interfaces.IPaciente;
 using Domain.InterfacesServices.IPacienteService;
 using Entities.Models;
+using Entities.Retorno;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.DTOs;
@@ -25,6 +26,10 @@ public class PacienteController : ControllerBase
     [HttpGet("ListaPacientesClinica/{idClinica:int}")]
     [Produces("application/json")]
     public async Task<object> ListaPacientesClinica(int idClinica) => await _repository.ListaPacienteClinica(idClinica);
+
+    [HttpGet("GraficoPacienteConvenio/{idClinica:int}")]
+    [Produces("application/json")]
+    public async Task<RetornoGenerico<object>> GraficoPacienteConvenio(int idClinica) => await _service.GraficoPacienteConvenio(idClinica);
 
     [HttpGet("ObterPaciente/{idPaciente:int}")]
     [Produces("application/json")]
