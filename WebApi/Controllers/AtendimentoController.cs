@@ -51,6 +51,11 @@ public class AtendimentoController : ControllerBase
     [HttpGet("ListaAtentedimentoPaciente/{idPaciente:int}")]
     [Produces("application/json")]
     public async Task<object> ListaAtentedimentoPaciente(int idPaciente) => await _repository.ListaAtentedimentoPaciente(idPaciente);
+
+    [HttpGet("GraficoAtendimentosMensal/{idClinica:int}")]
+    [Produces("application/json")]
+    public async Task<ActionResult<RetornoGenerico<object>>> GraficoAtendimentosMensal(int idClinica) => 
+        await _service.GraficoAtendimentosMensal(idClinica);
     #endregion
 
     #region Exames

@@ -1,8 +1,10 @@
 ﻿using Domain.Interfaces.IAtendimento;
 using Entities.Models;
+using Entities.Retorno;
 using Infra.Configuracao;
 using Infra.Repositorio.Generico;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 namespace Infra.Repositorio.AtendimentoRepositorio;
 
@@ -24,6 +26,32 @@ public class AtendimentoRepository : RepositorioGenerico<Atendimento>, Interface
                 where ag.IdPaciente == idPaciente
                 select a
                 ).AsNoTracking().ToListAsync();
+        }
+    }
+    public async Task<RetornoGenerico<object>> GraficoAtendimentosMensal(int idClinica)
+    {
+        using (var banco = new AppDbContext(_context))
+        {
+            var resultados = await (
+                from ate in banco.Atendimento
+                join ag in banco.Agendamento on ate.IdAgendamento equals ag.Id
+                join c in banco.Clinica on ag.IdClinica equals c.Id
+                where c.Id == idClinica
+                group ate by new { Mes = ag.DataAgendamento.Month } into grp
+                orderby grp.Key.Mes descending
+                select new
+                {
+                    Mes = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(grp.Key.Mes),
+                    QuantidadeAgendamento = grp.Count()
+                }
+            ).Take(5).AsNoTracking().ToListAsync();
+
+            return new RetornoGenerico<object>
+            {
+                Success = true,
+                Message = "Gerado com sucesso",
+                Result = resultados
+            };
         }
     }
 }

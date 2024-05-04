@@ -56,6 +56,8 @@ public class AtendimentoService : InterfaceAtendimentoService
         Atendimento atendimento = await _repository.GetEntityById(idAtendimento);
         await _repository.Delete(atendimento);
     }
+
+    public async Task<RetornoGenerico<object>> GraficoAtendimentosMensal(int idClinica) => await _repository.GraficoAtendimentosMensal(idClinica);
     #endregion
 
     #region Exames

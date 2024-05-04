@@ -8,6 +8,7 @@ public interface InterfaceAtendimentoService
     Task<RetornoGenerico<Atendimento>> AdicionarAtendimento(Atendimento atendimento);
     Task AtualizarAtendimento(Atendimento atendimento);
     Task DeletarAtendimento(int idAtendimento);
+    Task<RetornoGenerico<object>> GraficoAtendimentosMensal(int idClinica);
 
     #region Exames
     Task<RetornoGenerico<ExameAtendimento>> AdicionarExameAtendimento(ExameAtendimento exame);
