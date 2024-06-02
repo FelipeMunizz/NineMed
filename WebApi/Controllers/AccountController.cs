@@ -2,6 +2,7 @@
 using Entities.Models;
 using Entities.Retorno;
 using Entities.Users;
+using Helper.Configuracoes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -33,7 +34,7 @@ public class AccountController : ControllerBase
         if (result.Succeeded)
         {
             var token = new TokenJwtBuilder()
-                .AddSecurityKey(JwtSecurityKey.Create("NineMed_Secret_Key-20232004"))
+                .AddSecurityKey(JwtSecurityKey.Create(Config.SecurityToken))
                 .AddSubject("Nine Med v1")
                 .AddIssuer("NineMed.Security.Bearer")
                 .AddAudience("NineMed.Security.Bearer")

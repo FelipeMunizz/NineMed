@@ -8,6 +8,8 @@ public static class Config
 
     public static string ConectionString = StringsConnection(ambiente);
 
+    public static string SecurityToken = "NineMed_Secret_Key-2023200454741186251284218857742684126841268412684471000000000214110257468429632587410147852369842014785264";
+
     private static string DiretorioLog()
     {   
         string pastaLogs = "LogsGerados";
