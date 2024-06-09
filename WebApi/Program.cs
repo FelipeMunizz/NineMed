@@ -190,7 +190,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
                         ValidIssuer = "NineMed.Security.Bearer",
                         ValidAudience = "NineMed.Security.Bearer",
-                        IssuerSigningKey = JwtSecurityKey.Create("NineMed_Secret_Key-20232004")
+                        IssuerSigningKey = JwtSecurityKey.Create(Config.SecurityKey)
                     };
 
                     option.Events = new JwtBearerEvents

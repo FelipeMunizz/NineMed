@@ -34,7 +34,7 @@ public class AccountController : ControllerBase
         if (result.Succeeded)
         {
             var token = new TokenJwtBuilder()
-                .AddSecurityKey(JwtSecurityKey.Create(Config.SecurityToken))
+                .AddSecurityKey(JwtSecurityKey.Create(Config.SecurityKey))
                 .AddSubject("Nine Med v1")
                 .AddIssuer("NineMed.Security.Bearer")
                 .AddAudience("NineMed.Security.Bearer")
