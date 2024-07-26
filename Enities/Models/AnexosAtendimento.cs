@@ -6,7 +6,7 @@ namespace Entities.Models;
 public class AnexosAtendimento
 {
     public int Id { get; set; }
-    public string Base64Anexo { get; set; }
+    public byte[] Base64Anexo { get; set; }
 
     [ForeignKey("Atendimento")]
     public int IdAtendimento { get; set; }
