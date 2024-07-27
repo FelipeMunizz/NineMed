@@ -79,4 +79,9 @@ public class AgendamentoController : ControllerBase
     [Produces("application/json")]
     public async Task<ActionResult<RetornoGenerico<object>>> AgendamentoPacienteDiario(int idClinica) =>
         await _service.AgendamentoPacienteDiario(idClinica);
+
+    [HttpGet("AgendamentosAtendimento/{idFuncionario:int}")]
+    [Produces("application/json")]
+    public async Task<ActionResult<RetornoGenerico<object>>> AgendamentosAtendimento(int idFuncionario) =>
+        await _service.AgendamentosAtendimento(idFuncionario);
 }

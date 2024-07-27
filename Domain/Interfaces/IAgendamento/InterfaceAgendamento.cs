@@ -12,4 +12,5 @@ public interface InterfaceAgendamento : InterfaceGeneric<Agendamento>
     Task<IList<Agendamento>> ListaAgendamentosDia(int idClinica, DateTime dia);
     Task<RetornoGenerico<object>> GraficoAgendamento(int idClinica);
     Task<RetornoGenerico<object>> AgendamentoPacienteDiario(int idClinica);
+    Task<RetornoGenerico<object>> AgendamentosAtendimento(int idFuncionario);
 }

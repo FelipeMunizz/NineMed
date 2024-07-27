@@ -1,4 +1,5 @@
-﻿using Domain.Interfaces.IAgendamento;
+﻿using Dapper;
+using Domain.Interfaces.IAgendamento;
 using Entities.Enums;
 using Entities.Models;
 using Entities.Retorno;
@@ -262,7 +263,7 @@ public class AgendamentoRepository : RepositorioGenerico<Agendamento>, Interface
                      && a.SituacaoAgendamento == SituacaoAgendamento.Confirmado
                      && a.DataAgendamento >= diaAtual
                      && a.DataAgendamento <= diaAtual.AddDays(1)
-                     orderby a.HoraAgendamento ascending
+                    orderby a.HoraAgendamento ascending
                     select new
                     {
                         NomePaciente = p.Nome,
@@ -285,7 +286,49 @@ public class AgendamentoRepository : RepositorioGenerico<Agendamento>, Interface
         }
     }
 
-    public static class EnumHelper
+    public async Task<RetornoGenerico<object>> AgendamentosAtendimento(int idFuncionario)
+    {
+        try
+        {
+            DateTime diaAtual = DateTime.Now;
+            using (var connection = new SqlConnection(Config.ConectionString))
+            {
+                await connection.OpenAsync();
+                string query = @"
+                select 
+                    p.Id CodCliente,
+                    p.Nome,
+                    p.RG,
+                    p.CPF,
+                    FORMAT(a.DataAgendamento, 'dd/MM/yyyy HH:mm') Agendamento
+                from agendamento a
+                join Paciente p on a.IdPaciente = p.Id 
+                where 
+                    FORMAT(a.DataAgendamento, 'yyyy-MM-dd') = FORMAT(GETDATE(), 'yyyy-MM-dd')
+                and a.IdFuncionario = @IdFuncionario
+                and a.SituacaoAgendamento = @SituacaoAgendamento";
+
+                var parametros = new { IdFuncionario = idFuncionario, SituacaoAgendamento = SituacaoAgendamento.Confirmado };
+
+                var resultado = await connection.QueryAsync<dynamic>(query, parametros);
+
+                return new RetornoGenerico<object>
+                {
+                    Success = true,
+                    Message = "Gerado com sucesso",
+                    Result = resultado
+                };
+            }
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+    }
+
+
+
+    private static class EnumHelper
     {
         public static string GetEnumDescription(Enum value)
         {
