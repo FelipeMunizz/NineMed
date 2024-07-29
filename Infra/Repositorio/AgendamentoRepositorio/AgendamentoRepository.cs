@@ -296,6 +296,7 @@ public class AgendamentoRepository : RepositorioGenerico<Agendamento>, Interface
                 await connection.OpenAsync();
                 string query = @"
                 select 
+                    a.Id IdAgendamento,
                     p.Id CodCliente,
                     p.Nome,
                     p.RG,
