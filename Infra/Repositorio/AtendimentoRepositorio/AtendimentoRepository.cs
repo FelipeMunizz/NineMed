@@ -54,4 +54,16 @@ public class AtendimentoRepository : RepositorioGenerico<Atendimento>, Interface
             };
         }
     }
+
+    public async Task<Atendimento?> ObterAtendimentoAgendamento(int idAgendamento)
+    {
+        using (var banco = new AppDbContext(_context))
+        {
+            return await (
+                from a in banco.Atendimento
+                where a.IdAgendamento == idAgendamento
+                select a
+                ).AsNoTracking().FirstOrDefaultAsync();
+        }
+    }
 }

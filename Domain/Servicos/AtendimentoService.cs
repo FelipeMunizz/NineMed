@@ -29,6 +29,22 @@ public class AtendimentoService : InterfaceAtendimentoService
     #region Atendimento
     public async Task<RetornoGenerico<Atendimento>> AdicionarAtendimento(Atendimento atendimento)
     {
+        if (atendimento.IdAgendamento > 0)
+        {
+            Atendimento atendimentoCadastrado = await _repository.ObterAtendimentoAgendamento(atendimento.IdAgendamento);
+
+            if (atendimentoCadastrado != null)
+            {
+                return new RetornoGenerico<Atendimento>
+                {
+                    Success = true,
+                    Message = "Atendimento já cadastrado",
+                    Result = atendimentoCadastrado
+                };
+            }
+        }
+
+
         atendimento = await _repository.Add(atendimento);
         if (atendimento.Id > 0)
         {

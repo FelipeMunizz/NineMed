@@ -8,4 +8,5 @@ public interface InterfaceAtendimento : InterfaceGeneric<Atendimento>
 {
     Task<IList<Atendimento>> ListaAtentedimentoPaciente(int idPaciente);
     Task<RetornoGenerico<object>> GraficoAtendimentosMensal(int idClinica);
+    Task<Atendimento> ObterAtendimentoAgendamento(int idAgendamento);
 }
