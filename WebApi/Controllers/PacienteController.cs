@@ -287,5 +287,10 @@ public class PacienteController : ControllerBase
         await _service.DeletarPacienteProntuario(idProntuario);
         return Ok();
     }
+
+    [HttpGet("ObtemProntuarioTelaAtendimento/{idPaciente:int}")]
+    [Produces("application/json")]
+    public async Task<ActionResult<object>> ObtemProntuarioTelaAtendimento(int idPaciente) => 
+        await _service.ObtemProntuarioTelaAtendimento(idPaciente);
     #endregion
 }

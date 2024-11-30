@@ -48,5 +48,6 @@ public interface InterfacePacienteService
     Task<PacienteProntuario> ObtemPacienteProntuaio(int idPaciente);
     Task<PacienteProntuario> ObtemProntuaio(int idProntuario);
     Task DeletarPacienteProntuario(int idProntuario);
+    Task<object> ObtemProntuarioTelaAtendimento(int idPaciente);
     #endregion
 }

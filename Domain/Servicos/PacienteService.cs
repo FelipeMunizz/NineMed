@@ -195,6 +195,8 @@ public class PacienteService : InterfacePacienteService
 
     public async Task<PacienteProntuario> ObtemPacienteProntuaio(int idPaciente) => await _prontuarioRepositorio.ObtemPacienteProntuario(idPaciente);
 
+    public async Task<object> ObtemProntuarioTelaAtendimento(int idPaciente) => await _prontuarioRepositorio.ObtemProntuarioTelaAtendimento(idPaciente);
+
     public async Task DeletarPacienteProntuario(int idProntuario)
     {
         PacienteProntuario prontuario = await ObtemProntuaio(idProntuario);
