@@ -1,4 +1,5 @@
-﻿using Domain.Interfaces.IToten;
+﻿using Domain.IIntegracao;
+using Domain.Interfaces.IToten;
 using Domain.InterfacesServices.ITotenService;
 using Entities.Enums;
 using Entities.Models;
@@ -11,11 +12,14 @@ public class TotenService : InterfaceTotenService
 {
     private readonly InterfaceSenhaToten _repositorySenhas;
     private readonly InterfaceToten _repositoryToten;
+    private readonly RabbitMqService _rabbitMQService;
 
     public TotenService(InterfaceSenhaToten repositorySenhas, InterfaceToten repositoryToten)
     {
         _repositorySenhas = repositorySenhas;
         _repositoryToten = repositoryToten;
+
+        _rabbitMQService = new RabbitMqService("fila_senhas");
     }
 
     #region Toten
@@ -99,6 +103,15 @@ public class TotenService : InterfaceTotenService
             };
 
             novaSenha = await _repositorySenhas.Add(novaSenha);
+
+            if (novaSenha.Id.Equals(0))
+                return new RetornoGenerico<SenhaToten>
+                {
+                    Success = false,
+                    Message = "Não foi possivel gerar a senha"
+                };
+
+            _rabbitMQService.SendMessage(novaSenha);
 
             return new RetornoGenerico<SenhaToten>
             {

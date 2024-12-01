@@ -74,6 +74,7 @@ public class TotenController : ControllerBase
         return Ok();
     }
 
+    [AllowAnonymous]
     [HttpPost("AdicionarSenhaToten")]
     [Produces("application/json")]
     public async Task<ActionResult<RetornoGenerico<SenhaToten>>> AdicionarSenhaToten(SenhaToten senhaToten) 

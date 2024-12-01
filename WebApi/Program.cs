@@ -1,4 +1,5 @@
 #region References
+using Domain.IIntegracao;
 using Domain.Interfaces.Generics;
 using Domain.Interfaces.IAgendamento;
 using Domain.Interfaces.IAtendimento;
@@ -148,6 +149,8 @@ builder.Services.AddScoped<InterfaceLancamentoService,  LancamentoService>();
 builder.Services.AddScoped<InterfaceCategoriaFinanceiraService, CategoriaFinanceiraService>();
 builder.Services.AddScoped<InterfaceFormaPagamentoService, FormaPagamentoService>();
 #endregion
+
+builder.Services.AddSingleton(new RabbitMqService("fila_senhas"));
 
 builder.Services.AddSwaggerGen(c =>
 {
