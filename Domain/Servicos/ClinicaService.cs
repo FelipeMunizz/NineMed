@@ -2,7 +2,6 @@
 using Domain.InterfacesServices.IClinicaService;
 using Entities.Models;
 using Entities.Retorno;
-using Helper.Logs;
 
 namespace Domain.Servicos;
 
@@ -34,7 +33,6 @@ public class ClinicaService : InterfaceClinicaService
             }
             else
             {
-                LogProxy.GravarLog($"Erro ao salvar Clinica: CNPJ {clinica.CNPJ}");
                 return new RetornoGenerico<Clinica>
                 {
                     Success = false,
@@ -54,8 +52,6 @@ public class ClinicaService : InterfaceClinicaService
         }
         catch (Exception ex)
         {
-            LogProxy.GravarLogException(ex);
-
             return new RetornoGenerico<Clinica>
             {
                 Success = false,
@@ -72,8 +68,7 @@ public class ClinicaService : InterfaceClinicaService
         }
         catch (Exception ex)
         {
-            LogProxy.GravarLogException(ex);
-            throw;
+            return;
         }
     }
 
@@ -95,8 +90,7 @@ public class ClinicaService : InterfaceClinicaService
         }
         catch (Exception ex)
         {
-            LogProxy.GravarLogException(ex);
-            throw;
+            return;
         }
     }
     #endregion

@@ -4,7 +4,6 @@ using Domain.InterfacesServices.ITotenService;
 using Entities.Enums;
 using Entities.Models;
 using Entities.Retorno;
-using Helper.Logs;
 
 namespace Domain.Servicos;
 
@@ -123,7 +122,6 @@ public class TotenService : InterfaceTotenService
         }
         catch (Exception ex)
         {
-            LogProxy.GravarLogException(ex);
             return new RetornoGenerico<SenhaToten>
             {
                 Success = false,
@@ -145,7 +143,7 @@ public class TotenService : InterfaceTotenService
         }
         catch (Exception ex)
         {
-            LogProxy.GravarLogException(ex);
+            return;
         }
     }
 
@@ -160,7 +158,7 @@ public class TotenService : InterfaceTotenService
         }
         catch (Exception ex)
         {
-            LogProxy.GravarLogException(ex);
+            return;
         }
     }
     #endregion

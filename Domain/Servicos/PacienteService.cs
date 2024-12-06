@@ -2,7 +2,6 @@
 using Domain.InterfacesServices.IPacienteService;
 using Entities.Models;
 using Entities.Retorno;
-using Helper.Logs;
 
 namespace Domain.Servicos;
 
@@ -51,7 +50,6 @@ public class PacienteService : InterfacePacienteService
             }
             else
             {
-                LogProxy.GravarLog($"Erro ao salvar Paciente: {paciente.Nome}, CPF {paciente.CPF}");
                 throw new Exception("Erro ao adicionar a Paciente");
             }
             await AdicionarEnderecoPaciente(endereco);
@@ -62,7 +60,6 @@ public class PacienteService : InterfacePacienteService
         }
         catch (Exception ex)
         {
-            LogProxy.GravarLogException(ex);
             throw;
         }
     }

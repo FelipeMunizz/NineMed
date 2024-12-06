@@ -1,6 +1,5 @@
 ﻿using Entities.Models;
 using Entities.Users;
-using Helper.Logs;
 using Helper.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -128,15 +127,11 @@ public class UsersController : ControllerBase
                     else
                         return false;
                 }
-                else
-                {
-                    LogProxy.GravarLogErro("Erro Api InverTexto",$"Erro na chamada à API: {response.StatusCode}");
-                }
             }
         }
         catch (Exception ex)
         {
-            LogProxy.GravarLogException(ex);
+            return false;
         }
 
         return false; // Retornar false por padrão em caso de erro
