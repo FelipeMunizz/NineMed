@@ -11,14 +11,14 @@ public class TotenService : InterfaceTotenService
 {
     private readonly InterfaceSenhaToten _repositorySenhas;
     private readonly InterfaceToten _repositoryToten;
-    private readonly RabbitMqService _rabbitMQService;
+    //private readonly RabbitMqService _rabbitMQService;
 
     public TotenService(InterfaceSenhaToten repositorySenhas, InterfaceToten repositoryToten)
     {
         _repositorySenhas = repositorySenhas;
         _repositoryToten = repositoryToten;
 
-        _rabbitMQService = new RabbitMqService("fila_senhas");
+        //_rabbitMQService = new RabbitMqService("fila_senhas");
     }
 
     #region Toten
@@ -35,7 +35,7 @@ public class TotenService : InterfaceTotenService
     public async Task DeletarToten(int idToten)
     {
         Toten toten = await _repositoryToten.GetEntityById(idToten);
-        if(toten != null)
+        if (toten != null)
             await _repositoryToten.Delete(toten);
     }
     #endregion
@@ -44,7 +44,7 @@ public class TotenService : InterfaceTotenService
     public async Task<IList<SenhaToten>> ListaSenhasPainel(int idToten) => await _repositorySenhas.ListaSenhasPainel(idToten);
 
     public async Task<IList<SenhaToten>> ListaSenhaTotenTipoAtendimento(TipoAtendimento tipoAtendimento, int idToten)
-        => await _repositorySenhas.ListaSenhaTotenTipoAtendimento(tipoAtendimento, idToten); 
+        => await _repositorySenhas.ListaSenhaTotenTipoAtendimento(tipoAtendimento, idToten);
 
     public async Task<RetornoGenerico<SenhaToten>> AdicionarSenhaToten(SenhaToten obj)
     {
@@ -110,7 +110,7 @@ public class TotenService : InterfaceTotenService
                     Message = "Não foi possivel gerar a senha"
                 };
 
-            _rabbitMQService.SendMessage(novaSenha);
+            //_rabbitMQService.SendMessage(novaSenha);
 
             return new RetornoGenerico<SenhaToten>
             {

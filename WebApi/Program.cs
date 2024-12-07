@@ -127,13 +127,13 @@ builder.Services.AddScoped<InterfaceCentroCusto, CentroCustoRepository>();
 builder.Services.AddScoped<InterfaceConfiguracaoFinanceira, ConfiguracaoFinanceiraRepository>();
 builder.Services.AddScoped<InterfaceLancamento, LancamentoRepository>();
 builder.Services.AddScoped<InterfaceCategoriaFinanceira, CategoriaFinanceiraRepository>();
-builder.Services.AddScoped<InterfaceFormaPagamento, FormaPagamentoRepository>();   
+builder.Services.AddScoped<InterfaceFormaPagamento, FormaPagamentoRepository>();
 #endregion
 
 #region Servicos
 builder.Services.AddScoped<InterfaceTotenService, TotenService>();
 builder.Services.AddScoped<InterfaceClinicaService, ClinicaService>();
-builder.Services.AddScoped<InterfaceConvenioService, ConvenioService>();    
+builder.Services.AddScoped<InterfaceConvenioService, ConvenioService>();
 builder.Services.AddScoped<InterfaceFuncionarioService, FuncionarioService>();
 builder.Services.AddScoped<InterfaceProcedimentoService, ProcedimentoService>();
 builder.Services.AddScoped<InterfacePacienteService, PacienteService>();
@@ -143,14 +143,14 @@ builder.Services.AddScoped<InterfaceAtendimentoService, AtendimentoService>();
 builder.Services.AddScoped<InterfaceBancoService, BancoService>();
 builder.Services.AddScoped<InterfaceContaBancariaService, ContaBancariaService>();
 builder.Services.AddScoped<InterfaceSubCategoriaService, SubCategoriaService>();
-builder.Services.AddScoped<InterfaceCentroCustoService,  CentroCustoService>();
+builder.Services.AddScoped<InterfaceCentroCustoService, CentroCustoService>();
 builder.Services.AddScoped<InterfaceConfiguracaoFinanceiraService, ConfiguracaoFinanceiraService>();
-builder.Services.AddScoped<InterfaceLancamentoService,  LancamentoService>();
+builder.Services.AddScoped<InterfaceLancamentoService, LancamentoService>();
 builder.Services.AddScoped<InterfaceCategoriaFinanceiraService, CategoriaFinanceiraService>();
 builder.Services.AddScoped<InterfaceFormaPagamentoService, FormaPagamentoService>();
 #endregion
 
-builder.Services.AddSingleton(new RabbitMqService("fila_senhas"));
+//builder.Services.AddSingleton(new RabbitMqService("fila_senhas"));
 
 builder.Services.AddSwaggerGen(c =>
 {
