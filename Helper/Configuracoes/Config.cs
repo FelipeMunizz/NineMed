@@ -4,24 +4,8 @@ public static class Config
 {
     private const Ambiente ambiente = Ambiente.Producao;
 
-    public static string DiretorioLogs = DiretorioLog();
-
     public static string ConectionString = StringsConnection(ambiente);
     public const string SecurityKey = "43443FDFDF34DF34343fdf344SDFSDFSDFSDFSDF4545354345SDFGDFGDFGDFGdffgfdGDFGDGR%";
-
-    private static string DiretorioLog()
-    {   
-        string pastaLogs = "LogsGerados";
-        string diretorioBin = AppDomain.CurrentDomain.BaseDirectory;
-        string caminhoPastaLogs = Path.Combine(diretorioBin, pastaLogs);
-
-        if (!Directory.Exists(caminhoPastaLogs))
-        {
-            Directory.CreateDirectory(caminhoPastaLogs);
-        }
-
-        return caminhoPastaLogs;
-    }
 
     private static string StringsConnection(Ambiente ambientes)
     {
