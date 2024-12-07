@@ -30,25 +30,32 @@ public class AccountController : ControllerBase
     [HttpPost("CreateToken")]
     public async Task<object> CreateToken([FromBody] LoginUserDTO model)
     {
-        var result = await _sign.PasswordSignInAsync(model.Email, model.Password, false, lockoutOnFailure: false);
-        if (result.Succeeded)
+        try
         {
-            var token = new TokenJwtBuilder()
-                .AddSecurityKey(JwtSecurityKey.Create(Config.SecurityKey))
-                .AddSubject("Nine Med v1")
-                .AddIssuer("NineMed.Security.Bearer")
-                .AddAudience("NineMed.Security.Bearer")
-                .AddClaim("UsuarioEmail", model.Email)
-                .AddExpiry(1440)
-                .Builder();
-
-            return new RetornoToken
+            var result = await _sign.PasswordSignInAsync(model.Email, model.Password, false, lockoutOnFailure: false);
+            if (result.Succeeded)
             {
-                Token = token.value,
-                Email = model.Email
-            };
+                var token = new TokenJwtBuilder()
+                    .AddSecurityKey(JwtSecurityKey.Create(Config.SecurityKey))
+                    .AddSubject("Nine Med v1")
+                    .AddIssuer("NineMed.Security.Bearer")
+                    .AddAudience("NineMed.Security.Bearer")
+                    .AddClaim("UsuarioEmail", model.Email)
+                    .AddExpiry(1440)
+                    .Builder();
+
+                return new RetornoToken
+                {
+                    Token = token.value,
+                    Email = model.Email
+                };
+            }
+            else
+                return Unauthorized();
         }
-        else
-            return Unauthorized();
+        catch (Exception ex)
+        {
+            return ex;
+        }
     }
 }
