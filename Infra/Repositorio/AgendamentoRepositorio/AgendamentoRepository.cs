@@ -301,7 +301,7 @@ public class AgendamentoRepository : RepositorioGenerico<Agendamento>, Interface
                     p.Nome,
                     p.RG,
                     p.CPF,
-                    FORMAT(a.DataAgendamento, 'dd/MM/yyyy HH:mm') Agendamento
+                    CONCAT(FORMAT(a.DataAgendamento, 'dd/MM/yyyy'), ' ', a.HoraAgendamento) Agendamento
                 from agendamento a
                 join Paciente p on a.IdPaciente = p.Id 
                 where 
