@@ -155,7 +155,7 @@ public class PacienteService : InterfacePacienteService
     public async Task<RetornoGenerico<PacienteProntuario>> AdicionarPacienteProntuario(PacienteProntuario prontuario)
     {
         PacienteProntuario pacienteProntuario = await ObtemPacienteProntuaio(prontuario.IdPaciente);
-        if(pacienteProntuario != null)
+        if(pacienteProntuario == null)
         {
             prontuario = await _prontuarioRepositorio.Add(prontuario);
 
