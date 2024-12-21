@@ -59,8 +59,7 @@ public class AtendimentoController : ControllerBase
 
     [HttpGet("EvolucaoProntuarioByIdPaciente/{idPaciente:int}")]
     [Produces("application/json")]
-    public async Task<ActionResult<RetornoGenerico<object>>> EvolucaoProntuarioByIdPaciente(int idPaciente) =>
-        
+    public async Task<ActionResult<RetornoGenerico<object>>> EvolucaoProntuarioByIdPaciente(int idPaciente) =>        
         await _service.EvolucaoProntuarioByIdPaciente(idPaciente);
     #endregion
 
