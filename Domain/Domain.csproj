@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ReportViewerCore.NETCore" Version="15.1.25" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Enities\Entities.csproj" />
     <ProjectReference Include="..\Helper\Helper.csproj" />
   </ItemGroup>
