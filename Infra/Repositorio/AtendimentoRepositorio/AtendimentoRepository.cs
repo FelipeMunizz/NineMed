@@ -1,8 +1,11 @@
-﻿using Domain.Interfaces.IAtendimento;
+﻿using Dapper;
+using Domain.Interfaces.IAtendimento;
 using Entities.Models;
 using Entities.Retorno;
+using Helper.Configuracoes;
 using Infra.Configuracao;
 using Infra.Repositorio.Generico;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 
@@ -20,7 +23,7 @@ public class AtendimentoRepository : RepositorioGenerico<Atendimento>, Interface
     {
         using (var banco = new AppDbContext(_context))
         {
-            return await(
+            return await (
                 from a in banco.Atendimento
                 join ag in banco.Agendamento on a.IdAgendamento equals ag.Id
                 where ag.IdPaciente == idPaciente
@@ -64,6 +67,88 @@ public class AtendimentoRepository : RepositorioGenerico<Atendimento>, Interface
                 where a.IdAgendamento == idAgendamento
                 select a
                 ).AsNoTracking().FirstOrDefaultAsync();
+        }
+    }
+
+    public async Task<RetornoGenerico<object>> EvolucaoProntuarioByIdPaciente(int idPaciente)
+    {
+        string query = $"""
+            SELECT 
+                a.Id CodRegistro,
+                'Atendimento' TipoRegistro,
+                CONCAT(FORMAT(ag.[DataAgendamento], 'dd/MM/yyyy'), ' ', ag.[HoraAgendamento]) as DataRegistro,
+                a.[QueixaPrincipal] as Descricao
+            FROM Atendimento a
+            join Agendamento ag on a.IdAgendamento = ag.Id
+            join Paciente p on p.Id = ag.IdPaciente
+            where p.Id = {idPaciente}
+
+            UNION ALL
+
+            SELECT 
+                ax.Id,
+                'Anexos' TipoRegistro,
+                CONCAT(FORMAT(ag.[DataAgendamento], 'dd/MM/yyyy'), ' ', ag.[HoraAgendamento]) as DataRegistro,
+                ax.Base64Anexo
+            FROM AnexosAtendimento ax
+            JOIN Atendimento a on a.Id = ax.IdAtendimento
+            JOIN Agendamento ag on a.Id = a.IdAgendamento
+            join Paciente p on p.Id = ag.IdPaciente
+            where p.Id = {idPaciente}
+
+            UNION ALL
+
+            SELECT 
+                ats.Id,
+                'Atestado' TipoRegistro,
+                CONCAT(FORMAT(ag.[DataAgendamento], 'dd/MM/yyyy'), ' ', ag.[HoraAgendamento]) as DataRegistro,
+                ats.Descricao
+            FROM AtestadoAtendimento ats
+            JOIN Atendimento a on a.Id = ats.IdAtendimento
+            JOIN Agendamento ag on a.Id = a.IdAgendamento
+            join Paciente p on p.Id = ag.IdPaciente
+            where p.Id = {idPaciente}
+
+            UNION ALL
+
+            SELECT 
+                ex.Id,
+                'Exame' TipoRegistro,
+                CONCAT(FORMAT(ag.[DataAgendamento], 'dd/MM/yyyy'), ' ', ag.[HoraAgendamento]) as DataRegistro,
+                ex.Exame Descricao
+            FROM ExameAtendimento ex
+            JOIN Atendimento a on a.Id = ex.IdAtendimento
+            JOIN Agendamento ag on a.Id = a.IdAgendamento
+            join Paciente p on p.Id = ag.IdPaciente
+            where p.Id = {idPaciente}
+
+            UNION ALL
+
+            SELECT 
+                prs.Id,
+                'Prescrição' TipoRegistro,
+                CONCAT(FORMAT(ag.[DataAgendamento], 'dd/MM/yyyy'), ' ', ag.[HoraAgendamento]) as DataRegistro,
+                prs.ItemReceita Descricao
+            FROM PrescricaoAtendimento prs
+            JOIN Atendimento a on a.Id = prs.IdAtendimento
+            JOIN Agendamento ag on a.Id = a.IdAgendamento
+            join Paciente p on p.Id = ag.IdPaciente
+            where p.Id = {idPaciente}
+            """;
+
+        using (var connection = new SqlConnection(Config.ConectionString))
+        {
+            if (connection.State == System.Data.ConnectionState.Closed)
+                await connection.OpenAsync();
+
+            var result = await connection.QueryAsync<dynamic>(query);
+
+            return new RetornoGenerico<object>
+            {
+                Success = true,
+                Message = "Evoulção do prontuário do paciente",
+                Result = result
+            };
         }
     }
 }

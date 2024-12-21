@@ -1,6 +1,7 @@
 ﻿using Domain.Interfaces.IAtendimento;
 using Domain.InterfacesServices.IAtendimentoService;
 using Entities.Models;
+using Entities.ModelsReports;
 using Entities.Retorno;
 
 namespace Domain.Servicos;
@@ -74,6 +75,8 @@ public class AtendimentoService : InterfaceAtendimentoService
     }
 
     public async Task<RetornoGenerico<object>> GraficoAtendimentosMensal(int idClinica) => await _repository.GraficoAtendimentosMensal(idClinica);
+
+    public async Task<RetornoGenerico<object>> EvolucaoProntuarioByIdPaciente(int idPaciente) => await _repository.EvolucaoProntuarioByIdPaciente(idPaciente);
     #endregion
 
     #region Exames
@@ -161,6 +164,7 @@ public class AtendimentoService : InterfaceAtendimentoService
     }
     public async Task<AtestadoAtendimento> ObterAtestadoAtendimento(int idAtestado) => await _atestadoRepository.GetEntityById(idAtestado);
     public async Task<IList<AtestadoAtendimento>> ListarAtestadosAtendimento(int idAtendimento) => await _atestadoRepository.ListaAtestadoAtendimento(idAtendimento);
+    public async Task<AtestadoModelReport> ObterAtestadoRelatorio(int idAtendimento) => await _atestadoRepository.GetAtestadoReport(idAtendimento);
     #endregion
 
     #region Anexos

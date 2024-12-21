@@ -1,4 +1,5 @@
 ﻿using Entities.Models;
+using Entities.ModelsReports;
 using Entities.Retorno;
 
 namespace Domain.InterfacesServices.IAtendimentoService;
@@ -9,6 +10,7 @@ public interface InterfaceAtendimentoService
     Task AtualizarAtendimento(Atendimento atendimento);
     Task DeletarAtendimento(int idAtendimento);
     Task<RetornoGenerico<object>> GraficoAtendimentosMensal(int idClinica);
+    Task<RetornoGenerico<object>> EvolucaoProntuarioByIdPaciente(int idPaciente);
 
     #region Exames
     Task<RetornoGenerico<ExameAtendimento>> AdicionarExameAtendimento(ExameAtendimento exame);
@@ -32,6 +34,7 @@ public interface InterfaceAtendimentoService
     Task DeletarAtestadoAtendimento(int idAtestado);
     Task<AtestadoAtendimento> ObterAtestadoAtendimento(int idAtestado);
     Task<IList<AtestadoAtendimento>> ListarAtestadosAtendimento(int idAtendimento);
+    Task<AtestadoModelReport> ObterAtestadoRelatorio(int idAtendimento);
     #endregion
 
     #region Anexos

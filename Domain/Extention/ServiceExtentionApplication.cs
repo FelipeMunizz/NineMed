@@ -17,11 +17,6 @@ using Domain.InterfacesServices.ISubCategoriaService;
 using Domain.InterfacesServices.ITotenService;
 using Domain.Servicos;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Extention
 {
