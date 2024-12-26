@@ -1,4 +1,5 @@
 #region References
+using FastReport.Data;
 using Entities.Models;
 using Helper.Configuracoes;
 using Infra.Configuracao;
@@ -112,6 +113,8 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 }
 
 app.UseHttpsRedirection();
+
+app.UseStaticFiles();
 
 app.UseAuthentication();
 

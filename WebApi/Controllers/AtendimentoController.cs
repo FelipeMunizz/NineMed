@@ -4,6 +4,7 @@ using Entities.Models;
 using Entities.Retorno;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 
 namespace WebApi.Controllers;
 
@@ -54,12 +55,12 @@ public class AtendimentoController : ControllerBase
 
     [HttpGet("GraficoAtendimentosMensal/{idClinica:int}")]
     [Produces("application/json")]
-    public async Task<ActionResult<RetornoGenerico<object>>> GraficoAtendimentosMensal(int idClinica) => 
+    public async Task<ActionResult<RetornoGenerico<object>>> GraficoAtendimentosMensal(int idClinica) =>
         await _service.GraficoAtendimentosMensal(idClinica);
 
     [HttpGet("EvolucaoProntuarioByIdPaciente/{idPaciente:int}")]
     [Produces("application/json")]
-    public async Task<ActionResult<RetornoGenerico<object>>> EvolucaoProntuarioByIdPaciente(int idPaciente) =>        
+    public async Task<ActionResult<RetornoGenerico<object>>> EvolucaoProntuarioByIdPaciente(int idPaciente) =>
         await _service.EvolucaoProntuarioByIdPaciente(idPaciente);
     #endregion
 
@@ -181,6 +182,11 @@ public class AtendimentoController : ControllerBase
         await _service.DeletarAtestadoAtendimento(idAtestado);
         return Ok();
     }
+
+    [AllowAnonymous]
+    [HttpGet("AtestadoRepository/{idAtendimento:int}")]
+    public async Task<ActionResult<object>> AtestadoRepository(int idAtendimento) =>
+        await _service.ObterAtestadoRelatorio(idAtendimento);
     #endregion
 
     #region Anexos

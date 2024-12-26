@@ -34,7 +34,7 @@ public interface InterfaceAtendimentoService
     Task DeletarAtestadoAtendimento(int idAtestado);
     Task<AtestadoAtendimento> ObterAtestadoAtendimento(int idAtestado);
     Task<IList<AtestadoAtendimento>> ListarAtestadosAtendimento(int idAtendimento);
-    Task<AtestadoModelReport> ObterAtestadoRelatorio(int idAtendimento);
+    Task<object> ObterAtestadoRelatorio(int idAtendimento);
     #endregion
 
     #region Anexos

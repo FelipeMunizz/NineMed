@@ -32,21 +32,36 @@ public class AtestadoAtendimentoRepository : RepositorioGenerico<AtestadoAtendim
         using (var banco = new AppDbContext(_context))
         {
             return await (
-            from a in banco.Atendimento
-            join ag in banco.Agendamento on a.IdAgendamento equals ag.Id into agJoin
-            from ag in agJoin.DefaultIfEmpty()
-            join f in banco.Funcionario on ag.IdFuncionario equals f.Id into fJoin
-            from f in fJoin.DefaultIfEmpty()
-            join ata in banco.AtestadoAtendimento on a.Id equals ata.IdAtendimento into ataJoin
-            from ata in ataJoin.DefaultIfEmpty()
-            where a.Id == idAtendimento
+            from ats in banco.AtestadoAtendimento
+            join at in banco.Atendimento on ats.IdAtendimento equals at.Id
+            join ag in banco.Agendamento on at.IdAgendamento equals ag.Id
+            join f in banco.Funcionario on ag.IdFuncionario equals f.Id
+            join p in banco.Paciente on ag.IdPaciente equals p.Id
+            join c in banco.Clinica on ag.IdClinica equals c.Id
+            let endereco = banco.EnderecoClinica
+                            .Where(ed => ed.IdClinica == c.Id)
+                            .OrderBy(ed => ed.Id)
+                            .FirstOrDefault()
+            let contato = banco.ContatoClinica
+                            .Where(ct => ct.IdClinica == c.Id)
+                            .OrderBy(ct => ct.Id)
+                            .FirstOrDefault()
+            where ats.IdAtendimento == idAtendimento
             select new AtestadoModelReport
             {
+                NomePaciente = p.Nome,
                 NomeFuncionario = f.Nome,
-                DataAtestado = ata.Data,
-                Descricao = ata.Descricao
+                NomeEmpresa = c.Nome ?? c.Fantasia ?? c.RazaoSocial,
+                DataFinal = ats.Data,
+                Descricao = ats.Descricao,
+                CRM = "",
+                UF = endereco.Estado,
+                Endereco = endereco != null ? $"{endereco.Logradouro}, {endereco.Numero}" : null,
+                Bairro = endereco.Bairro,
+                Cidade = endereco.Cidade,
+                Telefone = contato.NumeroContato
             }
-        ).FirstOrDefaultAsync();
+        ).AsNoTracking().FirstOrDefaultAsync();
         }
     }
 }
