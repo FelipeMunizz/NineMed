@@ -7,9 +7,7 @@ using Entities.Models;
 using Entities.ModelsReports;
 using Entities.Retorno;
 using Helper.Configuracoes;
-using System.Collections;
 using System.Net.Http.Headers;
-using System.Security.Cryptography.Xml;
 using System.Text.Json;
 
 namespace Domain.Servicos;
@@ -21,24 +19,18 @@ public class AtendimentoService : InterfaceAtendimentoService
     private readonly InterfacePrescricaoAtendimento _prescricaoRepository;
     private readonly InterfaceAtestadoAtendimento _atestadoRepository;
     private readonly InterfaceAnexosAtendimento _anexosRepository;
-    private readonly InterfaceClinicaService _clinicaService;
-    private readonly InterfaceClinica _clinicaRepository;
 
     public AtendimentoService(InterfaceAtendimento repository,
         InterfaceExameAtendimento exameRepository,
         InterfacePrescricaoAtendimento prescricaoRepository,
         InterfaceAtestadoAtendimento atestadoRepository,
-        InterfaceAnexosAtendimento anexosRepository,
-        InterfaceClinica clinicaRepository,
-        InterfaceClinicaService clinicaService)
+        InterfaceAnexosAtendimento anexosRepository)
     {
         _repository = repository;
         _exameRepository = exameRepository;
         _prescricaoRepository = prescricaoRepository;
         _atestadoRepository = atestadoRepository;
         _anexosRepository = anexosRepository;
-        _clinicaRepository = clinicaRepository;
-        _clinicaService = clinicaService;
     }
 
     #region Atendimento
@@ -180,25 +172,7 @@ public class AtendimentoService : InterfaceAtendimentoService
     public async Task<IList<AtestadoAtendimento>> ListarAtestadosAtendimento(int idAtendimento) => await _atestadoRepository.ListaAtestadoAtendimento(idAtendimento);
     public async Task<object> ObterAtestadoRelatorio(int idAtendimento)
     {
-        Clinica clinica = await _clinicaRepository.GetEntityById(2);
-        ContatoClinica contatoClinica = await _clinicaService.ObterContatoClinica(1);
-        EnderecoClinica enderecoClinica = await _clinicaService.ObterEnderecoClinica(1);
-        AtestadoModelReport atestadoModelReport = new AtestadoModelReport
-        {
-            NomeEmpresa = clinica.Fantasia,
-            DataEmissao = DateTime.Now,
-            DataInicial = DateTime.Now,
-            DataFinal = DateTime.Now.AddDays(5),
-            Endereco = enderecoClinica.Logradouro + " " + enderecoClinica.Numero,
-            Bairro = enderecoClinica.Bairro,
-            Cidade = enderecoClinica.Cidade,
-            UF = enderecoClinica.Estado,
-            Descricao = "teste",
-            NomeFuncionario = "Felipe",
-            NomePaciente = "Felipe Paciente",
-            Telefone = contatoClinica.NumeroContato,
-            CRM = "23949958738489"
-        };
+        AtestadoModelReport atestadoModelReport = await _atestadoRepository.GetAtestadoReport(idAtendimento);
 
         AtestadoReport atestadoReport = new AtestadoReport();
         var pdf = await atestadoReport.GeneretReport(atestadoModelReport);

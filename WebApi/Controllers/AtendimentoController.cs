@@ -162,9 +162,16 @@ public class AtendimentoController : ControllerBase
         RetornoGenerico<AtestadoAtendimento> retorno = await _service.AdicionarAtestadoAtendimento(Atestado);
 
         if (retorno.Success)
-            return Ok(retorno);
-        else
-            return BadRequest(retorno);
+        {
+            object linkDownload = await _service.ObterAtestadoRelatorio(retorno.Result.IdAtendimento);
+            return new RetornoGenerico<object>
+            {
+                Success = true,
+                Message = "Atestado gerado com sucesso",
+                Result = linkDownload
+            };
+        }
+        return BadRequest(retorno);
     }
 
     [HttpPut("AtualizarAtestadoAtendimento")]
@@ -183,9 +190,10 @@ public class AtendimentoController : ControllerBase
         return Ok();
     }
 
-    [AllowAnonymous]
-    [HttpGet("AtestadoRepository/{idAtendimento:int}")]
-    public async Task<ActionResult<object>> AtestadoRepository(int idAtendimento) =>
+    [HttpGet("ObterAtestadoRelatorio/{idAtendimento:int}")]
+    [Produces("application/json")]
+
+    public async Task<ActionResult<object>> ObterAtestadoRelatorio(int idAtendimento) =>
         await _service.ObterAtestadoRelatorio(idAtendimento);
     #endregion
 
