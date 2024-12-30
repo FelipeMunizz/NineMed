@@ -152,7 +152,8 @@ public class AtendimentoService : InterfaceAtendimentoService
             return new RetornoGenerico<AtestadoAtendimento>
             {
                 Success = true,
-                Message = "Prescrição adicionada com sucesso"
+                Message = "Prescrição adicionada com sucesso",
+                Result = Atestado
             };
         else
             return new RetornoGenerico<AtestadoAtendimento> { Success = false, Message = "Não foi possivel adicionar a Prescricão." };
@@ -169,7 +170,26 @@ public class AtendimentoService : InterfaceAtendimentoService
             await _atestadoRepository.Delete(Atestado);
     }
     public async Task<AtestadoAtendimento> ObterAtestadoAtendimento(int idAtestado) => await _atestadoRepository.GetEntityById(idAtestado);
-    public async Task<IList<AtestadoAtendimento>> ListarAtestadosAtendimento(int idAtendimento) => await _atestadoRepository.ListaAtestadoAtendimento(idAtendimento);
+    public async Task<RetornoGenerico<AtestadoAtendimento>> ObterAtestadoByIdAtendimento(int idAtendimento)
+    {
+        AtestadoAtendimento atestado = await _atestadoRepository.ObterAtestadoByIdAtendimento(idAtendimento);
+
+        if(atestado != null)
+        {
+            return new RetornoGenerico<AtestadoAtendimento>
+            {
+                Success = true,
+                Message = "Atestado encontrado",
+                Result = atestado
+            };
+        }
+
+        return new RetornoGenerico<AtestadoAtendimento>
+        {
+            Success = false,
+            Message = "Atestado não encontrado"
+        };
+    }
     public async Task<object> ObterAtestadoRelatorio(int idAtendimento)
     {
         AtestadoModelReport atestadoModelReport = await _atestadoRepository.GetAtestadoReport(idAtendimento);

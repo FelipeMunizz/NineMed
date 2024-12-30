@@ -150,10 +150,10 @@ public class AtendimentoController : ControllerBase
     public async Task<ActionResult<AtestadoAtendimento>> ObterAtestadoAtendimento(int idAtestado) =>
         await _service.ObterAtestadoAtendimento(idAtestado);
 
-    [HttpGet("ListaAtestadosAtentedimento/{idAtendimento:int}")]
+    [HttpGet("ObterAtestadoByIdAtendimento/{idAtendimento:int}")]
     [Produces("application/json")]
-    public async Task<object> ListaAtestadosAtentedimento(int idAtendimento) =>
-        await _service.ListarAtestadosAtendimento(idAtendimento);
+    public async Task<object> ObterAtestadoByIdAtendimento(int idAtendimento) =>
+        await _service.ObterAtestadoByIdAtendimento(idAtendimento);
 
     [HttpPost("AdicionarAtestadoAtendimento")]
     [Produces("application/json")]
@@ -179,7 +179,8 @@ public class AtendimentoController : ControllerBase
     public async Task<IActionResult> AtualizarAtestadoAtendimento(AtestadoAtendimento Atestado)
     {
         await _service.AtualizarAtestadoAtendimento(Atestado);
-        return Ok();
+        var link = await _service.ObterAtestadoRelatorio(Atestado.IdAtendimento);
+        return Ok(link);
     }
 
     [HttpDelete("DeletarAtestadoAtendimento/{idAtestado:int}")]

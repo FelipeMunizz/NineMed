@@ -33,7 +33,7 @@ public interface InterfaceAtendimentoService
     Task AtualizarAtestadoAtendimento(AtestadoAtendimento Atestado);
     Task DeletarAtestadoAtendimento(int idAtestado);
     Task<AtestadoAtendimento> ObterAtestadoAtendimento(int idAtestado);
-    Task<IList<AtestadoAtendimento>> ListarAtestadosAtendimento(int idAtendimento);
+    Task<RetornoGenerico<AtestadoAtendimento>> ObterAtestadoByIdAtendimento(int idAtendimento);
     Task<object> ObterAtestadoRelatorio(int idAtendimento);
     #endregion
 

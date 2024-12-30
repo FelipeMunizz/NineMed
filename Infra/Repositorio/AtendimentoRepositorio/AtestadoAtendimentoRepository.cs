@@ -15,7 +15,7 @@ public class AtestadoAtendimentoRepository : RepositorioGenerico<AtestadoAtendim
     {
         _context = new DbContextOptions<AppDbContext>();
     }
-    public async Task<IList<AtestadoAtendimento>> ListaAtestadoAtendimento(int idAtendimento)
+    public async Task<AtestadoAtendimento> ObterAtestadoByIdAtendimento(int idAtendimento)
     {
         using (var banco = new AppDbContext(_context))
         {
@@ -23,7 +23,7 @@ public class AtestadoAtendimentoRepository : RepositorioGenerico<AtestadoAtendim
                     from aa in banco.AtestadoAtendimento
                     where aa.IdAtendimento == idAtendimento
                     select aa
-                ).AsNoTracking().ToListAsync();
+                ).AsNoTracking().FirstOrDefaultAsync();
         }
     }
 
@@ -52,6 +52,8 @@ public class AtestadoAtendimentoRepository : RepositorioGenerico<AtestadoAtendim
                 NomePaciente = p.Nome,
                 NomeFuncionario = f.Nome,
                 NomeEmpresa = c.Nome ?? c.Fantasia ?? c.RazaoSocial,
+                DataEmissao = DateTime.Now, 
+                DataInicial = DateTime.Now,
                 DataFinal = ats.Data,
                 Descricao = ats.Descricao,
                 CRM = "",
