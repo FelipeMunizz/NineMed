@@ -82,7 +82,6 @@ public class AtendimentoRepository : RepositorioGenerico<Atendimento>, Interface
             join Agendamento ag on a.IdAgendamento = ag.Id
             join Paciente p on p.Id = ag.IdPaciente
             where p.Id = {idPaciente}
-            and a.Finalizado = 1
 
             UNION ALL
 
@@ -96,7 +95,6 @@ public class AtendimentoRepository : RepositorioGenerico<Atendimento>, Interface
             JOIN Agendamento ag on a.Id = a.IdAgendamento
             join Paciente p on p.Id = ag.IdPaciente
             where p.Id = {idPaciente}
-            and a.Finalizado = 1
 
             UNION ALL
 
@@ -110,7 +108,6 @@ public class AtendimentoRepository : RepositorioGenerico<Atendimento>, Interface
             JOIN Agendamento ag on a.Id = a.IdAgendamento
             join Paciente p on p.Id = ag.IdPaciente
             where p.Id = {idPaciente}
-            and a.Finalizado = 1
 
             UNION ALL
 
@@ -124,7 +121,6 @@ public class AtendimentoRepository : RepositorioGenerico<Atendimento>, Interface
             JOIN Agendamento ag on a.Id = a.IdAgendamento
             join Paciente p on p.Id = ag.IdPaciente
             where p.Id = {idPaciente}
-            and a.Finalizado = 1
 
             UNION ALL
 
@@ -138,7 +134,6 @@ public class AtendimentoRepository : RepositorioGenerico<Atendimento>, Interface
             JOIN Agendamento ag on a.Id = a.IdAgendamento
             join Paciente p on p.Id = ag.IdPaciente
             where p.Id = {idPaciente}
-            and a.Finalizado = 1
             """;
 
         using (var connection = new SqlConnection(Config.ConectionString))
