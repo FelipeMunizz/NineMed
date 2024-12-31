@@ -61,7 +61,8 @@ public class AtestadoAtendimentoRepository : RepositorioGenerico<AtestadoAtendim
                 Endereco = endereco != null ? $"{endereco.Logradouro}, {endereco.Numero}" : null,
                 Bairro = endereco.Bairro,
                 Cidade = endereco.Cidade,
-                Telefone = contato.NumeroContato
+                Telefone = contato.NumeroContato,
+                LogoEmpresa = c.Logo
             }
         ).AsNoTracking().FirstOrDefaultAsync();
         }

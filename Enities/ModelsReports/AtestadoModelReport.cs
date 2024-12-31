@@ -17,5 +17,5 @@ public class AtestadoModelReport
     public string Cidade { get; set; }
     public string Telefone { get; set; }
     public DateTime DataEmissao { get; set; } = DateTime.Now;
-    public byte[] LogoEmpresa { get; set; }
+    public string LogoEmpresa { get; set; }
 }

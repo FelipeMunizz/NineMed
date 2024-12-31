@@ -1,6 +1,7 @@
 ﻿using Entities.ModelsReports;
 using FastReport;
 using FastReport.Export.PdfSimple;
+using System.Drawing;
 using System.Text.Json;
 
 namespace Domain.Relatorios;
@@ -16,6 +17,22 @@ public class AtestadoReport
 
             using Report report = new Report();
 
+            var logoEmpresa = dados.LogoEmpresa;
+
+            if (logoEmpresa.Contains(","))
+            {
+                logoEmpresa = logoEmpresa.Split(',')[1];
+            }
+
+            while (logoEmpresa.Length % 4 != 0)
+            {
+                logoEmpresa += "=";
+            }
+
+            byte[] imageBytes = Convert.FromBase64String(logoEmpresa);
+
+            Image image = Image.FromStream(new MemoryStream(imageBytes));
+
             report.Load(path);
             report.SetParameterValue("NomeEmpresa", dados.NomeEmpresa);
             report.SetParameterValue("DataEmissao", dados.DataEmissao);
@@ -30,6 +47,7 @@ public class AtestadoReport
             report.SetParameterValue("NomePaciente", dados.NomePaciente);
             report.SetParameterValue("Telefone", dados.Telefone);
             report.SetParameterValue("CRM", dados.CRM);
+            report.SetParameterValue("LogoEmpresa", image);
             await report.PrepareAsync();
 
             using MemoryStream ms = new MemoryStream();

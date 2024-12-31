@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ScriptLanguage="CSharp" ReportInfo.Created="12/21/2024 22:37:36" ReportInfo.Modified="12/23/2024 08:27:15" ReportInfo.CreatorVersion="2025.1.0.0">
+<Report ScriptLanguage="CSharp" ReportInfo.Created="12/21/2024 22:37:36" ReportInfo.Modified="12/30/2024 20:50:09" ReportInfo.CreatorVersion="2025.1.0.0">
   <Dictionary>
     <Parameter Name="NomePaciente" DataType="System.String" AsString=""/>
     <Parameter Name="DataInicial" DataType="System.String" AsString=""/>
@@ -13,10 +13,12 @@
     <Parameter Name="Bairro" DataType="System.String" AsString=""/>
     <Parameter Name="Cidade" DataType="System.String" AsString=""/>
     <Parameter Name="Telefone" DataType="System.String" AsString=""/>
+    <Parameter Name="LogoEmpresa" DataType="System.Byte[]" AsString=""/>
   </Dictionary>
   <ReportPage Name="Page1" RawPaperSize="9" LeftMargin="0" TopMargin="0" RightMargin="0" BottomMargin="0" Watermark.Font="Arial, 60pt" LastPageSource="15" FirstPageSource="15">
     <ReportTitleBand Name="ReportTitle1" Width="793.8" Height="75.6">
-      <TextObject Name="Text1" Left="9.45" Top="18.9" Width="765.45" Height="37.8" Text="Atestado Médico" HorzAlign="Center" Font="Arial, 20pt, style=Bold"/>
+      <TextObject Name="Text1" Left="255.15" Top="18.9" Width="236.25" Height="37.8" Text="Atestado Médico" HorzAlign="Center" Font="Arial, 20pt, style=Bold"/>
+      <TextObject Name="Text7" Left="18.9" Top="28.35" Width="94.5" Height="18.9" Text="[LogoEmpresa]" Font="Arial, 10pt"/>
     </ReportTitleBand>
     <DataBand Name="Data1" Top="79.6" Width="793.8" Height="122.85">
       <TextObject Name="Text4" Left="9.45" Top="9.45" Width="765.45" Height="113.4" Text="Atesto que o (a) Sr. (Sra.) [NomePaciente], encontra-se sob meus cuidados profissionais necessitando de afastamento de suas atividades pelo período de [DataInicial] á [DataFinal].&#13;&#10;&#13;&#10;Observações: [Descricao]" Font="Arial, 12pt">
