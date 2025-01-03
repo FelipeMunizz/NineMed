@@ -158,30 +158,12 @@ public class AtendimentoController : ControllerBase
     [HttpPost("AdicionarAtestadoAtendimento")]
     [Produces("application/json")]
     public async Task<ActionResult<object>> AdicionarAtestadoAtendimento(AtestadoAtendimento Atestado)
-    {
-        RetornoGenerico<AtestadoAtendimento> retorno = await _service.AdicionarAtestadoAtendimento(Atestado);
-
-        if (retorno.Success)
-        {
-            object linkDownload = await _service.ObterAtestadoRelatorio(retorno.Result.IdAtendimento);
-            return new RetornoGenerico<object>
-            {
-                Success = true,
-                Message = "Atestado gerado com sucesso",
-                Result = linkDownload
-            };
-        }
-        return BadRequest(retorno);
-    }
+        => await _service.AdicionarAtestadoAtendimento(Atestado);
 
     [HttpPut("AtualizarAtestadoAtendimento")]
     [Produces("application/json")]
-    public async Task<IActionResult> AtualizarAtestadoAtendimento(AtestadoAtendimento Atestado)
-    {
-        await _service.AtualizarAtestadoAtendimento(Atestado);
-        var link = await _service.ObterAtestadoRelatorio(Atestado.IdAtendimento);
-        return Ok(link);
-    }
+    public async Task<ActionResult<RetornoGenerico<AtestadoAtendimento>>> AtualizarAtestadoAtendimento(AtestadoAtendimento Atestado)
+        => await _service.AtualizarAtestadoAtendimento(Atestado);
 
     [HttpDelete("DeletarAtestadoAtendimento/{idAtestado:int}")]
     [Produces("application/json")]

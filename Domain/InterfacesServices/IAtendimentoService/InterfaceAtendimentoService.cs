@@ -30,7 +30,7 @@ public interface InterfaceAtendimentoService
 
     #region Atestado
     Task<RetornoGenerico<AtestadoAtendimento>> AdicionarAtestadoAtendimento(AtestadoAtendimento Atestado);
-    Task AtualizarAtestadoAtendimento(AtestadoAtendimento Atestado);
+    Task<RetornoGenerico<AtestadoAtendimento>> AtualizarAtestadoAtendimento(AtestadoAtendimento Atestado);
     Task DeletarAtestadoAtendimento(int idAtestado);
     Task<AtestadoAtendimento> ObterAtestadoAtendimento(int idAtestado);
     Task<RetornoGenerico<AtestadoAtendimento>> ObterAtestadoByIdAtendimento(int idAtendimento);
