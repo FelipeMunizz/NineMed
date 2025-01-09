@@ -72,69 +72,79 @@ public class AtendimentoRepository : RepositorioGenerico<Atendimento>, Interface
 
     public async Task<RetornoGenerico<object>> EvolucaoProntuarioByIdPaciente(int idPaciente)
     {
-        string query = $"""
+        string query = $@"
+                        WITH Registros AS (
+                SELECT 
+                    a.Id AS CodRegistro,
+                    'Atendimento' AS TipoRegistro,
+                    CONCAT(FORMAT(ag.[DataAgendamento], 'dd/MM/yyyy'), ' ', ag.[HoraAgendamento]) AS DataRegistro,
+                    a.[QueixaPrincipal] AS Descricao
+                FROM Atendimento a
+                JOIN Agendamento ag ON a.IdAgendamento = ag.Id
+                JOIN Paciente p ON p.Id = ag.IdPaciente
+                WHERE p.Id = {idPaciente}
+
+                UNION ALL
+
+                SELECT 
+                    ax.Id AS CodRegistro,
+                    'Anexos' AS TipoRegistro,
+                    CONCAT(FORMAT(ag.[DataAgendamento], 'dd/MM/yyyy'), ' ', ag.[HoraAgendamento]) AS DataRegistro,
+                    ax.Base64Anexo AS Descricao
+                FROM AnexosAtendimento ax
+                JOIN Atendimento a ON a.Id = ax.IdAtendimento
+                JOIN Agendamento ag ON a.Id = a.IdAgendamento
+                JOIN Paciente p ON p.Id = ag.IdPaciente
+                WHERE p.Id = {idPaciente}
+
+                UNION ALL
+
+                SELECT 
+                    ats.Id AS CodRegistro,
+                    'Atestado' AS TipoRegistro,
+                    CONCAT(FORMAT(ag.[DataAgendamento], 'dd/MM/yyyy'), ' ', ag.[HoraAgendamento]) AS DataRegistro,
+                    ats.Descricao AS Descricao
+                FROM AtestadoAtendimento ats
+                JOIN Atendimento a ON a.Id = ats.IdAtendimento
+                JOIN Agendamento ag ON a.Id = a.IdAgendamento
+                JOIN Paciente p ON p.Id = ag.IdPaciente
+                WHERE p.Id = {idPaciente}
+
+                UNION ALL
+
+                SELECT 
+                    ex.Id AS CodRegistro,
+                    'Exame' AS TipoRegistro,
+                    CONCAT(FORMAT(ag.[DataAgendamento], 'dd/MM/yyyy'), ' ', ag.[HoraAgendamento]) AS DataRegistro,
+                    ex.Exame AS Descricao
+                FROM ExameAtendimento ex
+                JOIN Atendimento a ON a.Id = ex.IdAtendimento
+                JOIN Agendamento ag ON a.Id = a.IdAgendamento
+                JOIN Paciente p ON p.Id = ag.IdPaciente
+                WHERE p.Id = {idPaciente}
+
+                UNION ALL
+
+                SELECT 
+                    prs.Id AS CodRegistro,
+                    'Prescrição' AS TipoRegistro,
+                    CONCAT(FORMAT(ag.[DataAgendamento], 'dd/MM/yyyy'), ' ', ag.[HoraAgendamento]) AS DataRegistro,
+                    prs.ItemReceita AS Descricao
+                FROM PrescricaoAtendimento prs
+                JOIN Atendimento a ON a.Id = prs.IdAtendimento
+                JOIN Agendamento ag ON a.Id = a.IdAgendamento
+                JOIN Paciente p ON p.Id = ag.IdPaciente
+                WHERE p.Id = {idPaciente}
+            )
             SELECT 
-                a.Id CodRegistro,
-                'Atendimento' TipoRegistro,
-                CONCAT(FORMAT(ag.[DataAgendamento], 'dd/MM/yyyy'), ' ', ag.[HoraAgendamento]) as DataRegistro,
-                a.[QueixaPrincipal] as Descricao
-            FROM Atendimento a
-            join Agendamento ag on a.IdAgendamento = ag.Id
-            join Paciente p on p.Id = ag.IdPaciente
-            where p.Id = {idPaciente}
-
-            UNION ALL
-
-            SELECT 
-                ax.Id,
-                'Anexos' TipoRegistro,
-                CONCAT(FORMAT(ag.[DataAgendamento], 'dd/MM/yyyy'), ' ', ag.[HoraAgendamento]) as DataRegistro,
-                ax.Base64Anexo
-            FROM AnexosAtendimento ax
-            JOIN Atendimento a on a.Id = ax.IdAtendimento
-            JOIN Agendamento ag on a.Id = a.IdAgendamento
-            join Paciente p on p.Id = ag.IdPaciente
-            where p.Id = {idPaciente}
-
-            UNION ALL
-
-            SELECT 
-                ats.Id,
-                'Atestado' TipoRegistro,
-                CONCAT(FORMAT(ag.[DataAgendamento], 'dd/MM/yyyy'), ' ', ag.[HoraAgendamento]) as DataRegistro,
-                ats.Descricao
-            FROM AtestadoAtendimento ats
-            JOIN Atendimento a on a.Id = ats.IdAtendimento
-            JOIN Agendamento ag on a.Id = a.IdAgendamento
-            join Paciente p on p.Id = ag.IdPaciente
-            where p.Id = {idPaciente}
-
-            UNION ALL
-
-            SELECT 
-                ex.Id,
-                'Exame' TipoRegistro,
-                CONCAT(FORMAT(ag.[DataAgendamento], 'dd/MM/yyyy'), ' ', ag.[HoraAgendamento]) as DataRegistro,
-                ex.Exame Descricao
-            FROM ExameAtendimento ex
-            JOIN Atendimento a on a.Id = ex.IdAtendimento
-            JOIN Agendamento ag on a.Id = a.IdAgendamento
-            join Paciente p on p.Id = ag.IdPaciente
-            where p.Id = {idPaciente}
-
-            UNION ALL
-
-            SELECT 
-                prs.Id,
-                'Prescrição' TipoRegistro,
-                CONCAT(FORMAT(ag.[DataAgendamento], 'dd/MM/yyyy'), ' ', ag.[HoraAgendamento]) as DataRegistro,
-                prs.ItemReceita Descricao
-            FROM PrescricaoAtendimento prs
-            JOIN Atendimento a on a.Id = prs.IdAtendimento
-            JOIN Agendamento ag on a.Id = a.IdAgendamento
-            join Paciente p on p.Id = ag.IdPaciente
-            where p.Id = {idPaciente}
-            """;
+                CodRegistro,
+                TipoRegistro,
+                DataRegistro,
+                Descricao
+            FROM Registros
+            ORDER BY DataRegistro;
+            
+            ";
 
         using (var connection = new SqlConnection(Config.ConectionString))
         {
