@@ -2,7 +2,7 @@
 
 public static class Config
 {
-    private const Ambiente ambiente = Ambiente.Producao;
+    private const Ambiente ambiente = Ambiente.NotFelipe;
 
     public static string ConectionString = StringsConnection(ambiente);
     public const string SecurityKey = "43443FDFDF34DF34343fdf344SDFSDFSDFSDFSDF4545354345SDFGDFGDFGDFGdffgfdGDFGDGR%";

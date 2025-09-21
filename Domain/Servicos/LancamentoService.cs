@@ -2,7 +2,6 @@
 using Domain.InterfacesServices.ILancamentoService;
 using Entities.Models;
 using Entities.Retorno;
-using System.Drawing;
 
 namespace Domain.Servicos;
 
