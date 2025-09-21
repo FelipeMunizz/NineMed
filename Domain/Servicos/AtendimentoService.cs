@@ -1,8 +1,5 @@
 ﻿using Domain.Interfaces.IAtendimento;
-using Domain.Interfaces.IClinica;
 using Domain.InterfacesServices.IAtendimentoService;
-using Domain.InterfacesServices.IClinicaService;
-using Domain.Relatorios;
 using Entities.Models;
 using Entities.ModelsReports;
 using Entities.Retorno;
@@ -192,37 +189,7 @@ public class AtendimentoService : InterfaceAtendimentoService
     }
     public async Task<object> ObterAtestadoRelatorio(int idAtendimento)
     {
-        AtestadoModelReport atestadoModelReport = await _atestadoRepository.GetAtestadoReport(idAtendimento);
-
-        AtestadoReport atestadoReport = new AtestadoReport();
-        var pdf = await atestadoReport.GeneretReport(atestadoModelReport);
-
-        HttpClient httpClient = new HttpClient();
-        var content = new MultipartFormDataContent();
-
-        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Config.ApiKeyFileIO);
-
-        var fileContent = new ByteArrayContent(pdf);
-        fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse("application/pdf");
-        content.Add(fileContent, "file", $"Atestado_{atestadoModelReport.NomePaciente}.pdf");
-
-        var response = await httpClient.PostAsync("https://file.io", content);
-
-        if (!response.IsSuccessStatusCode)
-        {
-            throw new Exception($"Erro ao enviar arquivo para file.io: {response.StatusCode}");
-        }
-
-        // Processa a resposta para obter o link
-        var responseContent = await response.Content.ReadAsStringAsync();
-        FileIoResponse responseObject = JsonSerializer.Deserialize<FileIoResponse>(responseContent);
-
-        if (responseObject == null || string.IsNullOrEmpty(responseObject.Link))
-        {
-            throw new Exception("Resposta inválida do serviço file.io");
-        }
-
-        return responseObject.Link;
+        throw new NotImplementedException();
     } 
     #endregion
 

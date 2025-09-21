@@ -1,5 +1,4 @@
 #region References
-using FastReport.Data;
 using Entities.Models;
 using Helper.Configuracoes;
 using Infra.Configuracao;
@@ -7,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using StackExchange.Redis;
 using WebApi.Token;
 using static Domain.Extention.ServiceExtentionApplication;
 using static Infra.Extention.ServiceExtentionInfrastructure;
@@ -23,8 +23,11 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(Config.ConectionString));
+
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<AppDbContext>();
+
+builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(Config.ConnectionStringRedis));
 
 builder.Services.AddSharedInfrastructure();
 builder.Services.AddSharedApplication();

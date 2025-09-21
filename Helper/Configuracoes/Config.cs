@@ -5,6 +5,7 @@ public static class Config
     private const Ambiente ambiente = Ambiente.NotFelipe;
 
     public static string ConectionString = StringsConnection(ambiente);
+    public static string ConnectionStringRedis = "redis-10324.c308.sa-east-1-1.ec2.redns.redis-cloud.com:10324,password=FTj4ec3M8kV8p2RNRAxXLRKejsh3MTu5";
     public const string SecurityKey = "43443FDFDF34DF34343fdf344SDFSDFSDFSDFSDF4545354345SDFGDFGDFGDFGdffgfdGDFGDGR%";
     public const string ApiKeyFileIO = "FR2RIWQ.WF3PS58-WCR4M5X-K32FV35-NY36A91";
 

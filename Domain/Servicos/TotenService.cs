@@ -51,7 +51,6 @@ public class TotenService : InterfaceTotenService
             string senhaPainel = string.Empty;
 
             if (ultimaSenhaMesmoAtendimento > 0)
-            {
                 switch (obj.TipoAtendimento)
                 {
                     case TipoAtendimento.Prioritario:
@@ -67,9 +66,7 @@ public class TotenService : InterfaceTotenService
                         senhaPainel = $"CA0{ultimaSenhaMesmoAtendimento + 1}";
                         break;
                 }
-            }
             else
-            {
                 switch (obj.TipoAtendimento)
                 {
                     case TipoAtendimento.Prioritario:
@@ -85,9 +82,8 @@ public class TotenService : InterfaceTotenService
                         senhaPainel = $"CA01";
                         break;
                 }
-            }
 
-            SenhaToten novaSenha = new SenhaToten
+            SenhaToten novaSenha = new()
             {
                 SenhaPainel = senhaPainel,
                 TipoAtendimento = obj.TipoAtendimento,
@@ -97,17 +93,9 @@ public class TotenService : InterfaceTotenService
                 IdToten = obj.IdToten
             };
 
-            novaSenha = await _repositorySenhas.Add(novaSenha);
+            novaSenha = await _repositorySenhas.AddSenhaToten(novaSenha);
 
-            if (novaSenha.Id.Equals(0))
-                return new RetornoGenerico<SenhaToten>
-                {
-                    Success = false,
-                    Message = "Não foi possivel gerar a senha"
-                };
-
-
-            return new RetornoGenerico<SenhaToten>
+            return new()
             {
                 Success = true,
                 Message = "Senha gerada com sucesso",
@@ -117,7 +105,7 @@ public class TotenService : InterfaceTotenService
         }
         catch (Exception ex)
         {
-            return new RetornoGenerico<SenhaToten>
+            return new()
             {
                 Success = false,
                 Message = ex.Message,
@@ -134,22 +122,7 @@ public class TotenService : InterfaceTotenService
             senha.StatusAtendimento = obj.StatusAtendimento;
             senha.DataHoraAtualizacao = DateTime.Now;
 
-            await _repositorySenhas.Update(senha);
-        }
-        catch (Exception ex)
-        {
-            return;
-        }
-    }
-
-    public async Task DeletarSenhasTotenDiarias(int idToten)
-    {
-        try
-        {
-            IList<SenhaToten> senhasParaExcluir = await _repositorySenhas.SenhasParaExcluir(DateTime.Now, idToten);
-
-            foreach (var senhaToten in senhasParaExcluir)
-                await _repositorySenhas.Delete(senhaToten);
+            await _repositorySenhas.UpdateSenhaToten(senha);
         }
         catch (Exception ex)
         {
